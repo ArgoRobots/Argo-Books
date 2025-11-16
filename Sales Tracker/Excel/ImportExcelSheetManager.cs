@@ -1429,7 +1429,7 @@ namespace Sales_Tracker.Excel
 
             try
             {
-                // Parse returned items text - could be item names or indices
+                // Parse returned items text
                 string[] returnedItemsArray = tagData.ReturnedItemsText.Split([';', ','], StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (string returnedItemText in returnedItemsArray)

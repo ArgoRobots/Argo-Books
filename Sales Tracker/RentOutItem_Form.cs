@@ -23,7 +23,6 @@ namespace Sales_Tracker
 
             InitializeForm();
             PopulateCustomerList();
-            PopulateRateTypes();
             UpdateTheme();
             SetAccessibleDescriptions();
             LanguageManager.UpdateLanguageForControl(this);
@@ -73,6 +72,11 @@ namespace Sales_Tracker
                 MonthlyRate_Label.Text = $"Monthly: {MainMenu_Form.CurrencySymbol}{_rentalItem.MonthlyRate.Value:N2}";
             }
 
+            // Add event handlers to labels to toggle radio buttons
+            DailyRate_Label.Click += (s, e) => DailyRate_RadioButton.Checked = !DailyRate_RadioButton.Checked;
+            WeeklyRate_Label.Click += (s, e) => WeeklyRate_RadioButton.Checked = !WeeklyRate_RadioButton.Checked;
+            MonthlyRate_Label.Click += (s, e) => MonthlyRate_RadioButton.Checked = !MonthlyRate_RadioButton.Checked;
+
             UpdateTotalCost();
         }
         private void PopulateCustomerList()
@@ -94,10 +98,6 @@ namespace Sales_Tracker
                 RentOut_Button.Enabled = false;
             }
         }
-        private static void PopulateRateTypes()
-        {
-            // This is handled in InitializeForm
-        }
         private void UpdateTotalCost()
         {
             decimal rate = GetSelectedRate();
@@ -115,22 +115,34 @@ namespace Sales_Tracker
         private decimal GetSelectedRate()
         {
             if (DailyRate_RadioButton.Checked)
+            {
                 return _rentalItem.DailyRate;
+            }
             if (WeeklyRate_RadioButton.Checked && _rentalItem.WeeklyRate.HasValue)
+            {
                 return _rentalItem.WeeklyRate.Value;
+            }
             if (MonthlyRate_RadioButton.Checked && _rentalItem.MonthlyRate.HasValue)
+            {
                 return _rentalItem.MonthlyRate.Value;
+            }
 
             return 0;
         }
         private RentalRateType GetSelectedRateType()
         {
             if (DailyRate_RadioButton.Checked)
+            {
                 return RentalRateType.Daily;
+            }
             if (WeeklyRate_RadioButton.Checked)
+            {
                 return RentalRateType.Weekly;
+            }
             if (MonthlyRate_RadioButton.Checked)
+            {
                 return RentalRateType.Monthly;
+            }
 
             return RentalRateType.Daily;
         }
@@ -187,7 +199,7 @@ namespace Sales_Tracker
                 notes: Notes_TextBox.Text.Trim()
             );
 
-            // Use the RentOut method to update quantities properly
+            // Rent out the item
             if (!_rentalItem.RentOut(quantity, customer.CustomerID))
             {
                 CustomMessageBox.Show("Error", "Failed to rent out item. Please check availability.",
@@ -195,14 +207,12 @@ namespace Sales_Tracker
                 return;
             }
 
-            // Add rental record to the item's history
             _rentalItem.RentalRecords.Add(record);
 
             // Add rental record to customer
             customer.AddRentalRecord(record);
             customer.UpdatePaymentStatus();
 
-            // Create a rental transaction row in the Rental_DataGridView
             CreateRentalTransaction(customer, record, quantity, rate, totalCost);
 
             // Save changes

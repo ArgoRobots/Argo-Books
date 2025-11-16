@@ -1965,10 +1965,10 @@ namespace Sales_Tracker
         public List<string> GetProductPurchaseNames() => GetFormattedProductNames(CategoryPurchaseList);
 
         /// <summary>
-        /// Gets a list of formatted product names for rentable items.
+        /// Gets a list of formatted rentable items.
         /// Format: "CompanyOfOrigin > CategoryName > ProductName"
         /// </summary>
-        public List<string> GetRentableProductPurchaseNames()
+        public List<string> GetFormattedRentableProductNames()
         {
             List<string> names = [];
             foreach (Category category in CategoryPurchaseList)

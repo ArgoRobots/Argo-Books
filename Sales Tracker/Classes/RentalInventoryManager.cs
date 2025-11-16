@@ -1,36 +1,39 @@
-using Sales_Tracker.DataClasses;
 using Newtonsoft.Json;
+using Sales_Tracker.DataClasses;
 
 namespace Sales_Tracker.Classes
 {
+    /// <summary>
     /// Manages rental inventory operations including tracking availability and quantities.
+    /// </summary>
     public static class RentalInventoryManager
     {
-        private static List<RentalItem> _rentalInventory = [];
-        private static readonly string _inventoryFilePath = Path.Combine(Directories.AppData_dir, "rental_inventory.json");
-
+        /// <summary>
         /// Gets the current rental inventory list.
-        public static List<RentalItem> RentalInventory => _rentalInventory;
+        /// </summary>
+        public static List<RentalItem> RentalInventory { get; private set; } = [];
 
+        /// <summary>
         /// Loads rental inventory from file.
+        /// </summary>
         public static void LoadInventory()
         {
             try
             {
-                if (File.Exists(_inventoryFilePath))
+                if (File.Exists(Directories.Rentals_file))
                 {
-                    string json = File.ReadAllText(_inventoryFilePath);
-                    _rentalInventory = JsonConvert.DeserializeObject<List<RentalItem>>(json) ?? [];
+                    string json = File.ReadAllText(Directories.Rentals_file);
+                    RentalInventory = JsonConvert.DeserializeObject<List<RentalItem>>(json) ?? [];
                 }
                 else
                 {
-                    _rentalInventory = [];
+                    RentalInventory = [];
                 }
             }
             catch (Exception ex)
             {
                 Log.Error_ReadFile($"Failed to load rental inventory: {ex.Message}");
-                _rentalInventory = [];
+                RentalInventory = [];
             }
         }
 
@@ -41,8 +44,8 @@ namespace Sales_Tracker.Classes
         {
             try
             {
-                string json = JsonConvert.SerializeObject(_rentalInventory, Formatting.Indented);
-                File.WriteAllText(_inventoryFilePath, json);
+                string json = JsonConvert.SerializeObject(RentalInventory, Formatting.Indented);
+                File.WriteAllText(Directories.Rentals_file, json);
             }
             catch (Exception ex)
             {
@@ -55,74 +58,66 @@ namespace Sales_Tracker.Classes
         /// </summary>
         public static bool AddRentalItem(RentalItem item)
         {
-            if (_rentalInventory.Any(r => r.RentalItemID == item.RentalItemID))
+            if (RentalInventory.Any(r => r.RentalItemID == item.RentalItemID))
             {
-                return false; 
+                return false;
             }
 
-            _rentalInventory.Add(item);
+            RentalInventory.Add(item);
             SaveInventory();
             return true;
         }
 
+        /// <summary>
         /// Removes a rental item from inventory.
+        /// </summary>
         public static bool RemoveRentalItem(string rentalItemID)
         {
-            RentalItem? item = _rentalInventory.FirstOrDefault(r => r.RentalItemID == rentalItemID);
+            RentalItem? item = RentalInventory.FirstOrDefault(r => r.RentalItemID == rentalItemID);
             if (item != null)
             {
-                _rentalInventory.Remove(item);
+                RentalInventory.Remove(item);
                 SaveInventory();
                 return true;
             }
             return false;
         }
 
+        /// <summary>
         /// Gets a rental item by ID.
+        /// </summary>
         public static RentalItem? GetRentalItem(string rentalItemID)
         {
-            return _rentalInventory.FirstOrDefault(r => r.RentalItemID == rentalItemID);
+            return RentalInventory.FirstOrDefault(r => r.RentalItemID == rentalItemID);
         }
 
-        /// Gets all rental items for a specific product.
-        public static List<RentalItem> GetRentalItemsByProduct(string productID)
-        {
-            return _rentalInventory.Where(r => r.ProductID == productID).ToList();
-        }
-
+        /// <summary>
         /// Gets all available rental items.
+        /// </summary>
         public static List<RentalItem> GetAvailableItems()
         {
-            return _rentalInventory.Where(r => r.QuantityAvailable > 0).ToList();
+            return RentalInventory.Where(r => r.QuantityAvailable > 0).ToList();
         }
 
+        /// <summary>
         /// Gets all rented rental items.
+        /// </summary>
         public static List<RentalItem> GetRentedItems()
         {
-            return _rentalInventory.Where(r => r.QuantityRented > 0).ToList();
+            return RentalInventory.Where(r => r.QuantityRented > 0).ToList();
         }
 
+        /// <summary>
         /// Gets all items in maintenance.
+        /// </summary>
         public static List<RentalItem> GetMaintenanceItems()
         {
-            return _rentalInventory.Where(r => r.QuantityInMaintenance > 0).ToList();
+            return RentalInventory.Where(r => r.QuantityInMaintenance > 0).ToList();
         }
 
-        /// Checks if a product has available rental inventory.
-        public static bool IsProductAvailableForRent(string productID)
-        {
-            return _rentalInventory.Any(r => r.ProductID == productID && r.QuantityAvailable > 0);
-        }
-
-        /// Gets total available quantity for a product.
-        public static int GetAvailableQuantity(string productID)
-        {
-            return _rentalInventory
-                .Where(r => r.ProductID == productID)
-                .Sum(r => r.QuantityAvailable);
-        }
-
+        /// <summary>
         /// Updates rental item status.
+        /// </summary>
         public static bool UpdateItemStatus(string rentalItemID, RentalItem.AvailabilityStatus newStatus)
         {
             RentalItem? item = GetRentalItem(rentalItemID);
@@ -133,42 +128,6 @@ namespace Sales_Tracker.Classes
                 return true;
             }
             return false;
-        }
-
-        /// Processes a rental checkout.
-        public static bool ProcessRental(string rentalItemID, int quantity, string customerID)
-        {
-            RentalItem? item = GetRentalItem(rentalItemID);
-            if (item != null && item.RentOut(quantity, customerID))
-            {
-                SaveInventory();
-                return true;
-            }
-            return false;
-        }
-
-        /// Processes a rental return.
-        public static bool ProcessReturn(string rentalItemID, int quantity)
-        {
-            RentalItem? item = GetRentalItem(rentalItemID);
-            if (item != null && item.ReturnItem(quantity))
-            {
-                SaveInventory();
-                return true;
-            }
-            return false;
-        }
-
-        /// Gets inventory summary statistics.
-        public static (int TotalItems, int TotalQuantity, int Available, int Rented, int Maintenance) GetInventorySummary()
-        {
-            return (
-                TotalItems: _rentalInventory.Count,
-                TotalQuantity: _rentalInventory.Sum(r => r.TotalQuantity),
-                Available: _rentalInventory.Sum(r => r.QuantityAvailable),
-                Rented: _rentalInventory.Sum(r => r.QuantityRented),
-                Maintenance: _rentalInventory.Sum(r => r.QuantityInMaintenance)
-            );
         }
     }
 }

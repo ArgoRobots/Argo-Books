@@ -65,7 +65,7 @@ namespace Sales_Tracker
         }
         private List<SearchResult> GetSearchResultsForProducts()
         {
-            return SearchBox.ConvertToSearchResults(MainMenu_Form.Instance.GetRentableProductPurchaseNames());
+            return SearchBox.ConvertToSearchResults(MainMenu_Form.Instance.GetFormattedRentableProductNames());
         }
         private void UpdateTheme()
         {
@@ -140,10 +140,7 @@ namespace Sales_Tracker
         {
             string rentalItemID = RentalItemID_TextBox.Text.Trim();
 
-            // Check if rental item ID already exists
-            if (rentalItemID != ReadOnlyVariables.EmptyCell &&
-                RentalInventoryManager.RentalInventory.Any(item =>
-                    item.RentalItemID.Equals(rentalItemID, StringComparison.OrdinalIgnoreCase)))
+            if (DoesRentalItemExist(rentalItemID))
             {
                 CustomMessageBoxResult result = CustomMessageBox.ShowWithFormat(
                     "Rental Item ID already exists",
@@ -161,10 +158,8 @@ namespace Sales_Tracker
             // Get values from TextBoxes
             string[] items = ProductName_TextBox.Text.Split('>');
             string companyName = items[0].Trim();
-            string categoryName = items[1].Trim();
             string productName = items[2].Trim();
 
-            string productID = $"{companyName}-{productName}";
             int totalQuantity = int.Parse(TotalQuantity_TextBox.Text);
 
             decimal dailyRate = string.IsNullOrWhiteSpace(DailyRate_TextBox.Text)
@@ -190,7 +185,6 @@ namespace Sales_Tracker
             RentalItem newItem = new()
             {
                 RentalItemID = rentalItemID,
-                ProductID = productID,
                 ProductName = productName,
                 CompanyName = companyName,
                 TotalQuantity = totalQuantity,
@@ -220,6 +214,21 @@ namespace Sales_Tracker
 
             return true;
         }
+        private static bool DoesRentalItemExist(string id)
+        {
+            if (string.IsNullOrEmpty(id) || id == ReadOnlyVariables.EmptyCell)
+            {
+                return false;
+            }
+
+            if (RentalInventoryManager.RentalInventory.Any(item =>
+                    item.RentalItemID.Equals(id, StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+
+            return false;
+        }
         private void CheckIfProductsExist()
         {
             if (MainMenu_Form.Instance.GetProductPurchaseNames().Count == 0)
@@ -235,15 +244,14 @@ namespace Sales_Tracker
         }
         private void ValidateInputs(object sender, EventArgs e)
         {
-            bool allFieldsFilled = !string.IsNullOrWhiteSpace(RentalItemID_TextBox.Text) &&
-                !string.IsNullOrWhiteSpace(ProductName_TextBox.Text) &&
+            bool allFieldsFilled = !string.IsNullOrWhiteSpace(ProductName_TextBox.Text) &&
                 ProductName_TextBox.Tag?.ToString() != "0" &&
                 !string.IsNullOrWhiteSpace(TotalQuantity_TextBox.Text);
 
             // At least one rate field must be filled
             bool hasAtLeastOneRate = !string.IsNullOrWhiteSpace(DailyRate_TextBox.Text) ||
-                                    !string.IsNullOrWhiteSpace(WeeklyRate_TextBox.Text) ||
-                                    !string.IsNullOrWhiteSpace(MonthlyRate_TextBox.Text);
+                                     !string.IsNullOrWhiteSpace(WeeklyRate_TextBox.Text) ||
+                                     !string.IsNullOrWhiteSpace(MonthlyRate_TextBox.Text);
 
             AddRentalItem_Button.Enabled = allFieldsFilled && hasAtLeastOneRate;
         }

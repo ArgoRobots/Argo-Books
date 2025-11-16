@@ -486,7 +486,7 @@ namespace Sales_Tracker
             _purchase_DataGridView.Tag = MainMenu_Form.DataGridViewTag.Product;
             _purchase_DataGridView.CellFormatting += DataGridView_CellFormatting;
 
-            // Center the Rentable column header and content
+            // Center the Rentable column
             _purchase_DataGridView.Columns[Column.Rentable.ToString()].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             _purchase_DataGridView.Columns[Column.Rentable.ToString()].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
@@ -500,7 +500,7 @@ namespace Sales_Tracker
             _sale_DataGridView.Tag = MainMenu_Form.DataGridViewTag.Product;
             _sale_DataGridView.CellFormatting += DataGridView_CellFormatting;
 
-            // Center the Rentable column header and content
+            // Center the Rentable column
             _sale_DataGridView.Columns[Column.Rentable.ToString()].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             _sale_DataGridView.Columns[Column.Rentable.ToString()].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
 

@@ -73,7 +73,6 @@ namespace Sales_Tracker.Classes
             Receipts_dir = AppData_dir + companyName + @"\receipts\";
             Customers_file = TempCompany_dir + "customers" + ArgoFiles.TxtFileExtension;
 
-
             // Misc.
             CompanyData_file = TempCompany_dir + CompanyDataFileName;
         }

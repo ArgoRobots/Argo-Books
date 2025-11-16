@@ -70,11 +70,12 @@ namespace Sales_Tracker
             // 
             // ProductName_Label
             // 
+            ProductName_Label.AutoSize = true;
             ProductName_Label.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             ProductName_Label.Location = new Point(38, 31);
             ProductName_Label.Margin = new Padding(4, 0, 4, 0);
             ProductName_Label.Name = "ProductName_Label";
-            ProductName_Label.Size = new Size(675, 55);
+            ProductName_Label.Size = new Size(236, 45);
             ProductName_Label.TabIndex = 0;
             ProductName_Label.Text = "Product Name";
             // 
@@ -91,6 +92,7 @@ namespace Sales_Tracker
             // 
             // Customer_ComboBox
             // 
+            Customer_ComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Customer_ComboBox.BackColor = Color.Transparent;
             Customer_ComboBox.CustomizableEdges = customizableEdges1;
             Customer_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
@@ -103,7 +105,7 @@ namespace Sales_Tracker
             Customer_ComboBox.Margin = new Padding(4, 5, 4, 5);
             Customer_ComboBox.Name = "Customer_ComboBox";
             Customer_ComboBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            Customer_ComboBox.Size = new Size(674, 50);
+            Customer_ComboBox.Size = new Size(672, 50);
             Customer_ComboBox.TabIndex = 3;
             // 
             // Quantity_NumericUpDown
@@ -141,6 +143,7 @@ namespace Sales_Tracker
             // 
             // DailyRate_RadioButton
             // 
+            DailyRate_RadioButton.Animated = true;
             DailyRate_RadioButton.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
             DailyRate_RadioButton.CheckedState.BorderThickness = 0;
             DailyRate_RadioButton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
@@ -171,6 +174,7 @@ namespace Sales_Tracker
             // 
             // WeeklyRate_RadioButton
             // 
+            WeeklyRate_RadioButton.Animated = true;
             WeeklyRate_RadioButton.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
             WeeklyRate_RadioButton.CheckedState.BorderThickness = 0;
             WeeklyRate_RadioButton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
@@ -201,6 +205,7 @@ namespace Sales_Tracker
             // 
             // MonthlyRate_RadioButton
             // 
+            MonthlyRate_RadioButton.Animated = true;
             MonthlyRate_RadioButton.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
             MonthlyRate_RadioButton.CheckedState.BorderThickness = 0;
             MonthlyRate_RadioButton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
@@ -248,6 +253,7 @@ namespace Sales_Tracker
             // 
             // Notes_TextBox
             // 
+            Notes_TextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Notes_TextBox.Cursor = Cursors.IBeam;
             Notes_TextBox.CustomizableEdges = customizableEdges12;
             Notes_TextBox.DefaultText = "";
@@ -259,15 +265,16 @@ namespace Sales_Tracker
             Notes_TextBox.PlaceholderText = "Enter any additional notes...";
             Notes_TextBox.SelectedText = "";
             Notes_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges13;
-            Notes_TextBox.Size = new Size(675, 125);
+            Notes_TextBox.Size = new Size(673, 125);
             Notes_TextBox.TabIndex = 19;
             // 
             // RentOut_Button
             // 
+            RentOut_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             RentOut_Button.CustomizableEdges = customizableEdges14;
             RentOut_Button.Font = new Font("Segoe UI", 11F);
             RentOut_Button.ForeColor = Color.White;
-            RentOut_Button.Location = new Point(513, 949);
+            RentOut_Button.Location = new Point(510, 916);
             RentOut_Button.Margin = new Padding(4, 5, 4, 5);
             RentOut_Button.Name = "RentOut_Button";
             RentOut_Button.ShadowDecoration.CustomizableEdges = customizableEdges15;
@@ -278,10 +285,11 @@ namespace Sales_Tracker
             // 
             // Cancel_Button
             // 
+            Cancel_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Cancel_Button.CustomizableEdges = customizableEdges16;
             Cancel_Button.Font = new Font("Segoe UI", 11F);
             Cancel_Button.ForeColor = Color.White;
-            Cancel_Button.Location = new Point(305, 949);
+            Cancel_Button.Location = new Point(302, 916);
             Cancel_Button.Margin = new Padding(4, 5, 4, 5);
             Cancel_Button.Name = "Cancel_Button";
             Cancel_Button.ShadowDecoration.CustomizableEdges = customizableEdges17;
@@ -292,11 +300,13 @@ namespace Sales_Tracker
             // 
             // TotalCost_Label
             // 
+            TotalCost_Label.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            TotalCost_Label.AutoSize = true;
             TotalCost_Label.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            TotalCost_Label.Location = new Point(38, 867);
+            TotalCost_Label.Location = new Point(555, 859);
             TotalCost_Label.Margin = new Padding(4, 0, 4, 0);
             TotalCost_Label.Name = "TotalCost_Label";
-            TotalCost_Label.Size = new Size(675, 47);
+            TotalCost_Label.Size = new Size(156, 36);
             TotalCost_Label.TabIndex = 20;
             TotalCost_Label.Text = "Total: $0.00";
             TotalCost_Label.TextAlign = ContentAlignment.MiddleRight;
@@ -384,7 +394,7 @@ namespace Sales_Tracker
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(750, 1047);
+            ClientSize = new Size(748, 994);
             Controls.Add(ProductName_Label);
             Controls.Add(AvailableQuantity_Label);
             Controls.Add(SelectCustomer_Label);
@@ -412,9 +422,10 @@ namespace Sales_Tracker
             Margin = new Padding(4, 5, 4, 5);
             MaximizeBox = false;
             MinimizeBox = false;
+            MinimumSize = new Size(770, 1050);
             Name = "RentOutItem_Form";
             ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Rent Out Item";
             Shown += RentOutItem_Form_Shown;
             ((System.ComponentModel.ISupportInitialize)Quantity_NumericUpDown).EndInit();
