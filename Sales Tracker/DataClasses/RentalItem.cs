@@ -141,13 +141,5 @@ namespace Sales_Tracker.DataClasses
             TotalQuantity = newTotal;
             LastStatusUpdate = DateTime.Now;
         }
-
-        /// <summary>
-        /// Gets a summary string of the current inventory status.
-        /// </summary>
-        public string GetInventorySummary()
-        {
-            return $"Total: {TotalQuantity} | Available: {QuantityAvailable} | Rented: {QuantityRented} | Maintenance: {QuantityInMaintenance}";
-        }
     }
 }

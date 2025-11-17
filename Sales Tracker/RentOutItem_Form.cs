@@ -335,20 +335,6 @@ namespace Sales_Tracker
                 return false;
             }
 
-            if (Quantity_NumericUpDown.Value == 0)
-            {
-                CustomMessageBox.Show("Invalid Quantity", "Quantity must be at least 1.",
-                    CustomMessageBoxIcon.Warning, CustomMessageBoxButtons.Ok);
-                return false;
-            }
-
-            if (!decimal.TryParse(SecurityDeposit_TextBox.Text, out decimal deposit) || deposit < 0)
-            {
-                CustomMessageBox.Show("Invalid Deposit", "Please enter a valid security deposit amount.",
-                    CustomMessageBoxIcon.Warning, CustomMessageBoxButtons.Ok);
-                return false;
-            }
-
             return true;
         }
         private void Cancel_Button_Click(object sender, EventArgs e)
