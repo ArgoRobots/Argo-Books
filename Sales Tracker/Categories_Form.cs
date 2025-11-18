@@ -36,6 +36,7 @@ namespace Sales_Tracker
             LabelManager.ShowTotalLabel(Total_Label, selectedDataGridView);
             ShowingResultsFor_Label.Visible = false;
             LanguageManager.UpdateLanguageForControl(this);
+            AdjustRadioButtonPositions();
             DataGridViewManager.SortFirstColumnAndSelectFirstRow(Purchase_DataGridView, Sale_DataGridView, Rent_DataGridView);
             AddEventHandlers();
 
@@ -70,6 +71,14 @@ namespace Sales_Tracker
             ForSale_Label.AccessibleDescription = AccessibleDescriptionManager.AlignLeft;
             ShowingResultsFor_Label.AccessibleDescription = AccessibleDescriptionManager.DoNotCache;
             Total_Label.AccessibleDescription = AccessibleDescriptionManager.DoNotCache;
+        }
+        public void AdjustRadioButtonPositions()
+        {
+            Sale_RadioButton.Left = ForPurchase_Label.Right + CustomControls.SpaceBetweenControls;
+            ForSale_Label.Left = Sale_RadioButton.Right - 2;
+
+            Rent_RadioButton.Left = ForSale_Label.Right + CustomControls.SpaceBetweenControls;
+            ForRent_Label.Left = Rent_RadioButton.Right - 2;
         }
         private void UpdateTheme()
         {
