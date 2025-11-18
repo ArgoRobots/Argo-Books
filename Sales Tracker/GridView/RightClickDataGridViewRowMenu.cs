@@ -121,6 +121,7 @@ namespace Sales_Tracker.GridView
             }
 
             RestoreSelectionAndScroll(grid, firstSelectedIndex, scrollPosition);
+            MainMenu_Form.CloseRightClickPanels();
         }
         private static void MoveRows2(object sender, EventArgs e)
         {
@@ -147,6 +148,7 @@ namespace Sales_Tracker.GridView
             }
 
             RestoreSelectionAndScroll(grid, firstSelectedIndex, scrollPosition);
+            MainMenu_Form.CloseRightClickPanels();
         }
         private static void ViewReceipt(object sender, EventArgs e)
         {
@@ -251,6 +253,52 @@ namespace Sales_Tracker.GridView
                 CategoryMoveDirection.RentalToSale => MainMenu_Form.Instance.CategorySaleList,
                 _ => null
             };
+
+            // Check if any selected categories already exist in the target list
+            List<string> duplicateCategories = new();
+            foreach (DataGridViewRow row in rowsToMove)
+            {
+                string categoryName = row.Cells[0].Value.ToString();
+                if (targetList.Any(c => c.Name == categoryName))
+                {
+                    duplicateCategories.Add(categoryName);
+                }
+            }
+
+            if (duplicateCategories.Count > 0)
+            {
+                string targetName = direction switch
+                {
+                    CategoryMoveDirection.PurchaseToSale => "Sales",
+                    CategoryMoveDirection.PurchaseToRental => "Rentals",
+                    CategoryMoveDirection.SaleToPurchase => "Purchases",
+                    CategoryMoveDirection.SaleToRental => "Rentals",
+                    CategoryMoveDirection.RentalToPurchase => "Purchases",
+                    CategoryMoveDirection.RentalToSale => "Sales",
+                    _ => ""
+                };
+
+                if (duplicateCategories.Count == 1)
+                {
+                    CustomMessageBox.ShowWithFormat(
+                        "Cannot move category",
+                        "The category '{0}' already exists in {1}.",
+                        CustomMessageBoxIcon.Error,
+                        CustomMessageBoxButtons.Ok,
+                        duplicateCategories[0], targetName);
+                }
+                else
+                {
+                    string categoriesList = string.Join("\n• ", duplicateCategories);
+                    CustomMessageBox.ShowWithFormat(
+                        "Cannot move categories",
+                        "The following categories already exist in {0}:\n\n• {1}",
+                        CustomMessageBoxIcon.Error,
+                        CustomMessageBoxButtons.Ok,
+                        targetName, categoriesList);
+                }
+                return;
+            }
 
             MainMenu_Form.IsProgramLoading = true;
             int successfulMoves = 0;
