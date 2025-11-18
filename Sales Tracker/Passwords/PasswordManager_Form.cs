@@ -5,6 +5,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker.Passwords
 {
+    /// <summary>
+    /// Form for managing application password settings.
+    /// </summary>
     public partial class PasswordManager_Form : BaseForm
     {
         // Init.

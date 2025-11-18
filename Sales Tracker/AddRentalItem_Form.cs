@@ -7,6 +7,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Form for adding new rental items to inventory.
+    /// </summary>
     public partial class AddRentalItem_Form : BaseForm
     {
         // Properties

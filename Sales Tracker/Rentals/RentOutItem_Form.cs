@@ -8,6 +8,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Form for renting out an item to a customer.
+    /// </summary>
     public partial class RentOutItem_Form : BaseForm
     {
         // Properties

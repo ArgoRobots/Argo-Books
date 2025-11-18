@@ -9,6 +9,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker.Startup.Menus
 {
+    /// <summary>
+    /// Form for configuring company information and settings.
+    /// </summary>
     public partial class ConfigureCompany_Form : BaseForm
     {
         // Properties

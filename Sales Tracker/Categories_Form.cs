@@ -9,6 +9,9 @@ using System.ComponentModel;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Form for managing product categories.
+    /// </summary>
     public partial class Categories_Form : BaseForm
     {
         // Properties

@@ -7,6 +7,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Form for selecting date range filters for transaction data.
+    /// </summary>
     public partial class DateRange_Form : BaseForm
     {
         // Properties

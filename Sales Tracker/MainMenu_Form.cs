@@ -24,6 +24,9 @@ using Timer = System.Windows.Forms.Timer;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Main application form displaying transactions, charts, and analytics.
+    /// </summary>
     public partial class MainMenu_Form : BaseForm
     {
         // Admin mode can only be enabled by directly setting it to true here

@@ -8,6 +8,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Form for managing product inventory and information.
+    /// </summary>
     public partial class Products_Form : BaseForm
     {
         private static Products_Form _instance;

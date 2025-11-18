@@ -9,6 +9,9 @@ using Sales_Tracker.UI;
 
 namespace Sales_Tracker
 {
+    /// <summary>
+    /// Form for viewing and managing rental transactions.
+    /// </summary>
     public partial class Rentals_Form : BaseForm
     {
         // Properties
