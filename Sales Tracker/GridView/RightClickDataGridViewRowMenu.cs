@@ -25,7 +25,7 @@ namespace Sales_Tracker.GridView
         public static Guna2Panel Panel { get; private set; }
         public static Guna2Button Modify_Button { get; private set; }
         public static Guna2Button Move_Button { get; private set; }
-        public static Guna2Button MoveTo_Button { get; private set; }
+        public static Guna2Button Move2_Button { get; private set; }
         public static Guna2Button ViewReceipt_Button { get; private set; }
         public static Guna2Button ExportReceipt_Button { get; private set; }
         public static Guna2Button ShowItems_Button { get; private set; }
@@ -54,8 +54,8 @@ namespace Sales_Tracker.GridView
             Move_Button = CustomControls.ConstructBtnForMenu("Move", CustomControls.PanelBtnWidth, flowPanel);
             Move_Button.Click += MoveRows;
 
-            MoveTo_Button = CustomControls.ConstructBtnForMenu("Move to...", CustomControls.PanelBtnWidth, flowPanel);
-            MoveTo_Button.Click += MoveRowsTo;
+            Move2_Button = CustomControls.ConstructBtnForMenu("Move", CustomControls.PanelBtnWidth, flowPanel);
+            Move2_Button.Click += MoveRows2;
 
             ViewReceipt_Button = CustomControls.ConstructBtnForMenu("View receipt", CustomControls.PanelBtnWidth, flowPanel);
             ViewReceipt_Button.Click += ViewReceipt;
@@ -106,7 +106,7 @@ namespace Sales_Tracker.GridView
             int scrollPosition = grid.FirstDisplayedScrollingRowIndex;
             int firstSelectedIndex = selectedRows[0].Index;
 
-            // Move rows based on current selection (default direction)
+            // Move rows based on current selection (first destination)
             if (MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.CategoryPurchases)
             {
                 MoveCategoryRows(selectedRows, CategoryMoveDirection.PurchaseToSale);
@@ -122,7 +122,7 @@ namespace Sales_Tracker.GridView
 
             RestoreSelectionAndScroll(grid, firstSelectedIndex, scrollPosition);
         }
-        private static void MoveRowsTo(object sender, EventArgs e)
+        private static void MoveRows2(object sender, EventArgs e)
         {
             Guna2DataGridView grid = (Guna2DataGridView)Panel.Tag;
             List<DataGridViewRow> selectedRows = grid.SelectedRows.Cast<DataGridViewRow>().ToList();
@@ -132,64 +132,18 @@ namespace Sales_Tracker.GridView
             int scrollPosition = grid.FirstDisplayedScrollingRowIndex;
             int firstSelectedIndex = selectedRows[0].Index;
 
-            // Ask user where to move categories based on current selection
-            CategoryMoveDirection? direction = null;
-
+            // Move rows based on current selection (second destination)
             if (MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.CategoryPurchases)
             {
-                CustomMessageBoxResult result = CustomMessageBox.Show(
-                    "Move to",
-                    "Move selected categories to Sales or Rentals?",
-                    CustomMessageBoxIcon.Question,
-                    CustomMessageBoxButtons.YesNoCancel);
-
-                if (result == CustomMessageBoxResult.Yes)
-                {
-                    direction = CategoryMoveDirection.PurchaseToSale;
-                }
-                else if (result == CustomMessageBoxResult.No)
-                {
-                    direction = CategoryMoveDirection.PurchaseToRental;
-                }
+                MoveCategoryRows(selectedRows, CategoryMoveDirection.PurchaseToRental);
             }
             else if (MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.CategorySales)
             {
-                CustomMessageBoxResult result = CustomMessageBox.Show(
-                    "Move to",
-                    "Move selected categories to Purchases or Rentals?",
-                    CustomMessageBoxIcon.Question,
-                    CustomMessageBoxButtons.YesNoCancel);
-
-                if (result == CustomMessageBoxResult.Yes)
-                {
-                    direction = CategoryMoveDirection.SaleToPurchase;
-                }
-                else if (result == CustomMessageBoxResult.No)
-                {
-                    direction = CategoryMoveDirection.SaleToRental;
-                }
+                MoveCategoryRows(selectedRows, CategoryMoveDirection.SaleToRental);
             }
             else if (MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.CategoryRentals)
             {
-                CustomMessageBoxResult result = CustomMessageBox.Show(
-                    "Move to",
-                    "Move selected categories to Purchases or Sales?",
-                    CustomMessageBoxIcon.Question,
-                    CustomMessageBoxButtons.YesNoCancel);
-
-                if (result == CustomMessageBoxResult.Yes)
-                {
-                    direction = CategoryMoveDirection.RentalToPurchase;
-                }
-                else if (result == CustomMessageBoxResult.No)
-                {
-                    direction = CategoryMoveDirection.RentalToSale;
-                }
-            }
-
-            if (direction.HasValue)
-            {
-                MoveCategoryRows(selectedRows, direction.Value);
+                MoveCategoryRows(selectedRows, CategoryMoveDirection.RentalToSale);
             }
 
             RestoreSelectionAndScroll(grid, firstSelectedIndex, scrollPosition);

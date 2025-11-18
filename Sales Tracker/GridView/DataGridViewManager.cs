@@ -701,36 +701,36 @@ namespace Sales_Tracker.GridView
                 flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Modify_Button, currentIndex++);
             }
 
-            // Add Move_Button and MoveTo_Button for categories
+            // Add Move_Button and Move2_Button for categories
             if (selectedOption == MainMenu_Form.SelectedOption.CategoryPurchases)
             {
-                string text = LanguageManager.TranslateString("Move category to sales");
                 RightClickDataGridViewRowMenu.Move_Button.Visible = true;
-                RightClickDataGridViewRowMenu.Move_Button.Text = text;
+                RightClickDataGridViewRowMenu.Move_Button.Text = LanguageManager.TranslateString("Move category to sales");
                 flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Move_Button, currentIndex++);
 
-                RightClickDataGridViewRowMenu.MoveTo_Button.Visible = true;
-                flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.MoveTo_Button, currentIndex++);
+                RightClickDataGridViewRowMenu.Move2_Button.Visible = true;
+                RightClickDataGridViewRowMenu.Move2_Button.Text = LanguageManager.TranslateString("Move category to rentals");
+                flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Move2_Button, currentIndex++);
             }
             else if (selectedOption == MainMenu_Form.SelectedOption.CategorySales)
             {
-                string text = LanguageManager.TranslateString("Move category to purchases");
                 RightClickDataGridViewRowMenu.Move_Button.Visible = true;
-                RightClickDataGridViewRowMenu.Move_Button.Text = text;
+                RightClickDataGridViewRowMenu.Move_Button.Text = LanguageManager.TranslateString("Move category to purchases");
                 flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Move_Button, currentIndex++);
 
-                RightClickDataGridViewRowMenu.MoveTo_Button.Visible = true;
-                flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.MoveTo_Button, currentIndex++);
+                RightClickDataGridViewRowMenu.Move2_Button.Visible = true;
+                RightClickDataGridViewRowMenu.Move2_Button.Text = LanguageManager.TranslateString("Move category to rentals");
+                flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Move2_Button, currentIndex++);
             }
             else if (selectedOption == MainMenu_Form.SelectedOption.CategoryRentals)
             {
-                string text = LanguageManager.TranslateString("Move category to purchases");
                 RightClickDataGridViewRowMenu.Move_Button.Visible = true;
-                RightClickDataGridViewRowMenu.Move_Button.Text = text;
+                RightClickDataGridViewRowMenu.Move_Button.Text = LanguageManager.TranslateString("Move category to purchases");
                 flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Move_Button, currentIndex++);
 
-                RightClickDataGridViewRowMenu.MoveTo_Button.Visible = true;
-                flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.MoveTo_Button, currentIndex++);
+                RightClickDataGridViewRowMenu.Move2_Button.Visible = true;
+                RightClickDataGridViewRowMenu.Move2_Button.Text = LanguageManager.TranslateString("Move category to sales");
+                flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Move2_Button, currentIndex++);
             }
 
             if (isPurchasesOrSales)
