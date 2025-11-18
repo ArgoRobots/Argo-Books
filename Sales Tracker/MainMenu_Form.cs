@@ -2006,7 +2006,7 @@ namespace Sales_Tracker
                 ItemsInTransaction_Form => IsButtonSelected(Purchases_Button) ? SelectedOption.ItemsInPurchase : SelectedOption.ItemsInSale,
                 Customers_Form => SelectedOption.Customers,
                 AddCustomer_Form => SelectedOption.Customers,
-                AddRentalItem_Form => SelectedOption.Rentals,
+                Rentals_Form => SelectedOption.Rentals,
                 _ => GetButtonBasedOption()
             };
         }

@@ -773,6 +773,11 @@ namespace Sales_Tracker.GridView
                         }
                         break;
 
+                    case MainMenu_Form.SelectedOption.Rentals:
+                        itemType = "the rental item";
+                        identifier = grid.SelectedRows[0].Cells[Rentals_Form.Column.ProductName.ToString()].Value?.ToString() ?? "Unknown";
+                        break;
+
                     case MainMenu_Form.SelectedOption.Purchases:
                     case MainMenu_Form.SelectedOption.Sales:
                     case MainMenu_Form.SelectedOption.ItemsInPurchase:

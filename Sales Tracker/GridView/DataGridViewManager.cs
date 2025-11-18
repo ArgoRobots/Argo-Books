@@ -345,29 +345,26 @@ namespace Sales_Tracker.GridView
         // Methods for DataGridView_UserDeletingRow
         private static void HandlePurchasesDeletion(DataGridViewRowCancelEventArgs e)
         {
-            string type = "purchase";
             string columnName = ReadOnlyVariables.ID_column;
             string name = e.Row.Cells[columnName].Value?.ToString();
 
-            string message = $"Deleted {type} '{name}'";
+            string message = $"Deleted purchase '{name}'";
             CustomMessage_Form.AddThingThatHasChangedAndLogMessage(MainMenu_Form.ThingsThatHaveChangedInFile, 2, message);
         }
         private static void HandleSalesDeletion(DataGridViewRowCancelEventArgs e)
         {
-            string type = "sale";
             string columnName = ReadOnlyVariables.ID_column;
             string name = e.Row.Cells[columnName].Value?.ToString();
 
-            string message = $"Deleted {type} '{name}'";
+            string message = $"Deleted sale '{name}'";
             CustomMessage_Form.AddThingThatHasChangedAndLogMessage(MainMenu_Form.ThingsThatHaveChangedInFile, 2, message);
         }
         private static void HandleRentalsDeletion(DataGridViewRowCancelEventArgs e)
         {
-            string type = "rental";
-            string columnName = ReadOnlyVariables.ID_column;
+            string columnName = Rentals_Form.Column.ProductName.ToString();
             string name = e.Row.Cells[columnName].Value?.ToString();
 
-            string message = $"Deleted {type} '{name}'";
+            string message = $"Deleted rental '{name}'";
             CustomMessage_Form.AddThingThatHasChangedAndLogMessage(MainMenu_Form.ThingsThatHaveChangedInFile, 2, message);
         }
         private static void HandleProductPurchasesDeletion(DataGridViewRowCancelEventArgs e)
@@ -416,7 +413,6 @@ namespace Sales_Tracker.GridView
         }
         private static void HandleCategoryDeletion(DataGridViewRowCancelEventArgs e)
         {
-            string type = "category";
             string columnName = Categories_Form.Column.CategoryName.ToString();
             string valueBeingRemoved = e.Row.Cells[columnName].Value?.ToString();
 
@@ -451,7 +447,7 @@ namespace Sales_Tracker.GridView
             // In case the category name that is being deleted is in the TextBox
             Categories_Form.Instance.VaidateCategoryTextBox();
 
-            string message = $"Deleted {type} '{valueBeingRemoved}'";
+            string message = $"Deleted category '{valueBeingRemoved}'";
             CustomMessage_Form.AddThingThatHasChangedAndLogMessage(MainMenu_Form.ThingsThatHaveChangedInFile, 2, message);
         }
         private static void HandleAccountantsDeletion(DataGridViewRowCancelEventArgs e)
