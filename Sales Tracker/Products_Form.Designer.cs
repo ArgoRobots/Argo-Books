@@ -430,7 +430,7 @@ namespace Sales_Tracker
             // 
             ForSale_Label.AutoSize = true;
             ForSale_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForSale_Label.Location = new Point(227, 32);
+            ForSale_Label.Location = new Point(245, 34);
             ForSale_Label.Name = "ForSale_Label";
             ForSale_Label.Padding = new Padding(5);
             ForSale_Label.Size = new Size(102, 41);
@@ -444,7 +444,7 @@ namespace Sales_Tracker
             Sale_RadioButton.CheckedState.BorderThickness = 0;
             Sale_RadioButton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
             Sale_RadioButton.CheckedState.InnerColor = Color.White;
-            Sale_RadioButton.Location = new Point(204, 40);
+            Sale_RadioButton.Location = new Point(222, 42);
             Sale_RadioButton.Name = "Sale_RadioButton";
             Sale_RadioButton.ShadowDecoration.CustomizableEdges = customizableEdges15;
             Sale_RadioButton.Size = new Size(25, 25);
@@ -459,7 +459,7 @@ namespace Sales_Tracker
             // 
             ForPurchase_Label.AutoSize = true;
             ForPurchase_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForPurchase_Label.Location = new Point(43, 32);
+            ForPurchase_Label.Location = new Point(61, 34);
             ForPurchase_Label.Name = "ForPurchase_Label";
             ForPurchase_Label.Padding = new Padding(5);
             ForPurchase_Label.Size = new Size(155, 41);
@@ -473,7 +473,7 @@ namespace Sales_Tracker
             Purchase_RadioButton.CheckedState.BorderThickness = 0;
             Purchase_RadioButton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
             Purchase_RadioButton.CheckedState.InnerColor = Color.White;
-            Purchase_RadioButton.Location = new Point(20, 40);
+            Purchase_RadioButton.Location = new Point(38, 42);
             Purchase_RadioButton.Name = "Purchase_RadioButton";
             Purchase_RadioButton.ShadowDecoration.CustomizableEdges = customizableEdges16;
             Purchase_RadioButton.Size = new Size(25, 25);
@@ -531,7 +531,7 @@ namespace Sales_Tracker
             Rent_RadioButton.CheckedState.BorderThickness = 0;
             Rent_RadioButton.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
             Rent_RadioButton.CheckedState.InnerColor = Color.White;
-            Rent_RadioButton.Location = new Point(335, 40);
+            Rent_RadioButton.Location = new Point(353, 42);
             Rent_RadioButton.Name = "Rent_RadioButton";
             Rent_RadioButton.ShadowDecoration.CustomizableEdges = customizableEdges19;
             Rent_RadioButton.Size = new Size(25, 25);
@@ -546,7 +546,7 @@ namespace Sales_Tracker
             // 
             ForRent_Label.AutoSize = true;
             ForRent_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ForRent_Label.Location = new Point(358, 32);
+            ForRent_Label.Location = new Point(376, 34);
             ForRent_Label.Name = "ForRent_Label";
             ForRent_Label.Padding = new Padding(5);
             ForRent_Label.Size = new Size(103, 41);

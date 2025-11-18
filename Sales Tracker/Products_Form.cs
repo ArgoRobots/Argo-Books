@@ -78,9 +78,9 @@ namespace Sales_Tracker
 
             TextBoxManager.Attach(Search_TextBox);
 
-            ForPurchase_Label.Click += (_, _) => Purchase_RadioButton.Checked = !Purchase_RadioButton.Checked;
-            ForSale_Label.Click += (_, _) => Sale_RadioButton.Checked = !Sale_RadioButton.Checked;
-            ForRent_Label.Click += (_, _) => Rent_RadioButton.Checked = !Rent_RadioButton.Checked;
+            ForPurchase_Label.Click += (_, _) => Purchase_RadioButton.Checked = true;
+            ForSale_Label.Click += (_, _) => Sale_RadioButton.Checked = true;
+            ForRent_Label.Click += (_, _) => Rent_RadioButton.Checked = true;
         }
         private void AddSearchBoxEvents()
         {

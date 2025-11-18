@@ -71,10 +71,10 @@ namespace Sales_Tracker
                 MonthlyRate_Label.Text = $"Monthly: {MainMenu_Form.CurrencySymbol}{_rentalItem.MonthlyRate.Value:N2}";
             }
 
-            // Add event handlers to labels to toggle radio buttons
-            DailyRate_Label.Click += (s, e) => DailyRate_RadioButton.Checked = !DailyRate_RadioButton.Checked;
-            WeeklyRate_Label.Click += (s, e) => WeeklyRate_RadioButton.Checked = !WeeklyRate_RadioButton.Checked;
-            MonthlyRate_Label.Click += (s, e) => MonthlyRate_RadioButton.Checked = !MonthlyRate_RadioButton.Checked;
+            // Add event handlers to RadioButton labels
+            DailyRate_Label.Click += (s, e) => DailyRate_RadioButton.Checked = true;
+            WeeklyRate_Label.Click += (s, e) => WeeklyRate_RadioButton.Checked = true;
+            MonthlyRate_Label.Click += (s, e) => MonthlyRate_RadioButton.Checked = true;
 
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(SecurityDeposit_TextBox);
 
