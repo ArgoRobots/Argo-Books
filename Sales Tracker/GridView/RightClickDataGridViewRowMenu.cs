@@ -38,12 +38,13 @@ namespace Sales_Tracker.GridView
         public static Guna2Button UndoLoss_Button { get; private set; }
         public static Guna2Button Delete_Button { get; private set; }
         public static Guna2Button RentOut_Button { get; private set; }
+        public static Guna2Button ReturnRental_Button { get; private set; }
 
         // Methods
         public static void Construct()
         {
             Panel = CustomControls.ConstructPanelForMenu(
-                new Size(CustomControls.PanelWidth, 10 * CustomControls.PanelButtonHeight + CustomControls.SpaceForPanel),
+                new Size(CustomControls.PanelWidth, 11 * CustomControls.PanelButtonHeight + CustomControls.SpaceForPanel),
                 "rightClickDataGridView_Panel"
             );
 
@@ -91,6 +92,9 @@ namespace Sales_Tracker.GridView
 
             RentOut_Button = CustomControls.ConstructBtnForMenu("Rent out", CustomControls.PanelBtnWidth, flowPanel);
             RentOut_Button.Click += RentOut;
+
+            ReturnRental_Button = CustomControls.ConstructBtnForMenu("Return rental", CustomControls.PanelBtnWidth, flowPanel);
+            ReturnRental_Button.Click += ReturnRental;
         }
         private static void ModifyRow(object sender, EventArgs e)
         {
@@ -883,6 +887,28 @@ namespace Sales_Tracker.GridView
                 Tools.OpenForm(new RentOutItem_Form(rentalItem, selectedRow));
                 Hide();
             }
+        }
+        private static void ReturnRental(object sender, EventArgs e)
+        {
+            Guna2DataGridView grid = (Guna2DataGridView)Panel.Tag;
+            if (grid.SelectedRows.Count != 1) { return; }
+
+            DataGridViewRow selectedRow = grid.SelectedRows[0];
+
+            // Check if rental is already returned
+            if (selectedRow.Tag is TagData tagData && tagData.IsReturned)
+            {
+                CustomMessageBox.Show(
+                    "Already Returned",
+                    "This rental has already been returned.",
+                    CustomMessageBoxIcon.Info,
+                    CustomMessageBoxButtons.Ok);
+                return;
+            }
+
+            // Open the return rental form
+            Tools.OpenForm(new ReturnRental_Form(MainMenu_Form.Instance));
+            Hide();
         }
 
         // Helper methods
