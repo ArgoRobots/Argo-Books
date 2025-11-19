@@ -2004,8 +2004,9 @@ namespace Sales_Tracker
                 Accountants_Form => SelectedOption.Accountants,
                 Companies_Form => SelectedOption.Companies,
                 Categories_Form => Categories_Form.Instance.Purchase_RadioButton.Checked ? SelectedOption.CategoryPurchases :
-                                   Categories_Form.Instance.Rent_RadioButton.Checked ? SelectedOption.CategoryRentals : SelectedOption.CategorySales,
-                Products_Form => Products_Form.Instance.Purchase_RadioButton.Checked ? SelectedOption.ProductPurchases : SelectedOption.ProductSales,
+                                   Categories_Form.Instance.Sale_RadioButton.Checked ? SelectedOption.CategorySales : SelectedOption.CategoryRentals,
+                Products_Form => Products_Form.Instance.Purchase_RadioButton.Checked ? SelectedOption.ProductPurchases :
+                                 Products_Form.Instance.Sale_RadioButton.Checked ? SelectedOption.ProductSales : SelectedOption.ProductRentals,
                 Receipts_Form => SelectedOption.Receipts,
                 ItemsInTransaction_Form => IsButtonSelected(Purchases_Button) ? SelectedOption.ItemsInPurchase : SelectedOption.ItemsInSale,
                 Customers_Form => SelectedOption.Customers,
@@ -2041,6 +2042,7 @@ namespace Sales_Tracker
             Rentals,
             ProductPurchases,
             ProductSales,
+            ProductRentals,
             CategoryPurchases,
             CategorySales,
             CategoryRentals,

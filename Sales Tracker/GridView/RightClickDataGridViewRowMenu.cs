@@ -759,6 +759,7 @@ namespace Sales_Tracker.GridView
 
                     case MainMenu_Form.SelectedOption.ProductPurchases:
                     case MainMenu_Form.SelectedOption.ProductSales:
+                    case MainMenu_Form.SelectedOption.ProductRentals:
                         itemType = "the product";
                         identifier = grid.SelectedRows[0].Cells[Products_Form.Column.ProductName.ToString()].Value?.ToString() ?? "Unknown";
                         break;
@@ -806,7 +807,7 @@ namespace Sales_Tracker.GridView
                     MainMenu_Form.SelectedOption.Accountants => "accountants",
                     MainMenu_Form.SelectedOption.Companies => "companies",
                     MainMenu_Form.SelectedOption.CategoryPurchases or MainMenu_Form.SelectedOption.CategorySales or MainMenu_Form.SelectedOption.CategoryRentals => "categories",
-                    MainMenu_Form.SelectedOption.ProductPurchases or MainMenu_Form.SelectedOption.ProductSales => "products",
+                    MainMenu_Form.SelectedOption.ProductPurchases or MainMenu_Form.SelectedOption.ProductSales or MainMenu_Form.SelectedOption.ProductRentals => "products",
                     MainMenu_Form.SelectedOption.Customers => "customers",
                     MainMenu_Form.SelectedOption.Purchases or MainMenu_Form.SelectedOption.Sales => "transactions",
                     _ => "rows"

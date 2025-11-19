@@ -330,7 +330,7 @@ namespace Sales_Tracker
                 return;
             }
 
-            List<Category> categoriesList = GetCategoryList();
+            List<Category> categoriesList = GetCategoryListFromCategoryForm();
 
             bool containsCategory = categoriesList.Any(category => category.Name.Equals(textBox.Text.Trim(), StringComparison.OrdinalIgnoreCase));
             bool isOldValueDifferent = !string.Equals(_listOfOldValues[0], textBox.Text.Trim(), StringComparison.OrdinalIgnoreCase);
@@ -419,7 +419,7 @@ namespace Sales_Tracker
                         ConstructLabel(Products_Form.ColumnHeaders[Products_Form.Column.ProductCategory], left, Panel);
                         Guna2TextBox textBox = ConstructTextBox(left, columnName, cellValue, 50, CustomControls.KeyPressValidation.None, false, Panel);
                         // Attach SearchBox for categories
-                        List<Category> categoryList = GetCategoryList();
+                        List<Category> categoryList = GetCategoryListFromProductsForm();
                         List<SearchResult> categorySearchResults = SearchBox.ConvertToSearchResults(categoryList.Select(c => c.Name).ToList());
                         SearchBox.Attach(textBox, this, () => categorySearchResults, searchBoxMaxHeight, false, false, false, true);
                         textBox.TextChanged += ValidateInputs;
@@ -1339,7 +1339,7 @@ namespace Sales_Tracker
             }
 
             // Find the category
-            List<Category> categoryList = GetCategoryList();
+            List<Category> categoryList = GetCategoryListFromProductsForm();
             Category category = categoryList.FirstOrDefault(c => c.Name == newCategory);
             if (category == null)
             {
@@ -1587,7 +1587,7 @@ namespace Sales_Tracker
         }
         private static void UpdateProductsFormCategory(string oldCategory, string newCategory)
         {
-            // Update ProductCategory column in both Purchase and Sale DataGridViews
+            // Update ProductCategory column in the DataGridViews
             UpdateRowsInDataGridView(Products_Form.Instance.Purchase_DataGridView,
                 nameof(Products_Form.Column.ProductCategory), oldCategory, newCategory, false);
             UpdateRowsInDataGridView(Products_Form.Instance.Sale_DataGridView,
@@ -2122,13 +2122,28 @@ namespace Sales_Tracker
         }
 
         // Misc.
-        private static List<Category> GetCategoryList()
+        private static List<Category> GetCategoryListFromCategoryForm()
         {
             if (Categories_Form.Instance.Purchase_RadioButton.Checked)
             {
                 return MainMenu_Form.Instance.CategoryPurchaseList;
             }
             else if (Categories_Form.Instance.Sale_RadioButton.Checked)
+            {
+                return MainMenu_Form.Instance.CategorySaleList;
+            }
+            else
+            {
+                return MainMenu_Form.Instance.CategoryRentalList;
+            }
+        }
+        private static List<Category> GetCategoryListFromProductsForm()
+        {
+            if (Products_Form.Instance.Purchase_RadioButton.Checked)
+            {
+                return MainMenu_Form.Instance.CategoryPurchaseList;
+            }
+            else if (Products_Form.Instance.Sale_RadioButton.Checked)
             {
                 return MainMenu_Form.Instance.CategorySaleList;
             }
