@@ -650,6 +650,7 @@ namespace Sales_Tracker.GridView
             bool isSingleRowSelected = grid.SelectedRows.Count == 1;
             bool isPurchasesOrSales = selectedOption == MainMenu_Form.SelectedOption.Purchases ||
                                       selectedOption == MainMenu_Form.SelectedOption.Sales;
+            bool isRentals = selectedOption == MainMenu_Form.SelectedOption.Rentals;
             bool isTransactionView = selectedOption == MainMenu_Form.SelectedOption.ItemsInPurchase ||
                                      selectedOption == MainMenu_Form.SelectedOption.ItemsInSale;
             int currentIndex = 0;
@@ -669,13 +670,6 @@ namespace Sales_Tracker.GridView
                             RightClickDataGridViewRowMenu.RentOut_Button.Visible = true;
                             flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.RentOut_Button, currentIndex++);
                         }
-
-                        // Check if item has rented quantity for returning
-                        if (rentalItem.QuantityRented > 0)
-                        {
-                            RightClickDataGridViewRowMenu.ReturnRental_Button.Visible = true;
-                            flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ReturnRental_Button, currentIndex++);
-                        }
                     }
 
                     RightClickDataGridViewRowMenu.Modify_Button.Visible = true;
@@ -686,6 +680,19 @@ namespace Sales_Tracker.GridView
                 flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.Delete_Button, currentIndex++);
 
                 return;  // Don't add any more buttons
+            }
+
+            // Add buttons for Rental Transactions
+            if (isRentals && isSingleRowSelected)
+            {
+                DataGridViewRow selectedRow = grid.SelectedRows[0];
+
+                // Check if this is a rental transaction (has TagData) and not already returned
+                if (selectedRow.Tag is TagData tagData && !tagData.IsReturned)
+                {
+                    RightClickDataGridViewRowMenu.ReturnRental_Button.Visible = true;
+                    flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ReturnRental_Button, currentIndex++);
+                }
             }
 
             // Add buttons for Receipts_Form
