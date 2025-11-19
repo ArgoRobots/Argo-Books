@@ -664,11 +664,21 @@ namespace Sales_Tracker.GridView
             {
                 if (isSingleRowSelected)
                 {
-                    // Check if item has available quantity  
-                    if (grid.SelectedRows[0].Tag is RentalItem rentalItem && rentalItem.QuantityAvailable > 0)
+                    if (grid.SelectedRows[0].Tag is RentalItem rentalItem)
                     {
-                        RightClickDataGridViewRowMenu.RentOut_Button.Visible = true;
-                        flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.RentOut_Button, currentIndex++);
+                        // Check if item has available quantity for renting out
+                        if (rentalItem.QuantityAvailable > 0)
+                        {
+                            RightClickDataGridViewRowMenu.RentOut_Button.Visible = true;
+                            flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.RentOut_Button, currentIndex++);
+                        }
+
+                        // Check if item has rented quantity for returning
+                        if (rentalItem.QuantityRented > 0)
+                        {
+                            RightClickDataGridViewRowMenu.ReturnRental_Button.Visible = true;
+                            flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ReturnRental_Button, currentIndex++);
+                        }
                     }
 
                     RightClickDataGridViewRowMenu.Modify_Button.Visible = true;

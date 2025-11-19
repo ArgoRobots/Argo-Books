@@ -1,3 +1,4 @@
+using Sales_Tracker.UI;
 using System.Windows.Forms;
 
 namespace Sales_Tracker
@@ -45,7 +46,7 @@ namespace Sales_Tracker
             NoActiveRentals_Label = new Label();
             ActiveRentals_Label = new Label();
             SelectAllCheckBox = new CheckBox();
-            RentalsPanel = new Panel();
+            RentalsCheckListBox = new CustomCheckListBox();
             ReturnDate_Label = new Label();
             ReturnDatePicker = new Guna.UI2.WinForms.Guna2DateTimePicker();
             Notes_Label = new Label();
@@ -132,16 +133,21 @@ namespace Sales_Tracker
             SelectAllCheckBox.UseVisualStyleBackColor = true;
             SelectAllCheckBox.CheckedChanged += SelectAllCheckBox_CheckedChanged;
             //
-            // RentalsPanel
+            // RentalsCheckListBox
             //
-            RentalsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            RentalsPanel.AutoScroll = true;
-            RentalsPanel.BorderStyle = BorderStyle.FixedSingle;
-            RentalsPanel.Location = new Point(38, 313);
-            RentalsPanel.Margin = new Padding(4, 5, 4, 5);
-            RentalsPanel.Name = "RentalsPanel";
-            RentalsPanel.Size = new Size(673, 356);
-            RentalsPanel.TabIndex = 6;
+            RentalsCheckListBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            RentalsCheckListBox.BackColor = Color.White;
+            RentalsCheckListBox.BorderStyle = BorderStyle.FixedSingle;
+            RentalsCheckListBox.CheckOnClick = true;
+            RentalsCheckListBox.Font = new Font("Segoe UI", 9F);
+            RentalsCheckListBox.ForeColor = Color.Black;
+            RentalsCheckListBox.Location = new Point(38, 313);
+            RentalsCheckListBox.Margin = new Padding(4, 5, 4, 5);
+            RentalsCheckListBox.MinimumSize = new Size(100, 100);
+            RentalsCheckListBox.Name = "RentalsCheckListBox";
+            RentalsCheckListBox.Padding = new Padding(10);
+            RentalsCheckListBox.Size = new Size(673, 356);
+            RentalsCheckListBox.TabIndex = 6;
             //
             // ReturnDate_Label
             //
@@ -241,7 +247,7 @@ namespace Sales_Tracker
             Controls.Add(NoActiveRentals_Label);
             Controls.Add(ActiveRentals_Label);
             Controls.Add(SelectAllCheckBox);
-            Controls.Add(RentalsPanel);
+            Controls.Add(RentalsCheckListBox);
             Controls.Add(ReturnDate_Label);
             Controls.Add(ReturnDatePicker);
             Controls.Add(Notes_Label);
@@ -270,7 +276,7 @@ namespace Sales_Tracker
         private Label NoActiveRentals_Label;
         private Label ActiveRentals_Label;
         private CheckBox SelectAllCheckBox;
-        private Panel RentalsPanel;
+        private CustomCheckListBox RentalsCheckListBox;
         private Label ReturnDate_Label;
         private Guna.UI2.WinForms.Guna2DateTimePicker ReturnDatePicker;
         private Label Notes_Label;

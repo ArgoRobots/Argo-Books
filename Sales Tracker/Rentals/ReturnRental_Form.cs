@@ -17,7 +17,6 @@ namespace Sales_Tracker
         private readonly MainMenu_Form _mainMenuForm;
         private Customer _selectedCustomer;
         private List<RentalRecord> _activeRentals;
-        private readonly List<CheckBox> _rentalCheckBoxes;
 
         // Init.
         public ReturnRental_Form(MainMenu_Form mainMenu)
@@ -25,7 +24,6 @@ namespace Sales_Tracker
             InitializeComponent();
             _mainMenuForm = mainMenu;
             _activeRentals = [];
-            _rentalCheckBoxes = [];
 
             LoadCustomersWithActiveRentals();
             UpdateTheme();
@@ -62,46 +60,8 @@ namespace Sales_Tracker
             if (_selectedCustomer == null) return;
 
             // Clear previous rental checkboxes
-            RentalsPanel.Controls.Clear();
-            _rentalCheckBoxes.Clear();
+            RentalsCheckListBox.Clear();
             _activeRentals = _selectedCustomer.GetActiveRentals();
-
-            int yPosition = 10;
-
-            foreach (RentalRecord rental in _activeRentals)
-            {
-                RentalItem rentalItem = RentalInventoryManager.GetRentalItem(rental.RentalItemID);
-                if (rentalItem == null) continue;
-
-                // Create checkbox for rental
-                CheckBox checkBox = new()
-                {
-                    Location = new Point(10, yPosition),
-                    Size = new Size(650, 80),
-                    Font = new Font("Segoe UI", 10F),
-                    AutoSize = false
-                };
-
-                // Build rental info text
-                string overdueText = rental.IsOverdue ? " [OVERDUE]" : "";
-                string dueText = rental.DueDate.HasValue ? $" (Due: {rental.DueDate.Value:MMM dd, yyyy})" : "";
-                decimal outstanding = rental.TotalCost - rental.AmountPaid;
-
-                checkBox.Text = $"Rental #{rental.RentalRecordID}\n" +
-                    $"Product: {rental.ProductName} | Qty: {rental.Quantity} | Rate: {rental.RateType}\n" +
-                    $"Start: {rental.StartDate:MMM dd, yyyy}{dueText}{overdueText}\n" +
-                    $"Total: {MainMenu_Form.CurrencySymbol}{rental.TotalCost:N2} | Paid: {MainMenu_Form.CurrencySymbol}{rental.AmountPaid:N2} | Outstanding: {MainMenu_Form.CurrencySymbol}{outstanding:N2}";
-
-                if (rental.IsOverdue)
-                {
-                    checkBox.ForeColor = Color.Red;
-                }
-
-                _rentalCheckBoxes.Add(checkBox);
-                RentalsPanel.Controls.Add(checkBox);
-
-                yPosition += 90;
-            }
 
             if (_activeRentals.Count == 0)
             {
@@ -110,9 +70,30 @@ namespace Sales_Tracker
                     Text = "No active rentals for this customer.",
                     Location = new Point(10, 10),
                     Size = new Size(650, 30),
-                    Font = new Font("Segoe UI", 10F)
+                    Font = new Font("Segoe UI", 10F),
+                    BackColor = Color.Transparent,
+                    AccessibleDescription = AccessibleDescriptionManager.DoNotTranslate
                 };
-                RentalsPanel.Controls.Add(label);
+                RentalsCheckListBox.ContainerPanel.Controls.Add(label);
+                return;
+            }
+
+            foreach (RentalRecord rental in _activeRentals)
+            {
+                RentalItem rentalItem = RentalInventoryManager.GetRentalItem(rental.RentalItemID);
+                if (rentalItem == null) continue;
+
+                // Build rental info text
+                string overdueText = rental.IsOverdue ? " [OVERDUE]" : "";
+                string dueText = rental.DueDate.HasValue ? $" (Due: {rental.DueDate.Value:MMM dd, yyyy})" : "";
+                decimal outstanding = rental.TotalCost - rental.AmountPaid;
+
+                string rentalText = $"Rental #{rental.RentalRecordID} - {rental.ProductName} | Qty: {rental.Quantity} | Rate: {rental.RateType}\n" +
+                    $"Start: {rental.StartDate:MMM dd, yyyy}{dueText}{overdueText} | " +
+                    $"Total: {MainMenu_Form.CurrencySymbol}{rental.TotalCost:N2} | Paid: {MainMenu_Form.CurrencySymbol}{rental.AmountPaid:N2} | Outstanding: {MainMenu_Form.CurrencySymbol}{outstanding:N2}";
+
+                // Add to checklist box
+                RentalsCheckListBox.Add(rentalText, false);
             }
         }
         private void UpdateTheme()
@@ -142,9 +123,9 @@ namespace Sales_Tracker
         }
         private void SelectAllCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            foreach (CheckBox checkBox in _rentalCheckBoxes)
+            for (int i = 0; i < RentalsCheckListBox.Count; i++)
             {
-                checkBox.Checked = SelectAllCheckBox.Checked;
+                RentalsCheckListBox.SetItemChecked(i, SelectAllCheckBox.Checked);
             }
         }
         private void Return_Button_Click(object sender, EventArgs e)
@@ -160,12 +141,9 @@ namespace Sales_Tracker
 
             // Get selected rentals
             List<RentalRecord> selectedRentals = [];
-            for (int i = 0; i < _rentalCheckBoxes.Count; i++)
+            foreach (int index in RentalsCheckListBox.CheckedIndices)
             {
-                if (_rentalCheckBoxes[i].Checked)
-                {
-                    selectedRentals.Add(_activeRentals[i]);
-                }
+                selectedRentals.Add(_activeRentals[index]);
             }
 
             if (selectedRentals.Count == 0)
