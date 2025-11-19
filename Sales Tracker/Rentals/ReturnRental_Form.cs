@@ -127,8 +127,10 @@ namespace Sales_Tracker
             try
             {
                 // Update rental record
-                _rentalRecord.IsReturned = true;
                 _rentalRecord.ReturnDate = returnDate;
+                _rentalRecord.IsActive = false;
+                _rentalRecord.IsOverdue = false;
+
                 if (!string.IsNullOrWhiteSpace(notes))
                 {
                     _rentalRecord.Notes = string.IsNullOrWhiteSpace(_rentalRecord.Notes)
@@ -136,12 +138,11 @@ namespace Sales_Tracker
                         : $"{_rentalRecord.Notes}\nReturn Notes: {notes}";
                 }
 
-                // Update inventory quantities
+                // Update inventory quantities using the ReturnItem method
                 RentalItem rentalItem = RentalInventoryManager.GetRentalItem(_rentalRecord.RentalItemID);
                 if (rentalItem != null)
                 {
-                    rentalItem.QuantityRented -= _rentalRecord.Quantity;
-                    rentalItem.QuantityAvailable += _rentalRecord.Quantity;
+                    rentalItem.ReturnItem(_rentalRecord.Quantity);
                 }
 
                 // Update customer rental status
