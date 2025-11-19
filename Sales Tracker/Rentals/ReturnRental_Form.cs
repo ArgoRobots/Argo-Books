@@ -29,8 +29,8 @@ namespace Sales_Tracker
         {
             InitializeComponent();
             _mainMenuForm = mainMenu;
-            _activeRentals = new List<RentalRecord>();
-            _rentalCheckBoxes = new List<CheckBox>();
+            _activeRentals = [];
+            _rentalCheckBoxes = [];
 
             LoadCustomersWithActiveRentals();
             UpdateTheme();
@@ -42,7 +42,7 @@ namespace Sales_Tracker
         {
             CustomerComboBox.Items.Clear();
 
-            List<Customer> customersWithRentals = Customer.Customers
+            List<Customer> customersWithRentals = MainMenu_Form.Instance.CustomerList
                 .Where(c => c.GetActiveRentals().Count > 0)
                 .OrderBy(c => c.Name)
                 .ToList();
@@ -80,7 +80,7 @@ namespace Sales_Tracker
                 if (rentalItem == null) continue;
 
                 // Create checkbox for rental
-                CheckBox checkBox = new CheckBox
+                CheckBox checkBox = new()
                 {
                     Location = new Point(10, yPosition),
                     Size = new Size(650, 80),
@@ -111,7 +111,7 @@ namespace Sales_Tracker
 
             if (_activeRentals.Count == 0)
             {
-                Label label = new Label
+                Label label = new()
                 {
                     Text = "No active rentals for this customer.",
                     Location = new Point(10, 10),
@@ -142,7 +142,7 @@ namespace Sales_Tracker
         {
             if (CustomerComboBox.SelectedIndex < 0) return;
 
-            List<Customer> customersWithRentals = Customer.Customers
+            List<Customer> customersWithRentals = MainMenu_Form.Instance.CustomerList
                 .Where(c => c.GetActiveRentals().Count > 0)
                 .OrderBy(c => c.Name)
                 .ToList();
@@ -169,7 +169,7 @@ namespace Sales_Tracker
             }
 
             // Get selected rentals
-            List<RentalRecord> selectedRentals = new List<RentalRecord>();
+            List<RentalRecord> selectedRentals = [];
             for (int i = 0; i < _rentalCheckBoxes.Count; i++)
             {
                 if (_rentalCheckBoxes[i].Checked)
@@ -229,10 +229,7 @@ namespace Sales_Tracker
 
                     // 2. Update rental item inventory
                     RentalItem rentalItem = RentalInventoryManager.GetRentalItem(rental.RentalItemID);
-                    if (rentalItem != null)
-                    {
-                        rentalItem.ReturnItem(rental.Quantity);
-                    }
+                    rentalItem?.ReturnItem(rental.Quantity);
 
                     // 3. Update customer rental status
                     _selectedCustomer?.ReturnRental(rental.RentalRecordID);
