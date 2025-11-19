@@ -40,17 +40,20 @@ namespace Sales_Tracker
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Title_Label = new Label();
             SelectCustomer_Label = new Label();
-            CustomerComboBox = new Guna.UI2.WinForms.Guna2ComboBox();
+            Customer_ComboBox = new Guna.UI2.WinForms.Guna2ComboBox();
             NoActiveRentals_Label = new Label();
             ActiveRentals_Label = new Label();
-            SelectAllCheckBox = new CheckBox();
-            RentalsCheckListBox = new CustomCheckListBox();
+            SelectAll_CheckBox = new Guna.UI2.WinForms.Guna2CustomCheckBox();
+            SelectAll_Label = new Label();
+            Rentals_CheckListBox = new CustomCheckListBox();
             ReturnDate_Label = new Label();
-            ReturnDatePicker = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            ReturnDate_Picker = new Guna.UI2.WinForms.Guna2DateTimePicker();
             Notes_Label = new Label();
-            NotesTextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            Notes_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             Return_Button = new Guna.UI2.WinForms.Guna2Button();
             Cancel_Button = new Guna.UI2.WinForms.Guna2Button();
             SuspendLayout();
@@ -77,24 +80,24 @@ namespace Sales_Tracker
             SelectCustomer_Label.TabIndex = 1;
             SelectCustomer_Label.Text = "Select Customer";
             //
-            // CustomerComboBox
+            // Customer_ComboBox
             //
-            CustomerComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            CustomerComboBox.BackColor = Color.Transparent;
-            CustomerComboBox.CustomizableEdges = customizableEdges1;
-            CustomerComboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            CustomerComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            CustomerComboBox.FocusedColor = Color.Empty;
-            CustomerComboBox.Font = new Font("Segoe UI", 10F);
-            CustomerComboBox.ForeColor = Color.FromArgb(68, 88, 112);
-            CustomerComboBox.ItemHeight = 44;
-            CustomerComboBox.Location = new Point(38, 138);
-            CustomerComboBox.Margin = new Padding(4, 5, 4, 5);
-            CustomerComboBox.Name = "CustomerComboBox";
-            CustomerComboBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            CustomerComboBox.Size = new Size(672, 50);
-            CustomerComboBox.TabIndex = 2;
-            CustomerComboBox.SelectedIndexChanged += CustomerComboBox_SelectedIndexChanged;
+            Customer_ComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Customer_ComboBox.BackColor = Color.Transparent;
+            Customer_ComboBox.CustomizableEdges = customizableEdges1;
+            Customer_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Customer_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            Customer_ComboBox.FocusedColor = Color.Empty;
+            Customer_ComboBox.Font = new Font("Segoe UI", 10F);
+            Customer_ComboBox.ForeColor = Color.FromArgb(68, 88, 112);
+            Customer_ComboBox.ItemHeight = 44;
+            Customer_ComboBox.Location = new Point(38, 138);
+            Customer_ComboBox.Margin = new Padding(4, 5, 4, 5);
+            Customer_ComboBox.Name = "Customer_ComboBox";
+            Customer_ComboBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            Customer_ComboBox.Size = new Size(672, 50);
+            Customer_ComboBox.TabIndex = 2;
+            Customer_ComboBox.SelectedIndexChanged += Customer_ComboBox_SelectedIndexChanged;
             //
             // NoActiveRentals_Label
             //
@@ -120,34 +123,54 @@ namespace Sales_Tracker
             ActiveRentals_Label.TabIndex = 4;
             ActiveRentals_Label.Text = "Active Rentals (select to return)";
             //
-            // SelectAllCheckBox
+            // SelectAll_CheckBox
             //
-            SelectAllCheckBox.AutoSize = true;
-            SelectAllCheckBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            SelectAllCheckBox.Location = new Point(58, 278);
-            SelectAllCheckBox.Margin = new Padding(4, 5, 4, 5);
-            SelectAllCheckBox.Name = "SelectAllCheckBox";
-            SelectAllCheckBox.Size = new Size(108, 29);
-            SelectAllCheckBox.TabIndex = 5;
-            SelectAllCheckBox.Text = "Select All";
-            SelectAllCheckBox.UseVisualStyleBackColor = true;
-            SelectAllCheckBox.CheckedChanged += SelectAllCheckBox_CheckedChanged;
+            SelectAll_CheckBox.Animated = true;
+            SelectAll_CheckBox.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
+            SelectAll_CheckBox.CheckedState.BorderRadius = 2;
+            SelectAll_CheckBox.CheckedState.BorderThickness = 0;
+            SelectAll_CheckBox.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
+            SelectAll_CheckBox.CustomizableEdges = customizableEdges11;
+            SelectAll_CheckBox.Location = new Point(58, 280);
+            SelectAll_CheckBox.Margin = new Padding(4, 5, 4, 5);
+            SelectAll_CheckBox.Name = "SelectAll_CheckBox";
+            SelectAll_CheckBox.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            SelectAll_CheckBox.Size = new Size(20, 20);
+            SelectAll_CheckBox.TabIndex = 5;
+            SelectAll_CheckBox.UncheckedState.BorderColor = Color.FromArgb(125, 137, 149);
+            SelectAll_CheckBox.UncheckedState.BorderRadius = 2;
+            SelectAll_CheckBox.UncheckedState.BorderThickness = 0;
+            SelectAll_CheckBox.UncheckedState.FillColor = Color.FromArgb(125, 137, 149);
+            SelectAll_CheckBox.CheckedChanged += SelectAll_CheckBox_CheckedChanged;
             //
-            // RentalsCheckListBox
+            // SelectAll_Label
             //
-            RentalsCheckListBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            RentalsCheckListBox.BackColor = Color.White;
-            RentalsCheckListBox.BorderStyle = BorderStyle.FixedSingle;
-            RentalsCheckListBox.CheckOnClick = true;
-            RentalsCheckListBox.Font = new Font("Segoe UI", 9F);
-            RentalsCheckListBox.ForeColor = Color.Black;
-            RentalsCheckListBox.Location = new Point(38, 313);
-            RentalsCheckListBox.Margin = new Padding(4, 5, 4, 5);
-            RentalsCheckListBox.MinimumSize = new Size(100, 100);
-            RentalsCheckListBox.Name = "RentalsCheckListBox";
-            RentalsCheckListBox.Padding = new Padding(10);
-            RentalsCheckListBox.Size = new Size(673, 356);
-            RentalsCheckListBox.TabIndex = 6;
+            SelectAll_Label.AutoSize = true;
+            SelectAll_Label.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            SelectAll_Label.Location = new Point(83, 275);
+            SelectAll_Label.Margin = new Padding(4, 0, 4, 0);
+            SelectAll_Label.Name = "SelectAll_Label";
+            SelectAll_Label.Padding = new Padding(5);
+            SelectAll_Label.Size = new Size(98, 35);
+            SelectAll_Label.TabIndex = 13;
+            SelectAll_Label.Text = "Select All";
+            SelectAll_Label.Click += SelectAll_Label_Click;
+            //
+            // Rentals_CheckListBox
+            //
+            Rentals_CheckListBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Rentals_CheckListBox.BackColor = Color.White;
+            Rentals_CheckListBox.BorderStyle = BorderStyle.FixedSingle;
+            Rentals_CheckListBox.CheckOnClick = true;
+            Rentals_CheckListBox.Font = new Font("Segoe UI", 9F);
+            Rentals_CheckListBox.ForeColor = Color.Black;
+            Rentals_CheckListBox.Location = new Point(38, 313);
+            Rentals_CheckListBox.Margin = new Padding(4, 5, 4, 5);
+            Rentals_CheckListBox.MinimumSize = new Size(100, 100);
+            Rentals_CheckListBox.Name = "Rentals_CheckListBox";
+            Rentals_CheckListBox.Padding = new Padding(10);
+            Rentals_CheckListBox.Size = new Size(673, 356);
+            Rentals_CheckListBox.TabIndex = 6;
             //
             // ReturnDate_Label
             //
@@ -160,23 +183,23 @@ namespace Sales_Tracker
             ReturnDate_Label.TabIndex = 7;
             ReturnDate_Label.Text = "Return Date";
             //
-            // ReturnDatePicker
+            // ReturnDate_Picker
             //
-            ReturnDatePicker.BackColor = Color.Transparent;
-            ReturnDatePicker.Checked = true;
-            ReturnDatePicker.CustomizableEdges = customizableEdges3;
-            ReturnDatePicker.FillColor = Color.White;
-            ReturnDatePicker.Font = new Font("Segoe UI", 10F);
-            ReturnDatePicker.Format = DateTimePickerFormat.Short;
-            ReturnDatePicker.Location = new Point(38, 732);
-            ReturnDatePicker.Margin = new Padding(4, 5, 4, 5);
-            ReturnDatePicker.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            ReturnDatePicker.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            ReturnDatePicker.Name = "ReturnDatePicker";
-            ReturnDatePicker.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            ReturnDatePicker.Size = new Size(300, 56);
-            ReturnDatePicker.TabIndex = 8;
-            ReturnDatePicker.Value = new DateTime(2025, 11, 19, 0, 0, 0, 0);
+            ReturnDate_Picker.BackColor = Color.Transparent;
+            ReturnDate_Picker.Checked = true;
+            ReturnDate_Picker.CustomizableEdges = customizableEdges3;
+            ReturnDate_Picker.FillColor = Color.White;
+            ReturnDate_Picker.Font = new Font("Segoe UI", 10F);
+            ReturnDate_Picker.Format = DateTimePickerFormat.Short;
+            ReturnDate_Picker.Location = new Point(38, 732);
+            ReturnDate_Picker.Margin = new Padding(4, 5, 4, 5);
+            ReturnDate_Picker.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            ReturnDate_Picker.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            ReturnDate_Picker.Name = "ReturnDate_Picker";
+            ReturnDate_Picker.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            ReturnDate_Picker.Size = new Size(300, 56);
+            ReturnDate_Picker.TabIndex = 8;
+            ReturnDate_Picker.Value = new DateTime(2025, 11, 19, 0, 0, 0, 0);
             //
             // Notes_Label
             //
@@ -189,22 +212,22 @@ namespace Sales_Tracker
             Notes_Label.TabIndex = 9;
             Notes_Label.Text = "Return Notes (optional)";
             //
-            // NotesTextBox
+            // Notes_TextBox
             //
-            NotesTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            NotesTextBox.Cursor = Cursors.IBeam;
-            NotesTextBox.CustomizableEdges = customizableEdges5;
-            NotesTextBox.DefaultText = "";
-            NotesTextBox.Font = new Font("Segoe UI", 10F);
-            NotesTextBox.Location = new Point(38, 856);
-            NotesTextBox.Margin = new Padding(5, 8, 5, 8);
-            NotesTextBox.Multiline = true;
-            NotesTextBox.Name = "NotesTextBox";
-            NotesTextBox.PlaceholderText = "Enter any additional notes about the return...";
-            NotesTextBox.SelectedText = "";
-            NotesTextBox.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            NotesTextBox.Size = new Size(673, 100);
-            NotesTextBox.TabIndex = 10;
+            Notes_TextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Notes_TextBox.Cursor = Cursors.IBeam;
+            Notes_TextBox.CustomizableEdges = customizableEdges5;
+            Notes_TextBox.DefaultText = "";
+            Notes_TextBox.Font = new Font("Segoe UI", 10F);
+            Notes_TextBox.Location = new Point(38, 856);
+            Notes_TextBox.Margin = new Padding(5, 8, 5, 8);
+            Notes_TextBox.Multiline = true;
+            Notes_TextBox.Name = "Notes_TextBox";
+            Notes_TextBox.PlaceholderText = "Enter any additional notes about the return...";
+            Notes_TextBox.SelectedText = "";
+            Notes_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            Notes_TextBox.Size = new Size(673, 100);
+            Notes_TextBox.TabIndex = 10;
             //
             // Return_Button
             //
@@ -243,15 +266,16 @@ namespace Sales_Tracker
             ClientSize = new Size(748, 1069);
             Controls.Add(Title_Label);
             Controls.Add(SelectCustomer_Label);
-            Controls.Add(CustomerComboBox);
+            Controls.Add(Customer_ComboBox);
             Controls.Add(NoActiveRentals_Label);
             Controls.Add(ActiveRentals_Label);
-            Controls.Add(SelectAllCheckBox);
-            Controls.Add(RentalsCheckListBox);
+            Controls.Add(SelectAll_CheckBox);
+            Controls.Add(SelectAll_Label);
+            Controls.Add(Rentals_CheckListBox);
             Controls.Add(ReturnDate_Label);
-            Controls.Add(ReturnDatePicker);
+            Controls.Add(ReturnDate_Picker);
             Controls.Add(Notes_Label);
-            Controls.Add(NotesTextBox);
+            Controls.Add(Notes_TextBox);
             Controls.Add(Return_Button);
             Controls.Add(Cancel_Button);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -272,15 +296,16 @@ namespace Sales_Tracker
 
         private Label Title_Label;
         private Label SelectCustomer_Label;
-        private Guna.UI2.WinForms.Guna2ComboBox CustomerComboBox;
+        private Guna.UI2.WinForms.Guna2ComboBox Customer_ComboBox;
         private Label NoActiveRentals_Label;
         private Label ActiveRentals_Label;
-        private CheckBox SelectAllCheckBox;
-        private CustomCheckListBox RentalsCheckListBox;
+        private Guna.UI2.WinForms.Guna2CustomCheckBox SelectAll_CheckBox;
+        private Label SelectAll_Label;
+        private CustomCheckListBox Rentals_CheckListBox;
         private Label ReturnDate_Label;
-        private Guna.UI2.WinForms.Guna2DateTimePicker ReturnDatePicker;
+        private Guna.UI2.WinForms.Guna2DateTimePicker ReturnDate_Picker;
         private Label Notes_Label;
-        private Guna.UI2.WinForms.Guna2TextBox NotesTextBox;
+        private Guna.UI2.WinForms.Guna2TextBox Notes_TextBox;
         private Guna.UI2.WinForms.Guna2Button Return_Button;
         private Guna.UI2.WinForms.Guna2Button Cancel_Button;
     }

@@ -32,7 +32,7 @@ namespace Sales_Tracker
         }
         private void LoadCustomersWithActiveRentals()
         {
-            CustomerComboBox.Items.Clear();
+            Customer_ComboBox.Items.Clear();
 
             List<Customer> customersWithRentals = MainMenu_Form.Instance.CustomerList
                 .Where(c => c.GetActiveRentals().Count > 0)
@@ -42,12 +42,12 @@ namespace Sales_Tracker
             foreach (Customer customer in customersWithRentals)
             {
                 int activeCount = customer.GetActiveRentals().Count;
-                CustomerComboBox.Items.Add($"{customer.FullName} ({customer.CustomerID}) - {activeCount} active rental(s)");
+                Customer_ComboBox.Items.Add($"{customer.FullName} ({customer.CustomerID}) - {activeCount} active rental(s)");
             }
 
-            if (CustomerComboBox.Items.Count > 0)
+            if (Customer_ComboBox.Items.Count > 0)
             {
-                CustomerComboBox.SelectedIndex = 0;
+                Customer_ComboBox.SelectedIndex = 0;
             }
             else
             {
@@ -57,10 +57,10 @@ namespace Sales_Tracker
         }
         private void LoadActiveRentals()
         {
-            if (_selectedCustomer == null) return;
+            if (_selectedCustomer == null) { return; }
 
             // Clear previous rental checkboxes
-            RentalsCheckListBox.Clear();
+            Rentals_CheckListBox.Clear();
             _activeRentals = _selectedCustomer.GetActiveRentals();
 
             if (_activeRentals.Count == 0)
@@ -74,14 +74,14 @@ namespace Sales_Tracker
                     BackColor = Color.Transparent,
                     AccessibleDescription = AccessibleDescriptionManager.DoNotTranslate
                 };
-                RentalsCheckListBox.ContainerPanel.Controls.Add(label);
+                Rentals_CheckListBox.ContainerPanel.Controls.Add(label);
                 return;
             }
 
             foreach (RentalRecord rental in _activeRentals)
             {
                 RentalItem rentalItem = RentalInventoryManager.GetRentalItem(rental.RentalItemID);
-                if (rentalItem == null) continue;
+                if (rentalItem == null) { continue; }
 
                 // Build rental info text
                 string overdueText = rental.IsOverdue ? " [OVERDUE]" : "";
@@ -93,13 +93,14 @@ namespace Sales_Tracker
                     $"Total: {MainMenu_Form.CurrencySymbol}{rental.TotalCost:N2} | Paid: {MainMenu_Form.CurrencySymbol}{rental.AmountPaid:N2} | Outstanding: {MainMenu_Form.CurrencySymbol}{outstanding:N2}";
 
                 // Add to checklist box
-                RentalsCheckListBox.Add(rentalText, false);
+                Rentals_CheckListBox.Add(rentalText, false);
             }
         }
         private void UpdateTheme()
         {
             ThemeManager.SetThemeForForm(this);
             ThemeManager.MakeGButtonBluePrimary(Return_Button);
+            ThemeManager.ApplyThemeToCustomCheckListBox(Rentals_CheckListBox);
         }
 
         // Form event handlers
@@ -109,24 +110,28 @@ namespace Sales_Tracker
         }
 
         // Event handlers
-        private void CustomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void Customer_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CustomerComboBox.SelectedIndex < 0) return;
+            if (Customer_ComboBox.SelectedIndex < 0) { return; }
 
             List<Customer> customersWithRentals = MainMenu_Form.Instance.CustomerList
                 .Where(c => c.GetActiveRentals().Count > 0)
                 .OrderBy(c => c.LastName)
                 .ToList();
 
-            _selectedCustomer = customersWithRentals[CustomerComboBox.SelectedIndex];
+            _selectedCustomer = customersWithRentals[Customer_ComboBox.SelectedIndex];
             LoadActiveRentals();
         }
-        private void SelectAllCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void SelectAll_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            for (int i = 0; i < RentalsCheckListBox.Count; i++)
+            for (int i = 0; i < Rentals_CheckListBox.Count; i++)
             {
-                RentalsCheckListBox.SetItemChecked(i, SelectAllCheckBox.Checked);
+                Rentals_CheckListBox.SetItemChecked(i, SelectAll_CheckBox.Checked);
             }
+        }
+        private void SelectAll_Label_Click(object sender, EventArgs e)
+        {
+            SelectAll_CheckBox.Checked = !SelectAll_CheckBox.Checked;
         }
         private void Return_Button_Click(object sender, EventArgs e)
         {
@@ -141,7 +146,7 @@ namespace Sales_Tracker
 
             // Get selected rentals
             List<RentalRecord> selectedRentals = [];
-            foreach (int index in RentalsCheckListBox.CheckedIndices)
+            foreach (int index in Rentals_CheckListBox.CheckedIndices)
             {
                 selectedRentals.Add(_activeRentals[index]);
             }
@@ -155,8 +160,8 @@ namespace Sales_Tracker
                 return;
             }
 
-            DateTime returnDate = ReturnDatePicker.Value;
-            string notes = NotesTextBox.Text.Trim();
+            DateTime returnDate = ReturnDate_Picker.Value;
+            string notes = Notes_TextBox.Text.Trim();
 
             // Confirm return
             CustomMessageBoxResult result = CustomMessageBox.Show("Confirm Return",
@@ -165,7 +170,7 @@ namespace Sales_Tracker
                 CustomMessageBoxIcon.Question,
                 CustomMessageBoxButtons.YesNo);
 
-            if (result != CustomMessageBoxResult.Yes) return;
+            if (result != CustomMessageBoxResult.Yes) { return; }
 
             // Process returns
             ProcessReturns(selectedRentals, returnDate, notes);
@@ -278,6 +283,9 @@ namespace Sales_Tracker
                     break;
                 }
             }
+
+            // Refresh the grid to ensure visual changes are displayed
+            _mainMenuForm.Rental_DataGridView.Refresh();
         }
     }
 }
