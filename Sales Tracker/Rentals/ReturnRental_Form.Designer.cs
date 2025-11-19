@@ -1,6 +1,6 @@
-using Guna.UI2.WinForms;
+using System.Windows.Forms;
 
-namespace Sales_Tracker.Rentals
+namespace Sales_Tracker
 {
     partial class ReturnRental_Form
     {
@@ -12,7 +12,6 @@ namespace Sales_Tracker.Rentals
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -30,229 +29,253 @@ namespace Sales_Tracker.Rentals
         /// </summary>
         private void InitializeComponent()
         {
-            this.MainPanel = new Guna2Panel();
-            this.NotesTextBox = new Guna2TextBox();
-            this.NotesLabel = new System.Windows.Forms.Label();
-            this.SelectAllCheckBox = new System.Windows.Forms.CheckBox();
-            this.CancelButton = new Guna2Button();
-            this.ReturnButton = new Guna2Button();
-            this.ReturnDatePicker = new Guna2DateTimePicker();
-            this.ReturnDateLabel = new System.Windows.Forms.Label();
-            this.RentalsPanel = new System.Windows.Forms.Panel();
-            this.ActiveRentalsLabel = new System.Windows.Forms.Label();
-            this.CustomerComboBox = new Guna2ComboBox();
-            this.CustomerLabel = new System.Windows.Forms.Label();
-            this.TitleLabel = new System.Windows.Forms.Label();
-            this.MainPanel.SuspendLayout();
-            this.SuspendLayout();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Title_Label = new Label();
+            SelectCustomer_Label = new Label();
+            CustomerComboBox = new Guna.UI2.WinForms.Guna2ComboBox();
+            NoActiveRentals_Label = new Label();
+            ActiveRentals_Label = new Label();
+            SelectAllCheckBox = new CheckBox();
+            RentalsPanel = new Panel();
+            ReturnDate_Label = new Label();
+            ReturnDatePicker = new Guna.UI2.WinForms.Guna2DateTimePicker();
+            Notes_Label = new Label();
+            NotesTextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            Return_Button = new Guna.UI2.WinForms.Guna2Button();
+            Cancel_Button = new Guna.UI2.WinForms.Guna2Button();
+            SuspendLayout();
             //
-            // MainPanel
+            // Title_Label
             //
-            this.MainPanel.Controls.Add(this.NotesTextBox);
-            this.MainPanel.Controls.Add(this.NotesLabel);
-            this.MainPanel.Controls.Add(this.SelectAllCheckBox);
-            this.MainPanel.Controls.Add(this.CancelButton);
-            this.MainPanel.Controls.Add(this.ReturnButton);
-            this.MainPanel.Controls.Add(this.ReturnDatePicker);
-            this.MainPanel.Controls.Add(this.ReturnDateLabel);
-            this.MainPanel.Controls.Add(this.RentalsPanel);
-            this.MainPanel.Controls.Add(this.ActiveRentalsLabel);
-            this.MainPanel.Controls.Add(this.CustomerComboBox);
-            this.MainPanel.Controls.Add(this.CustomerLabel);
-            this.MainPanel.Controls.Add(this.TitleLabel);
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(0, 0);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(800, 700);
-            this.MainPanel.TabIndex = 0;
+            Title_Label.AutoSize = true;
+            Title_Label.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            Title_Label.Location = new Point(38, 31);
+            Title_Label.Margin = new Padding(4, 0, 4, 0);
+            Title_Label.Name = "Title_Label";
+            Title_Label.Size = new Size(285, 45);
+            Title_Label.TabIndex = 0;
+            Title_Label.Text = "Return Rental(s)";
             //
-            // NotesTextBox
+            // SelectCustomer_Label
             //
-            this.NotesTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.NotesTextBox.DefaultText = "";
-            this.NotesTextBox.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.NotesTextBox.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.NotesTextBox.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.NotesTextBox.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.NotesTextBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.NotesTextBox.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.NotesTextBox.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.NotesTextBox.Location = new System.Drawing.Point(30, 543);
-            this.NotesTextBox.Multiline = true;
-            this.NotesTextBox.Name = "NotesTextBox";
-            this.NotesTextBox.PasswordChar = '\0';
-            this.NotesTextBox.PlaceholderText = "Optional return notes...";
-            this.NotesTextBox.SelectedText = "";
-            this.NotesTextBox.Size = new System.Drawing.Size(740, 80);
-            this.NotesTextBox.TabIndex = 11;
-            //
-            // NotesLabel
-            //
-            this.NotesLabel.AutoSize = true;
-            this.NotesLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.NotesLabel.Location = new System.Drawing.Point(30, 520);
-            this.NotesLabel.Name = "NotesLabel";
-            this.NotesLabel.Size = new System.Drawing.Size(97, 19);
-            this.NotesLabel.TabIndex = 10;
-            this.NotesLabel.Text = "Return Notes:";
-            //
-            // SelectAllCheckBox
-            //
-            this.SelectAllCheckBox.AutoSize = true;
-            this.SelectAllCheckBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.SelectAllCheckBox.Location = new System.Drawing.Point(30, 135);
-            this.SelectAllCheckBox.Name = "SelectAllCheckBox";
-            this.SelectAllCheckBox.Size = new System.Drawing.Size(76, 19);
-            this.SelectAllCheckBox.TabIndex = 9;
-            this.SelectAllCheckBox.Text = "Select All";
-            this.SelectAllCheckBox.UseVisualStyleBackColor = true;
-            this.SelectAllCheckBox.CheckedChanged += new System.EventHandler(this.SelectAllCheckBox_CheckedChanged);
-            //
-            // CancelButton
-            //
-            this.CancelButton.BorderRadius = 5;
-            this.CancelButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.CancelButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.CancelButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.CancelButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.CancelButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(76)))), ((int)(((byte)(60)))));
-            this.CancelButton.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.CancelButton.ForeColor = System.Drawing.Color.White;
-            this.CancelButton.Location = new System.Drawing.Point(420, 640);
-            this.CancelButton.Name = "CancelButton";
-            this.CancelButton.Size = new System.Drawing.Size(170, 45);
-            this.CancelButton.TabIndex = 8;
-            this.CancelButton.Text = "Cancel";
-            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
-            //
-            // ReturnButton
-            //
-            this.ReturnButton.BorderRadius = 5;
-            this.ReturnButton.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.ReturnButton.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.ReturnButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.ReturnButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.ReturnButton.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(204)))), ((int)(((byte)(113)))));
-            this.ReturnButton.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.ReturnButton.ForeColor = System.Drawing.Color.White;
-            this.ReturnButton.Location = new System.Drawing.Point(600, 640);
-            this.ReturnButton.Name = "ReturnButton";
-            this.ReturnButton.Size = new System.Drawing.Size(170, 45);
-            this.ReturnButton.TabIndex = 7;
-            this.ReturnButton.Text = "Process Return";
-            this.ReturnButton.Click += new System.EventHandler(this.ReturnButton_Click);
-            //
-            // ReturnDatePicker
-            //
-            this.ReturnDatePicker.Checked = true;
-            this.ReturnDatePicker.FillColor = System.Drawing.Color.White;
-            this.ReturnDatePicker.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.ReturnDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.ReturnDatePicker.Location = new System.Drawing.Point(30, 480);
-            this.ReturnDatePicker.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
-            this.ReturnDatePicker.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
-            this.ReturnDatePicker.Name = "ReturnDatePicker";
-            this.ReturnDatePicker.Size = new System.Drawing.Size(300, 36);
-            this.ReturnDatePicker.TabIndex = 6;
-            this.ReturnDatePicker.Value = new System.DateTime(2025, 11, 19, 0, 0, 0, 0);
-            //
-            // ReturnDateLabel
-            //
-            this.ReturnDateLabel.AutoSize = true;
-            this.ReturnDateLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.ReturnDateLabel.Location = new System.Drawing.Point(30, 457);
-            this.ReturnDateLabel.Name = "ReturnDateLabel";
-            this.ReturnDateLabel.Size = new System.Drawing.Size(95, 19);
-            this.ReturnDateLabel.TabIndex = 5;
-            this.ReturnDateLabel.Text = "Return Date:";
-            //
-            // RentalsPanel
-            //
-            this.RentalsPanel.AutoScroll = true;
-            this.RentalsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.RentalsPanel.Location = new System.Drawing.Point(30, 160);
-            this.RentalsPanel.Name = "RentalsPanel";
-            this.RentalsPanel.Size = new System.Drawing.Size(740, 285);
-            this.RentalsPanel.TabIndex = 4;
-            //
-            // ActiveRentalsLabel
-            //
-            this.ActiveRentalsLabel.AutoSize = true;
-            this.ActiveRentalsLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.ActiveRentalsLabel.Location = new System.Drawing.Point(30, 113);
-            this.ActiveRentalsLabel.Name = "ActiveRentalsLabel";
-            this.ActiveRentalsLabel.Size = new System.Drawing.Size(109, 19);
-            this.ActiveRentalsLabel.TabIndex = 3;
-            this.ActiveRentalsLabel.Text = "Active Rentals:";
+            SelectCustomer_Label.AutoSize = true;
+            SelectCustomer_Label.Font = new Font("Segoe UI", 11F);
+            SelectCustomer_Label.Location = new Point(38, 100);
+            SelectCustomer_Label.Margin = new Padding(4, 0, 4, 0);
+            SelectCustomer_Label.Name = "SelectCustomer_Label";
+            SelectCustomer_Label.Size = new Size(171, 30);
+            SelectCustomer_Label.TabIndex = 1;
+            SelectCustomer_Label.Text = "Select Customer";
             //
             // CustomerComboBox
             //
-            this.CustomerComboBox.BackColor = System.Drawing.Color.Transparent;
-            this.CustomerComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.CustomerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CustomerComboBox.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.CustomerComboBox.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.CustomerComboBox.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.CustomerComboBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(88)))), ((int)(((byte)(112)))));
-            this.CustomerComboBox.ItemHeight = 30;
-            this.CustomerComboBox.Location = new System.Drawing.Point(30, 70);
-            this.CustomerComboBox.Name = "CustomerComboBox";
-            this.CustomerComboBox.Size = new System.Drawing.Size(740, 36);
-            this.CustomerComboBox.TabIndex = 2;
-            this.CustomerComboBox.SelectedIndexChanged += new System.EventHandler(this.CustomerComboBox_SelectedIndexChanged);
+            CustomerComboBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            CustomerComboBox.BackColor = Color.Transparent;
+            CustomerComboBox.CustomizableEdges = customizableEdges1;
+            CustomerComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            CustomerComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            CustomerComboBox.FocusedColor = Color.Empty;
+            CustomerComboBox.Font = new Font("Segoe UI", 10F);
+            CustomerComboBox.ForeColor = Color.FromArgb(68, 88, 112);
+            CustomerComboBox.ItemHeight = 44;
+            CustomerComboBox.Location = new Point(38, 138);
+            CustomerComboBox.Margin = new Padding(4, 5, 4, 5);
+            CustomerComboBox.Name = "CustomerComboBox";
+            CustomerComboBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            CustomerComboBox.Size = new Size(672, 50);
+            CustomerComboBox.TabIndex = 2;
+            CustomerComboBox.SelectedIndexChanged += CustomerComboBox_SelectedIndexChanged;
             //
-            // CustomerLabel
+            // NoActiveRentals_Label
             //
-            this.CustomerLabel.AutoSize = true;
-            this.CustomerLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.CustomerLabel.Location = new System.Drawing.Point(30, 47);
-            this.CustomerLabel.Name = "CustomerLabel";
-            this.CustomerLabel.Size = new System.Drawing.Size(78, 19);
-            this.CustomerLabel.TabIndex = 1;
-            this.CustomerLabel.Text = "Customer:";
+            NoActiveRentals_Label.AutoSize = true;
+            NoActiveRentals_Label.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            NoActiveRentals_Label.ForeColor = Color.Red;
+            NoActiveRentals_Label.Location = new Point(38, 193);
+            NoActiveRentals_Label.Margin = new Padding(4, 0, 4, 0);
+            NoActiveRentals_Label.Name = "NoActiveRentals_Label";
+            NoActiveRentals_Label.Size = new Size(449, 25);
+            NoActiveRentals_Label.TabIndex = 3;
+            NoActiveRentals_Label.Text = "No active rentals found. No customers have active rentals.";
+            NoActiveRentals_Label.Visible = false;
             //
-            // TitleLabel
+            // ActiveRentals_Label
             //
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.TitleLabel.Location = new System.Drawing.Point(290, 15);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(220, 25);
-            this.TitleLabel.TabIndex = 0;
-            this.TitleLabel.Text = "Return Rental Item(s)";
+            ActiveRentals_Label.AutoSize = true;
+            ActiveRentals_Label.Font = new Font("Segoe UI", 11F);
+            ActiveRentals_Label.Location = new Point(38, 238);
+            ActiveRentals_Label.Margin = new Padding(4, 0, 4, 0);
+            ActiveRentals_Label.Name = "ActiveRentals_Label";
+            ActiveRentals_Label.Size = new Size(346, 30);
+            ActiveRentals_Label.TabIndex = 4;
+            ActiveRentals_Label.Text = "Active Rentals (select to return)";
+            //
+            // SelectAllCheckBox
+            //
+            SelectAllCheckBox.AutoSize = true;
+            SelectAllCheckBox.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            SelectAllCheckBox.Location = new Point(58, 278);
+            SelectAllCheckBox.Margin = new Padding(4, 5, 4, 5);
+            SelectAllCheckBox.Name = "SelectAllCheckBox";
+            SelectAllCheckBox.Size = new Size(108, 29);
+            SelectAllCheckBox.TabIndex = 5;
+            SelectAllCheckBox.Text = "Select All";
+            SelectAllCheckBox.UseVisualStyleBackColor = true;
+            SelectAllCheckBox.CheckedChanged += SelectAllCheckBox_CheckedChanged;
+            //
+            // RentalsPanel
+            //
+            RentalsPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            RentalsPanel.AutoScroll = true;
+            RentalsPanel.BorderStyle = BorderStyle.FixedSingle;
+            RentalsPanel.Location = new Point(38, 313);
+            RentalsPanel.Margin = new Padding(4, 5, 4, 5);
+            RentalsPanel.Name = "RentalsPanel";
+            RentalsPanel.Size = new Size(673, 356);
+            RentalsPanel.TabIndex = 6;
+            //
+            // ReturnDate_Label
+            //
+            ReturnDate_Label.AutoSize = true;
+            ReturnDate_Label.Font = new Font("Segoe UI", 11F);
+            ReturnDate_Label.Location = new Point(38, 694);
+            ReturnDate_Label.Margin = new Padding(4, 0, 4, 0);
+            ReturnDate_Label.Name = "ReturnDate_Label";
+            ReturnDate_Label.Size = new Size(124, 30);
+            ReturnDate_Label.TabIndex = 7;
+            ReturnDate_Label.Text = "Return Date";
+            //
+            // ReturnDatePicker
+            //
+            ReturnDatePicker.BackColor = Color.Transparent;
+            ReturnDatePicker.Checked = true;
+            ReturnDatePicker.CustomizableEdges = customizableEdges3;
+            ReturnDatePicker.FillColor = Color.White;
+            ReturnDatePicker.Font = new Font("Segoe UI", 10F);
+            ReturnDatePicker.Format = DateTimePickerFormat.Short;
+            ReturnDatePicker.Location = new Point(38, 732);
+            ReturnDatePicker.Margin = new Padding(4, 5, 4, 5);
+            ReturnDatePicker.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
+            ReturnDatePicker.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            ReturnDatePicker.Name = "ReturnDatePicker";
+            ReturnDatePicker.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            ReturnDatePicker.Size = new Size(300, 56);
+            ReturnDatePicker.TabIndex = 8;
+            ReturnDatePicker.Value = new DateTime(2025, 11, 19, 0, 0, 0, 0);
+            //
+            // Notes_Label
+            //
+            Notes_Label.AutoSize = true;
+            Notes_Label.Font = new Font("Segoe UI", 11F);
+            Notes_Label.Location = new Point(38, 818);
+            Notes_Label.Margin = new Padding(4, 0, 4, 0);
+            Notes_Label.Name = "Notes_Label";
+            Notes_Label.Size = new Size(232, 30);
+            Notes_Label.TabIndex = 9;
+            Notes_Label.Text = "Return Notes (optional)";
+            //
+            // NotesTextBox
+            //
+            NotesTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            NotesTextBox.Cursor = Cursors.IBeam;
+            NotesTextBox.CustomizableEdges = customizableEdges5;
+            NotesTextBox.DefaultText = "";
+            NotesTextBox.Font = new Font("Segoe UI", 10F);
+            NotesTextBox.Location = new Point(38, 856);
+            NotesTextBox.Margin = new Padding(5, 8, 5, 8);
+            NotesTextBox.Multiline = true;
+            NotesTextBox.Name = "NotesTextBox";
+            NotesTextBox.PlaceholderText = "Enter any additional notes about the return...";
+            NotesTextBox.SelectedText = "";
+            NotesTextBox.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            NotesTextBox.Size = new Size(673, 100);
+            NotesTextBox.TabIndex = 10;
+            //
+            // Return_Button
+            //
+            Return_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            Return_Button.CustomizableEdges = customizableEdges7;
+            Return_Button.Font = new Font("Segoe UI", 11F);
+            Return_Button.ForeColor = Color.White;
+            Return_Button.Location = new Point(510, 991);
+            Return_Button.Margin = new Padding(4, 5, 4, 5);
+            Return_Button.Name = "Return_Button";
+            Return_Button.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            Return_Button.Size = new Size(200, 50);
+            Return_Button.TabIndex = 11;
+            Return_Button.Text = "Process Return";
+            Return_Button.Click += Return_Button_Click;
+            //
+            // Cancel_Button
+            //
+            Cancel_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            Cancel_Button.CustomizableEdges = customizableEdges9;
+            Cancel_Button.Font = new Font("Segoe UI", 11F);
+            Cancel_Button.ForeColor = Color.White;
+            Cancel_Button.Location = new Point(302, 991);
+            Cancel_Button.Margin = new Padding(4, 5, 4, 5);
+            Cancel_Button.Name = "Cancel_Button";
+            Cancel_Button.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            Cancel_Button.Size = new Size(200, 50);
+            Cancel_Button.TabIndex = 12;
+            Cancel_Button.Text = "Cancel";
+            Cancel_Button.Click += Cancel_Button_Click;
             //
             // ReturnRental_Form
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 700);
-            this.Controls.Add(this.MainPanel);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "ReturnRental_Form";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Return Rental";
-            this.MainPanel.ResumeLayout(false);
-            this.MainPanel.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(748, 1069);
+            Controls.Add(Title_Label);
+            Controls.Add(SelectCustomer_Label);
+            Controls.Add(CustomerComboBox);
+            Controls.Add(NoActiveRentals_Label);
+            Controls.Add(ActiveRentals_Label);
+            Controls.Add(SelectAllCheckBox);
+            Controls.Add(RentalsPanel);
+            Controls.Add(ReturnDate_Label);
+            Controls.Add(ReturnDatePicker);
+            Controls.Add(Notes_Label);
+            Controls.Add(NotesTextBox);
+            Controls.Add(Return_Button);
+            Controls.Add(Cancel_Button);
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
+            Margin = new Padding(4, 5, 4, 5);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            MinimumSize = new Size(770, 1125);
+            Name = "ReturnRental_Form";
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Return Rental";
+            Shown += ReturnRental_Form_Shown;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Guna2Panel MainPanel;
-        private System.Windows.Forms.Label TitleLabel;
-        private System.Windows.Forms.Label CustomerLabel;
-        private Guna2ComboBox CustomerComboBox;
-        private System.Windows.Forms.Label ActiveRentalsLabel;
-        private System.Windows.Forms.Panel RentalsPanel;
-        private System.Windows.Forms.Label ReturnDateLabel;
-        private Guna2DateTimePicker ReturnDatePicker;
-        private Guna2Button ReturnButton;
-        private Guna2Button CancelButton;
-        private System.Windows.Forms.CheckBox SelectAllCheckBox;
-        private System.Windows.Forms.Label NotesLabel;
-        private Guna2TextBox NotesTextBox;
+        private Label Title_Label;
+        private Label SelectCustomer_Label;
+        private Guna.UI2.WinForms.Guna2ComboBox CustomerComboBox;
+        private Label NoActiveRentals_Label;
+        private Label ActiveRentals_Label;
+        private CheckBox SelectAllCheckBox;
+        private Panel RentalsPanel;
+        private Label ReturnDate_Label;
+        private Guna.UI2.WinForms.Guna2DateTimePicker ReturnDatePicker;
+        private Label Notes_Label;
+        private Guna.UI2.WinForms.Guna2TextBox NotesTextBox;
+        private Guna.UI2.WinForms.Guna2Button Return_Button;
+        private Guna.UI2.WinForms.Guna2Button Cancel_Button;
     }
 }
