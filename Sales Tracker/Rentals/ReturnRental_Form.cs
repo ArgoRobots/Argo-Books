@@ -17,6 +17,7 @@ namespace Sales_Tracker
         private readonly MainMenu_Form _mainMenuForm;
         private Customer _selectedCustomer;
         private List<RentalRecord> _activeRentals;
+        private CustomCheckListBox Rentals_CheckListBox;
 
         // Init.
         public ReturnRental_Form(MainMenu_Form mainMenu)
@@ -25,10 +26,32 @@ namespace Sales_Tracker
             _mainMenuForm = mainMenu;
             _activeRentals = [];
 
+            InitializeRentalsCheckListBox();
             LoadCustomersWithActiveRentals();
             UpdateTheme();
             LanguageManager.UpdateLanguageForControl(this);
             LoadingPanel.ShowBlankLoadingPanel(this);
+        }
+        private void InitializeRentalsCheckListBox()
+        {
+            Rentals_CheckListBox = new CustomCheckListBox
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.FixedSingle,
+                CheckOnClick = true,
+                Font = new Font("Segoe UI", 9F),
+                ForeColor = Color.Black,
+                Location = new Point(38, 313),
+                Margin = new Padding(4, 5, 4, 5),
+                MinimumSize = new Size(100, 100),
+                Name = "Rentals_CheckListBox",
+                Padding = new Padding(10),
+                Size = new Size(673, 356),
+                TabIndex = 6
+            };
+
+            Controls.Add(Rentals_CheckListBox);
         }
         private void LoadCustomersWithActiveRentals()
         {
@@ -211,6 +234,9 @@ namespace Sales_Tracker
                     UpdateDataGridViewRow(rental, returnDate);
                 }
 
+                // Refresh the grid to ensure visual changes are displayed
+                _mainMenuForm.Rental_DataGridView.Refresh();
+
                 // Save all changes
                 RentalInventoryManager.SaveInventory();
                 MainMenu_Form.Instance.SaveCustomersToFile();
@@ -283,9 +309,6 @@ namespace Sales_Tracker
                     break;
                 }
             }
-
-            // Refresh the grid to ensure visual changes are displayed
-            _mainMenuForm.Rental_DataGridView.Refresh();
         }
     }
 }

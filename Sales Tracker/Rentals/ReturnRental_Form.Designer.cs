@@ -49,7 +49,6 @@ namespace Sales_Tracker
             ActiveRentals_Label = new Label();
             SelectAll_CheckBox = new Guna.UI2.WinForms.Guna2CustomCheckBox();
             SelectAll_Label = new Label();
-            Rentals_CheckListBox = new CustomCheckListBox();
             ReturnDate_Label = new Label();
             ReturnDate_Picker = new Guna.UI2.WinForms.Guna2DateTimePicker();
             Notes_Label = new Label();
@@ -156,22 +155,6 @@ namespace Sales_Tracker
             SelectAll_Label.Text = "Select All";
             SelectAll_Label.Click += SelectAll_Label_Click;
             //
-            // Rentals_CheckListBox
-            //
-            Rentals_CheckListBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Rentals_CheckListBox.BackColor = Color.White;
-            Rentals_CheckListBox.BorderStyle = BorderStyle.FixedSingle;
-            Rentals_CheckListBox.CheckOnClick = true;
-            Rentals_CheckListBox.Font = new Font("Segoe UI", 9F);
-            Rentals_CheckListBox.ForeColor = Color.Black;
-            Rentals_CheckListBox.Location = new Point(38, 313);
-            Rentals_CheckListBox.Margin = new Padding(4, 5, 4, 5);
-            Rentals_CheckListBox.MinimumSize = new Size(100, 100);
-            Rentals_CheckListBox.Name = "Rentals_CheckListBox";
-            Rentals_CheckListBox.Padding = new Padding(10);
-            Rentals_CheckListBox.Size = new Size(673, 356);
-            Rentals_CheckListBox.TabIndex = 6;
-            //
             // ReturnDate_Label
             //
             ReturnDate_Label.AutoSize = true;
@@ -271,7 +254,6 @@ namespace Sales_Tracker
             Controls.Add(ActiveRentals_Label);
             Controls.Add(SelectAll_CheckBox);
             Controls.Add(SelectAll_Label);
-            Controls.Add(Rentals_CheckListBox);
             Controls.Add(ReturnDate_Label);
             Controls.Add(ReturnDate_Picker);
             Controls.Add(Notes_Label);
@@ -301,7 +283,6 @@ namespace Sales_Tracker
         private Label ActiveRentals_Label;
         private Guna.UI2.WinForms.Guna2CustomCheckBox SelectAll_CheckBox;
         private Label SelectAll_Label;
-        private CustomCheckListBox Rentals_CheckListBox;
         private Label ReturnDate_Label;
         private Guna.UI2.WinForms.Guna2DateTimePicker ReturnDate_Picker;
         private Label Notes_Label;
