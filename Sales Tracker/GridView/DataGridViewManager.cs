@@ -652,7 +652,6 @@ namespace Sales_Tracker.GridView
             bool isSingleRowSelected = grid.SelectedRows.Count == 1;
             bool isPurchasesOrSales = selectedOption == MainMenu_Form.SelectedOption.Purchases ||
                                       selectedOption == MainMenu_Form.SelectedOption.Sales;
-            bool isRentals = selectedOption == MainMenu_Form.SelectedOption.Rentals;
             bool isTransactionView = selectedOption == MainMenu_Form.SelectedOption.ItemsInPurchase ||
                                      selectedOption == MainMenu_Form.SelectedOption.ItemsInSale;
             int currentIndex = 0;
@@ -690,6 +689,7 @@ namespace Sales_Tracker.GridView
 
                 return;  // Don't add any more buttons
             }
+
             // Add buttons for Receipts_Form
             if (selectedOption == MainMenu_Form.SelectedOption.Receipts)
             {
@@ -761,32 +761,6 @@ namespace Sales_Tracker.GridView
                         RightClickDataGridViewRowMenu.ViewReceipt_Button.Visible = true;
                         flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ViewReceipt_Button, currentIndex++);
                     }
-
-                    RightClickDataGridViewRowMenu.ExportReceipt_Button.Visible = true;
-                    flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ExportReceipt_Button, currentIndex++);
-                }
-            }
-
-            // Add buttons for Rentals (rental transactions)
-            if (isRentals && isSingleRowSelected)
-            {
-                DataGridViewRow selectedRow = grid.SelectedRows[0];
-
-                // Check if rental is already returned
-                bool isReturned = selectedRow.Tag is TagData tagData && tagData.IsReturned;
-
-                if (!isReturned)
-                {
-                    // Show return rental button for active rentals
-                    RightClickDataGridViewRowMenu.ReturnRental_Button.Visible = true;
-                    flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ReturnRental_Button, currentIndex++);
-                }
-
-                // Add ViewReceipt_Button and ExportReceipt_Button
-                if (AnySelectedRowHasReceipt(grid))
-                {
-                    RightClickDataGridViewRowMenu.ViewReceipt_Button.Visible = true;
-                    flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ViewReceipt_Button, currentIndex++);
 
                     RightClickDataGridViewRowMenu.ExportReceipt_Button.Visible = true;
                     flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ExportReceipt_Button, currentIndex++);
