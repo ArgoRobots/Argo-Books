@@ -19,7 +19,7 @@ namespace Sales_Tracker
         private readonly RentalRecord _rentalRecord;
         private readonly DataGridViewRow _dataGridViewRow;
 
-        // Init.
+        // Init - Constructor for existing rental transaction rows
         public ReturnRental_Form(MainMenu_Form mainMenu, DataGridViewRow rentalRow)
         {
             InitializeComponent();
@@ -55,6 +55,31 @@ namespace Sales_Tracker
                 return;
             }
 
+            UpdateTheme();
+            LanguageManager.UpdateLanguageForControl(this);
+            LoadingPanel.ShowBlankLoadingPanel(this);
+        }
+
+        // Init - Constructor for active rentals (from rental inventory)
+        public ReturnRental_Form(MainMenu_Form mainMenu, Customer customer, RentalRecord rentalRecord)
+        {
+            InitializeComponent();
+            _mainMenuForm = mainMenu;
+            _customer = customer;
+            _rentalRecord = rentalRecord;
+            _dataGridViewRow = null; // No existing row for active rentals
+
+            if (_customer == null || _rentalRecord == null)
+            {
+                CustomMessageBox.Show("Error",
+                    "Could not find the rental information.",
+                    CustomMessageBoxIcon.Error,
+                    CustomMessageBoxButtons.Ok);
+                Close();
+                return;
+            }
+
+            LoadRentalDetails();
             UpdateTheme();
             LanguageManager.UpdateLanguageForControl(this);
             LoadingPanel.ShowBlankLoadingPanel(this);
@@ -186,37 +211,148 @@ namespace Sales_Tracker
         }
         private void UpdateDataGridViewRow(DateTime returnDate)
         {
-            // Update the tag data
-            if (_dataGridViewRow.Tag is TagData tagData)
+            // If we have an existing row (rental was already in Rental_DataGridView), update it
+            if (_dataGridViewRow != null)
             {
-                tagData.IsReturned = true;
-                tagData.ReturnDate = returnDate;
-                _dataGridViewRow.Tag = tagData;
+                // Update the tag data
+                if (_dataGridViewRow.Tag is TagData tagData)
+                {
+                    tagData.IsReturned = true;
+                    tagData.ReturnDate = returnDate;
+                    _dataGridViewRow.Tag = tagData;
+                }
+
+                // Apply visual indicator (strikethrough and color)
+                foreach (DataGridViewCell cell in _dataGridViewRow.Cells)
+                {
+                    cell.Style.Font = new Font(cell.Style.Font ?? _dataGridViewRow.DataGridView.DefaultCellStyle.Font, FontStyle.Strikeout);
+                    cell.Style.ForeColor = Color.Gray;
+                }
+
+                // Add return date to notes column if exists
+                DataGridViewCell noteCell = _dataGridViewRow.Cells[ReadOnlyVariables.Note_column];
+                if (noteCell != null)
+                {
+                    string currentNote = noteCell.Value?.ToString() ?? "";
+                    string returnNote = $"[RETURNED: {returnDate:MMM dd, yyyy}]";
+
+                    if (string.IsNullOrWhiteSpace(currentNote))
+                    {
+                        noteCell.Value = returnNote;
+                    }
+                    else if (!currentNote.Contains("RETURNED"))
+                    {
+                        noteCell.Value = $"{currentNote}\n{returnNote}";
+                    }
+                }
+            }
+            else
+            {
+                // No existing row - this was an active rental being returned from inventory view
+                // Add a new row to Rental_DataGridView
+                AddRentalRowToDataGridView(returnDate);
+            }
+        }
+
+        private void AddRentalRowToDataGridView(DateTime returnDate)
+        {
+            // Create a new row for the returned rental
+            RentalItem rentalItem = RentalInventoryManager.GetRentalItem(_rentalRecord.RentalItemID);
+            if (rentalItem == null) { return; }
+
+            // Get the product and category information
+            Product product = MainMenu_Form.Instance.GetProductPurchaseListProductIsFrom(
+                rentalItem.ProductName,
+                rentalItem.CompanyName) ??
+                MainMenu_Form.Instance.GetProductSaleListProductIsFrom(
+                rentalItem.ProductName,
+                rentalItem.CompanyName) ??
+                MainMenu_Form.Instance.GetProductRentalListProductIsFrom(
+                rentalItem.ProductName,
+                rentalItem.CompanyName);
+
+            string categoryName = MainMenu_Form.Instance.GetCategoryNameFromProductName(
+                rentalItem.ProductName,
+                rentalItem.CompanyName) ?? "";
+
+            // Determine the rental rate based on rate type
+            decimal rate = _rentalRecord.RateType.ToLower() switch
+            {
+                "daily" => rentalItem.DailyRate,
+                "weekly" => rentalItem.WeeklyRate,
+                "monthly" => rentalItem.MonthlyRate,
+                _ => 0
+            };
+
+            // Format the notes with return date
+            string notes = _rentalRecord.Notes ?? "";
+            string returnNote = $"[RETURNED: {returnDate:MMM dd, yyyy}]";
+            if (!string.IsNullOrWhiteSpace(notes) && !notes.Contains("RETURNED"))
+            {
+                notes = $"{notes}\n{returnNote}";
+            }
+            else if (string.IsNullOrWhiteSpace(notes))
+            {
+                notes = returnNote;
             }
 
-            // Apply visual indicator (strikethrough and color)
-            foreach (DataGridViewCell cell in _dataGridViewRow.Cells)
+            // Prepare the row values (matching structure from RentOutItem_Form)
+            object[] rowValues =
+            [
+                _rentalRecord.RentalRecordID,                    // Rental #
+                MainMenu_Form.SelectedAccountant,                // Accountant
+                rentalItem.ProductName,                          // Product / Service
+                categoryName,                                    // Category
+                product?.CountryOfOrigin ?? "-",                 // Country of destination
+                rentalItem.CompanyName,                          // Company of origin
+                _rentalRecord.StartDate.ToString("yyyy-MM-dd"),  // Date
+                _rentalRecord.Quantity,                          // Total items
+                rate.ToString("N2"),                             // Price per unit (rental rate)
+                "0.00",                                          // Shipping
+                "0.00",                                          // Tax
+                "0.00",                                          // Fee
+                "0.00",                                          // Discount
+                "0.00",                                          // Charged difference
+                _rentalRecord.TotalCost.ToString("N2"),          // Total rental revenue
+                "-",                                             // Notes placeholder
+                ReadOnlyVariables.EmptyCell                      // Has receipt
+            ];
+
+            // Add the row to the DataGridView
+            int rowIndex = _mainMenuForm.Rental_DataGridView.Rows.Add(rowValues);
+
+            // Add note if present
+            if (!string.IsNullOrWhiteSpace(notes))
             {
-                cell.Style.Font = new Font(cell.Style.Font ?? _dataGridViewRow.DataGridView.DefaultCellStyle.Font, FontStyle.Strikeout);
+                DataGridViewManager.AddNoteToCell(_mainMenuForm.Rental_DataGridView, rowIndex, notes);
+            }
+
+            // Create and attach TagData
+            TagData tagData = new()
+            {
+                IsReturned = true,
+                ReturnDate = returnDate,
+                CustomerID = _customer.CustomerID,
+                CustomerName = _customer.FullName,
+                RentalRecordID = _rentalRecord.RentalRecordID
+            };
+
+            DataGridViewRow newRow = _mainMenuForm.Rental_DataGridView.Rows[rowIndex];
+            newRow.Tag = tagData;
+
+            // Set the Has Receipt cell
+            MainMenu_Form.SetReceiptCellToX(newRow.Cells[MainMenu_Form.Column.HasReceipt.ToString()]);
+
+            // Apply visual indicator (strikethrough and color) since it's returned
+            foreach (DataGridViewCell cell in newRow.Cells)
+            {
+                cell.Style.Font = new Font(cell.Style.Font ?? newRow.DataGridView.DefaultCellStyle.Font, FontStyle.Strikeout);
                 cell.Style.ForeColor = Color.Gray;
             }
 
-            // Add return date to notes column if exists
-            DataGridViewCell noteCell = _dataGridViewRow.Cells[ReadOnlyVariables.Note_column];
-            if (noteCell != null)
-            {
-                string currentNote = noteCell.Value?.ToString() ?? "";
-                string returnNote = $"[RETURNED: {returnDate:MMM dd, yyyy}]";
-
-                if (string.IsNullOrWhiteSpace(currentNote))
-                {
-                    noteCell.Value = returnNote;
-                }
-                else if (!currentNote.Contains("RETURNED"))
-                {
-                    noteCell.Value = $"{currentNote}\n{returnNote}";
-                }
-            }
+            // Trigger the RowsAdded event to save and refresh
+            DataGridViewRowsAddedEventArgs args = new(rowIndex, 1);
+            DataGridViewManager.DataGridViewRowsAdded(_mainMenuForm.Rental_DataGridView, args);
         }
     }
 }
