@@ -1305,6 +1305,8 @@ namespace Sales_Tracker
                 else if (control is Guna2ComboBox comboBox)
                 {
                     string columnName = comboBox.Name;
+                    // Skip RateType combobox - it's handled in the rental rate fields section
+                    if (columnName == "RateType") continue;
                     _selectedRow.Cells[columnName].Value = comboBox.SelectedItem.ToString().Trim();
                 }
                 else if (control is Guna2DateTimePicker datePicker)
