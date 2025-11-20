@@ -9,6 +9,13 @@ using System.ComponentModel;
 
 namespace Sales_Tracker
 {
+    public enum CategoryType
+    {
+        Purchase,
+        Sale,
+        Rent
+    }
+
     /// <summary>
     /// Form for managing product categories.
     /// </summary>
@@ -23,9 +30,8 @@ namespace Sales_Tracker
         public static List<string> ThingsThatHaveChangedInFile { get; } = [];
 
         // Init.
-        public Categories_Form() : this(false) { }  // This is needed for TranslationGenerator.GenerateAllLanguageTranslationFiles()
-        public Categories_Form(bool checkPurchaseRadioButton) : this(checkPurchaseRadioButton ? 0 : 1) { }  // Backward compatibility
-        public Categories_Form(int radioButtonSelection)
+        public Categories_Form() : this(CategoryType.Purchase) { }  // This is needed for TranslationGenerator.GenerateAllLanguageTranslationFiles()
+        public Categories_Form(CategoryType categoryType)
         {
             InitializeComponent();
             _instance = this;
@@ -33,7 +39,7 @@ namespace Sales_Tracker
             _topForDataGridView = ShowingResultsFor_Label.Bottom + 20;
             ConstructDataGridViews();
             LoadCategories();
-            CheckRadioButton(radioButtonSelection);
+            CheckRadioButton(categoryType);
             UpdateTheme();
             Guna2TextBoxIconHoverEffect.Initialize(Search_TextBox);
             SetAccessibleDescriptions();
@@ -110,22 +116,18 @@ namespace Sales_Tracker
             }
             DataGridViewManager.ScrollToTopOfDataGridView(Rent_DataGridView);
         }
-        private void CheckRadioButton(int radioButtonSelection)
+        private void CheckRadioButton(CategoryType categoryType)
         {
-            // 0 = Purchase, 1 = Sale, 2 = Rent
-            switch (radioButtonSelection)
+            switch (categoryType)
             {
-                case 0:
+                case CategoryType.Purchase:
                     Purchase_RadioButton.Checked = true;
                     break;
-                case 1:
+                case CategoryType.Sale:
                     Sale_RadioButton.Checked = true;
                     break;
-                case 2:
+                case CategoryType.Rent:
                     Rent_RadioButton.Checked = true;
-                    break;
-                default:
-                    Purchase_RadioButton.Checked = true;
                     break;
             }
         }
