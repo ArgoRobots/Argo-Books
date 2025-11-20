@@ -344,7 +344,11 @@ namespace Sales_Tracker
         }
         private void CategoryWarning_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Tools.OpenForm(new Categories_Form(Purchase_RadioButton.Checked));
+            // Determine which radio button is selected: 0 = Purchase, 1 = Sale, 2 = Rent
+            int radioButtonSelection = Purchase_RadioButton.Checked ? 0 :
+                                       Sale_RadioButton.Checked ? 1 : 2;
+
+            Tools.OpenForm(new Categories_Form(radioButtonSelection));
             ValidateCategoryTextBox();
         }
         private void WarningCompany_LinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

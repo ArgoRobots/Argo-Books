@@ -24,7 +24,8 @@ namespace Sales_Tracker
 
         // Init.
         public Categories_Form() : this(false) { }  // This is needed for TranslationGenerator.GenerateAllLanguageTranslationFiles()
-        public Categories_Form(bool checkPurchaseRadioButton)
+        public Categories_Form(bool checkPurchaseRadioButton) : this(checkPurchaseRadioButton ? 0 : 1) { }  // Backward compatibility
+        public Categories_Form(int radioButtonSelection)
         {
             InitializeComponent();
             _instance = this;
@@ -32,7 +33,7 @@ namespace Sales_Tracker
             _topForDataGridView = ShowingResultsFor_Label.Bottom + 20;
             ConstructDataGridViews();
             LoadCategories();
-            CheckRadioButton(checkPurchaseRadioButton);
+            CheckRadioButton(radioButtonSelection);
             UpdateTheme();
             Guna2TextBoxIconHoverEffect.Initialize(Search_TextBox);
             SetAccessibleDescriptions();
@@ -109,15 +110,23 @@ namespace Sales_Tracker
             }
             DataGridViewManager.ScrollToTopOfDataGridView(Rent_DataGridView);
         }
-        private void CheckRadioButton(bool selectPurchaseRadioButton)
+        private void CheckRadioButton(int radioButtonSelection)
         {
-            if (selectPurchaseRadioButton)
+            // 0 = Purchase, 1 = Sale, 2 = Rent
+            switch (radioButtonSelection)
             {
-                Purchase_RadioButton.Checked = true;
-            }
-            else
-            {
-                Sale_RadioButton.Checked = true;
+                case 0:
+                    Purchase_RadioButton.Checked = true;
+                    break;
+                case 1:
+                    Sale_RadioButton.Checked = true;
+                    break;
+                case 2:
+                    Rent_RadioButton.Checked = true;
+                    break;
+                default:
+                    Purchase_RadioButton.Checked = true;
+                    break;
             }
         }
 
