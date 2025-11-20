@@ -50,14 +50,17 @@ namespace Sales_Tracker.Rentals
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(DailyRate_TextBox);
             TextBoxManager.Attach(DailyRate_TextBox);
             DailyRate_TextBox.TextChanged += ValidateInputs;
+            DailyRate_TextBox.TextChanged += HandleRateTextBoxChanged;
 
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(WeeklyRate_TextBox);
             TextBoxManager.Attach(WeeklyRate_TextBox);
             WeeklyRate_TextBox.TextChanged += ValidateInputs;
+            WeeklyRate_TextBox.TextChanged += HandleRateTextBoxChanged;
 
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(MonthlyRate_TextBox);
             TextBoxManager.Attach(MonthlyRate_TextBox);
             MonthlyRate_TextBox.TextChanged += ValidateInputs;
+            MonthlyRate_TextBox.TextChanged += HandleRateTextBoxChanged;
 
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(SecurityDeposit_TextBox);
             TextBoxManager.Attach(SecurityDeposit_TextBox);
@@ -123,6 +126,44 @@ namespace Sales_Tracker.Rentals
             Tools.OpenForm(new Products_Form(ProductType.Rent));
             CheckIfProductsExist();
         }
+        private void HandleRateTextBoxChanged(object sender, EventArgs e)
+        {
+            Guna2TextBox changedTextBox = (Guna2TextBox)sender;
+
+            // If the changed textbox has a value, disable the other rate textboxes
+            bool hasValue = !string.IsNullOrWhiteSpace(changedTextBox.Text) && changedTextBox.Text != "0";
+
+            if (changedTextBox == DailyRate_TextBox)
+            {
+                WeeklyRate_TextBox.Enabled = !hasValue;
+                MonthlyRate_TextBox.Enabled = !hasValue;
+                if (!hasValue)
+                {
+                    WeeklyRate_TextBox.Clear();
+                    MonthlyRate_TextBox.Clear();
+                }
+            }
+            else if (changedTextBox == WeeklyRate_TextBox)
+            {
+                DailyRate_TextBox.Enabled = !hasValue;
+                MonthlyRate_TextBox.Enabled = !hasValue;
+                if (!hasValue)
+                {
+                    DailyRate_TextBox.Clear();
+                    MonthlyRate_TextBox.Clear();
+                }
+            }
+            else if (changedTextBox == MonthlyRate_TextBox)
+            {
+                DailyRate_TextBox.Enabled = !hasValue;
+                WeeklyRate_TextBox.Enabled = !hasValue;
+                if (!hasValue)
+                {
+                    DailyRate_TextBox.Clear();
+                    WeeklyRate_TextBox.Clear();
+                }
+            }
+        }
 
         // Methods
         private void ClearInputs()
@@ -135,6 +176,11 @@ namespace Sales_Tracker.Rentals
             MonthlyRate_TextBox.Clear();
             SecurityDeposit_TextBox.Clear();
             Notes_TextBox.Clear();
+
+            // Re-enable all rate textboxes
+            DailyRate_TextBox.Enabled = true;
+            WeeklyRate_TextBox.Enabled = true;
+            MonthlyRate_TextBox.Enabled = true;
         }
         private bool AddRentalItem()
         {
