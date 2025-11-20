@@ -64,6 +64,9 @@ namespace Sales_Tracker
                 $"Total Cost: {MainMenu_Form.CurrencySymbol}{_rentalRecord.TotalCost:N2}\n" +
                 $"Amount Paid: {MainMenu_Form.CurrencySymbol}{_rentalRecord.AmountPaid:N2}\n" +
                 $"Outstanding: {MainMenu_Form.CurrencySymbol}{outstanding:N2}";
+
+            RentalDetails_Label.BackColor = CustomColors.ControlBack;
+            RentalDetails_Label.ForeColor=CustomColors.Text;
         }
         private void UpdateTheme()
         {
@@ -214,7 +217,6 @@ namespace Sales_Tracker
                 return false; // New row was added
             }
         }
-
         private void AddRentalRowToDataGridView(DateTime returnDate)
         {
             // Create a new row for the returned rental
