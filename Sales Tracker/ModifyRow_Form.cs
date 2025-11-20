@@ -1392,11 +1392,8 @@ namespace Sales_Tracker
                             ? _listOfOldValues[emailColumnIndex]
                             : "";
 
-                        // Only check for duplicates if the email has changed
-                        if (!gunaTextBox.Text.Trim().Equals(originalEmail, StringComparison.OrdinalIgnoreCase))
-                        {
-                            isUniqueEmail = !TextBoxValidation.IsEmailDuplicate(gunaTextBox.Text);
-                        }
+                        // Check for duplicates, excluding the original email
+                        isUniqueEmail = !TextBoxValidation.IsEmailDuplicate(gunaTextBox.Text, originalEmail);
                     }
 
                     bool isEmpty = string.IsNullOrEmpty(gunaTextBox.Text) ||

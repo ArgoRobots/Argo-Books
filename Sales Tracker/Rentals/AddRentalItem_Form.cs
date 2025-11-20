@@ -20,8 +20,6 @@ namespace Sales_Tracker.Rentals
             InitializeComponent();
 
             AddEventHandlersToTextBoxes();
-            Date_DateTimePicker.Value = DateTime.Now;
-            Date_DateTimePicker.MaxDate = DateTime.Now;
             CheckIfProductsExist();
             UpdateTheme();
             SetAccessibleDescriptions();
@@ -80,7 +78,6 @@ namespace Sales_Tracker.Rentals
             [
                 RentalItemID_Label,
                 ProductName_Label,
-                Date_Label,
                 TotalQuantity_Label,
                 DailyRate_Label,
                 WeeklyRate_Label,
@@ -182,7 +179,6 @@ namespace Sales_Tracker.Rentals
                 : decimal.Parse(SecurityDeposit_TextBox.Text);
 
             string notes = Notes_TextBox.Text.Trim();
-            DateTime dateAdded = Date_DateTimePicker.Value;
 
             // Create new rental item
             RentalItem newItem = new()
@@ -196,7 +192,6 @@ namespace Sales_Tracker.Rentals
                 MonthlyRate = monthlyRate,
                 SecurityDeposit = securityDeposit,
                 Notes = notes,
-                DateAdded = dateAdded,
                 Status = RentalItem.AvailabilityStatus.Available
             };
 

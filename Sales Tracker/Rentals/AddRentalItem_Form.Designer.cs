@@ -63,8 +63,6 @@ namespace Sales_Tracker.Rentals
             MonthlyRate_Label = new Label();
             MonthlyRate_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             AddRentalItem_Button = new Guna.UI2.WinForms.Guna2Button();
-            Date_Label = new Label();
-            Date_DateTimePicker = new Guna.UI2.WinForms.Guna2DateTimePicker();
             WarningProduct_LinkLabel = new LinkLabel();
             WarningProduct_PictureBox = new PictureBox();
             SecurityDeposit_Label = new Label();
@@ -306,37 +304,7 @@ namespace Sales_Tracker.Rentals
             AddRentalItem_Button.Tag = "";
             AddRentalItem_Button.Text = "Add rental item";
             AddRentalItem_Button.Click += AddRentalItem_Button_Click;
-            // 
-            // Date_Label
-            // 
-            Date_Label.Anchor = AnchorStyles.Top;
-            Date_Label.AutoSize = true;
-            Date_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Date_Label.Location = new Point(126, 256);
-            Date_Label.Name = "Date_Label";
-            Date_Label.Size = new Size(134, 31);
-            Date_Label.TabIndex = 0;
-            Date_Label.Text = "Date added";
-            // 
-            // Date_DateTimePicker
-            // 
-            Date_DateTimePicker.Anchor = AnchorStyles.Top;
-            Date_DateTimePicker.Checked = true;
-            Date_DateTimePicker.CustomizableEdges = customizableEdges15;
-            Date_DateTimePicker.FillColor = Color.White;
-            Date_DateTimePicker.Font = new Font("Segoe UI", 9F);
-            Date_DateTimePicker.Format = DateTimePickerFormat.Long;
-            Date_DateTimePicker.Location = new Point(126, 292);
-            Date_DateTimePicker.Margin = new Padding(4, 5, 4, 5);
-            Date_DateTimePicker.MaxDate = new DateTime(9998, 12, 31, 0, 0, 0, 0);
-            Date_DateTimePicker.MinDate = new DateTime(1753, 1, 1, 0, 0, 0, 0);
-            Date_DateTimePicker.Name = "Date_DateTimePicker";
-            Date_DateTimePicker.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            Date_DateTimePicker.Size = new Size(300, 50);
-            Date_DateTimePicker.TabIndex = 5;
-            Date_DateTimePicker.Value = new DateTime(2024, 6, 6, 19, 37, 49, 128);
-            Date_DateTimePicker.ValueChanged += ValidateInputs;
-            // 
+            //
             // WarningProduct_LinkLabel
             // 
             WarningProduct_LinkLabel.Anchor = AnchorStyles.Top;
@@ -457,8 +425,6 @@ namespace Sales_Tracker.Rentals
             Controls.Add(SecurityDeposit_TextBox);
             Controls.Add(WarningProduct_LinkLabel);
             Controls.Add(WarningProduct_PictureBox);
-            Controls.Add(Date_DateTimePicker);
-            Controls.Add(Date_Label);
             Controls.Add(AddRentalItem_Button);
             Controls.Add(MonthlyRate_Label);
             Controls.Add(MonthlyRate_TextBox);
@@ -502,8 +468,6 @@ namespace Sales_Tracker.Rentals
         private Label MonthlyRate_Label;
         private Guna.UI2.WinForms.Guna2TextBox MonthlyRate_TextBox;
         private Guna.UI2.WinForms.Guna2Button AddRentalItem_Button;
-        private Label Date_Label;
-        private Guna.UI2.WinForms.Guna2DateTimePicker Date_DateTimePicker;
         private LinkLabel WarningProduct_LinkLabel;
         private PictureBox WarningProduct_PictureBox;
         private Label SecurityDeposit_Label;

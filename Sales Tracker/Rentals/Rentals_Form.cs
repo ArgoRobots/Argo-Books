@@ -61,6 +61,7 @@ namespace Sales_Tracker.Rentals
         private void UpdateTheme()
         {
             ThemeManager.SetThemeForForm(this);
+            ThemeManager.MakeGButtonBluePrimary(CurrentRentals_Button);
             ThemeManager.MakeGButtonBluePrimary(AddRentalItem_Button);
         }
 
@@ -205,6 +206,10 @@ namespace Sales_Tracker.Rentals
         }
 
         // Event handlers
+        private void CurrentRentals_Button_Click(object sender, EventArgs e)
+        {
+            Tools.OpenForm(new CurrentRentals_Form());
+        }
         private void AddRentalItem_Button_Click(object sender, EventArgs e)
         {
             Tools.OpenForm(new AddRentalItem_Form());
