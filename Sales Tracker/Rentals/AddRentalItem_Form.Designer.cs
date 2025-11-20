@@ -46,20 +46,16 @@ namespace Sales_Tracker.Rentals
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             RentalItemID_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             RentalItemID_Label = new Label();
             ProductName_Label = new Label();
             ProductName_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             TotalQuantity_Label = new Label();
             TotalQuantity_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
-            DailyRate_Label = new Label();
-            DailyRate_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
-            WeeklyRate_Label = new Label();
-            WeeklyRate_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
-            MonthlyRate_Label = new Label();
-            MonthlyRate_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            RentalRate_Label = new Label();
+            RentalRate_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            RateType_Label = new Label();
+            RateType_ComboBox = new Guna.UI2.WinForms.Guna2ComboBox();
             AddRentalItem_Button = new Guna.UI2.WinForms.Guna2Button();
             WarningProduct_LinkLabel = new LinkLabel();
             WarningProduct_PictureBox = new PictureBox();
@@ -176,111 +172,72 @@ namespace Sales_Tracker.Rentals
             TotalQuantity_TextBox.Size = new Size(150, 50);
             TotalQuantity_TextBox.TabIndex = 3;
             TotalQuantity_TextBox.TextChanged += ValidateInputs;
-            // 
-            // DailyRate_Label
-            // 
-            DailyRate_Label.Anchor = AnchorStyles.Top;
-            DailyRate_Label.AutoSize = true;
-            DailyRate_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            DailyRate_Label.Location = new Point(280, 256);
-            DailyRate_Label.Name = "DailyRate_Label";
-            DailyRate_Label.Size = new Size(111, 31);
-            DailyRate_Label.TabIndex = 0;
-            DailyRate_Label.Text = "Daily rate";
-            // 
-            // DailyRate_TextBox
-            // 
-            DailyRate_TextBox.Anchor = AnchorStyles.Top;
-            DailyRate_TextBox.CustomizableEdges = customizableEdges7;
-            DailyRate_TextBox.DefaultText = "";
-            DailyRate_TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            DailyRate_TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            DailyRate_TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            DailyRate_TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            DailyRate_TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            DailyRate_TextBox.Font = new Font("Segoe UI", 9F);
-            DailyRate_TextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            DailyRate_TextBox.Location = new Point(280, 292);
-            DailyRate_TextBox.Margin = new Padding(4, 5, 4, 5);
-            DailyRate_TextBox.MaxLength = 8;
-            DailyRate_TextBox.Name = "DailyRate_TextBox";
-            DailyRate_TextBox.PlaceholderText = "";
-            DailyRate_TextBox.SelectedText = "";
-            DailyRate_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            DailyRate_TextBox.ShortcutsEnabled = false;
-            DailyRate_TextBox.Size = new Size(150, 50);
-            DailyRate_TextBox.TabIndex = 6;
-            DailyRate_TextBox.TextChanged += ValidateInputs;
-            // 
-            // WeeklyRate_Label
-            // 
-            WeeklyRate_Label.Anchor = AnchorStyles.Top;
-            WeeklyRate_Label.AutoSize = true;
-            WeeklyRate_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            WeeklyRate_Label.Location = new Point(438, 253);
-            WeeklyRate_Label.Name = "WeeklyRate_Label";
-            WeeklyRate_Label.Size = new Size(138, 31);
-            WeeklyRate_Label.TabIndex = 0;
-            WeeklyRate_Label.Text = "Weekly rate ";
-            // 
-            // WeeklyRate_TextBox
-            // 
-            WeeklyRate_TextBox.Anchor = AnchorStyles.Top;
-            WeeklyRate_TextBox.CustomizableEdges = customizableEdges9;
-            WeeklyRate_TextBox.DefaultText = "";
-            WeeklyRate_TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            WeeklyRate_TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            WeeklyRate_TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            WeeklyRate_TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            WeeklyRate_TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            WeeklyRate_TextBox.Font = new Font("Segoe UI", 9F);
-            WeeklyRate_TextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            WeeklyRate_TextBox.Location = new Point(438, 292);
-            WeeklyRate_TextBox.Margin = new Padding(4, 5, 4, 5);
-            WeeklyRate_TextBox.MaxLength = 8;
-            WeeklyRate_TextBox.Name = "WeeklyRate_TextBox";
-            WeeklyRate_TextBox.PlaceholderText = "";
-            WeeklyRate_TextBox.SelectedText = "";
-            WeeklyRate_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            WeeklyRate_TextBox.ShortcutsEnabled = false;
-            WeeklyRate_TextBox.Size = new Size(150, 50);
-            WeeklyRate_TextBox.TabIndex = 7;
-            WeeklyRate_TextBox.TextChanged += ValidateInputs;
-            // 
-            // MonthlyRate_Label
-            // 
-            MonthlyRate_Label.Anchor = AnchorStyles.Top;
-            MonthlyRate_Label.AutoSize = true;
-            MonthlyRate_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            MonthlyRate_Label.Location = new Point(596, 255);
-            MonthlyRate_Label.Name = "MonthlyRate_Label";
-            MonthlyRate_Label.Size = new Size(151, 31);
-            MonthlyRate_Label.TabIndex = 0;
-            MonthlyRate_Label.Text = "Monthly rate ";
-            // 
-            // MonthlyRate_TextBox
-            // 
-            MonthlyRate_TextBox.Anchor = AnchorStyles.Top;
-            MonthlyRate_TextBox.CustomizableEdges = customizableEdges11;
-            MonthlyRate_TextBox.DefaultText = "";
-            MonthlyRate_TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            MonthlyRate_TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            MonthlyRate_TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            MonthlyRate_TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            MonthlyRate_TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            MonthlyRate_TextBox.Font = new Font("Segoe UI", 9F);
-            MonthlyRate_TextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            MonthlyRate_TextBox.Location = new Point(596, 292);
-            MonthlyRate_TextBox.Margin = new Padding(4, 5, 4, 5);
-            MonthlyRate_TextBox.MaxLength = 8;
-            MonthlyRate_TextBox.Name = "MonthlyRate_TextBox";
-            MonthlyRate_TextBox.PlaceholderText = "";
-            MonthlyRate_TextBox.SelectedText = "";
-            MonthlyRate_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            MonthlyRate_TextBox.ShortcutsEnabled = false;
-            MonthlyRate_TextBox.Size = new Size(150, 50);
-            MonthlyRate_TextBox.TabIndex = 8;
-            MonthlyRate_TextBox.TextChanged += ValidateInputs;
+            //
+            // RentalRate_Label
+            //
+            RentalRate_Label.Anchor = AnchorStyles.Top;
+            RentalRate_Label.AutoSize = true;
+            RentalRate_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            RentalRate_Label.Location = new Point(280, 256);
+            RentalRate_Label.Name = "RentalRate_Label";
+            RentalRate_Label.Size = new Size(128, 31);
+            RentalRate_Label.TabIndex = 0;
+            RentalRate_Label.Text = "Rental rate";
+            //
+            // RentalRate_TextBox
+            //
+            RentalRate_TextBox.Anchor = AnchorStyles.Top;
+            RentalRate_TextBox.CustomizableEdges = customizableEdges7;
+            RentalRate_TextBox.DefaultText = "";
+            RentalRate_TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            RentalRate_TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            RentalRate_TextBox.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            RentalRate_TextBox.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            RentalRate_TextBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            RentalRate_TextBox.Font = new Font("Segoe UI", 9F);
+            RentalRate_TextBox.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            RentalRate_TextBox.Location = new Point(280, 292);
+            RentalRate_TextBox.Margin = new Padding(4, 5, 4, 5);
+            RentalRate_TextBox.MaxLength = 8;
+            RentalRate_TextBox.Name = "RentalRate_TextBox";
+            RentalRate_TextBox.PlaceholderText = "";
+            RentalRate_TextBox.SelectedText = "";
+            RentalRate_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            RentalRate_TextBox.ShortcutsEnabled = false;
+            RentalRate_TextBox.Size = new Size(150, 50);
+            RentalRate_TextBox.TabIndex = 4;
+            RentalRate_TextBox.TextChanged += ValidateInputs;
+            //
+            // RateType_Label
+            //
+            RateType_Label.Anchor = AnchorStyles.Top;
+            RateType_Label.AutoSize = true;
+            RateType_Label.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            RateType_Label.Location = new Point(438, 256);
+            RateType_Label.Name = "RateType_Label";
+            RateType_Label.Size = new Size(107, 31);
+            RateType_Label.TabIndex = 0;
+            RateType_Label.Text = "Rate type";
+            //
+            // RateType_ComboBox
+            //
+            RateType_ComboBox.Anchor = AnchorStyles.Top;
+            RateType_ComboBox.BackColor = Color.Transparent;
+            RateType_ComboBox.CustomizableEdges = customizableEdges9;
+            RateType_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            RateType_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            RateType_ComboBox.FocusedColor = Color.FromArgb(94, 148, 255);
+            RateType_ComboBox.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            RateType_ComboBox.Font = new Font("Segoe UI", 10F);
+            RateType_ComboBox.ForeColor = Color.FromArgb(68, 88, 112);
+            RateType_ComboBox.ItemHeight = 30;
+            RateType_ComboBox.Items.AddRange(new object[] { "Day", "Week", "Month" });
+            RateType_ComboBox.Location = new Point(438, 292);
+            RateType_ComboBox.Name = "RateType_ComboBox";
+            RateType_ComboBox.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            RateType_ComboBox.Size = new Size(150, 36);
+            RateType_ComboBox.TabIndex = 5;
+            RateType_ComboBox.SelectedIndex = 0;
             // 
             // AddRentalItem_Button
             // 
@@ -289,14 +246,14 @@ namespace Sales_Tracker.Rentals
             AddRentalItem_Button.BorderColor = Color.LightGray;
             AddRentalItem_Button.BorderRadius = 2;
             AddRentalItem_Button.BorderThickness = 1;
-            AddRentalItem_Button.CustomizableEdges = customizableEdges13;
+            AddRentalItem_Button.CustomizableEdges = customizableEdges11;
             AddRentalItem_Button.Enabled = false;
             AddRentalItem_Button.FillColor = Color.White;
             AddRentalItem_Button.Font = new Font("Segoe UI", 10F);
             AddRentalItem_Button.ForeColor = Color.Black;
             AddRentalItem_Button.Location = new Point(499, 543);
             AddRentalItem_Button.Name = "AddRentalItem_Button";
-            AddRentalItem_Button.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            AddRentalItem_Button.ShadowDecoration.CustomizableEdges = customizableEdges12;
             AddRentalItem_Button.Size = new Size(214, 48);
             AddRentalItem_Button.TabIndex = 11;
             AddRentalItem_Button.Tag = "";
@@ -343,7 +300,7 @@ namespace Sales_Tracker.Rentals
             // SecurityDeposit_TextBox
             // 
             SecurityDeposit_TextBox.Anchor = AnchorStyles.Top;
-            SecurityDeposit_TextBox.CustomizableEdges = customizableEdges15;
+            SecurityDeposit_TextBox.CustomizableEdges = customizableEdges13;
             SecurityDeposit_TextBox.DefaultText = "";
             SecurityDeposit_TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             SecurityDeposit_TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -358,7 +315,7 @@ namespace Sales_Tracker.Rentals
             SecurityDeposit_TextBox.Name = "SecurityDeposit_TextBox";
             SecurityDeposit_TextBox.PlaceholderText = "";
             SecurityDeposit_TextBox.SelectedText = "";
-            SecurityDeposit_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            SecurityDeposit_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges14;
             SecurityDeposit_TextBox.ShortcutsEnabled = false;
             SecurityDeposit_TextBox.Size = new Size(150, 50);
             SecurityDeposit_TextBox.TabIndex = 9;
@@ -379,7 +336,7 @@ namespace Sales_Tracker.Rentals
             // 
             Notes_TextBox.Anchor = AnchorStyles.Top;
             Notes_TextBox.AutoSize = true;
-            Notes_TextBox.CustomizableEdges = customizableEdges17;
+            Notes_TextBox.CustomizableEdges = customizableEdges15;
             Notes_TextBox.DefaultText = "";
             Notes_TextBox.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             Notes_TextBox.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -395,7 +352,7 @@ namespace Sales_Tracker.Rentals
             Notes_TextBox.Name = "Notes_TextBox";
             Notes_TextBox.PlaceholderText = "";
             Notes_TextBox.SelectedText = "";
-            Notes_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            Notes_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges16;
             Notes_TextBox.ShortcutsEnabled = false;
             Notes_TextBox.Size = new Size(525, 105);
             Notes_TextBox.TabIndex = 10;
@@ -424,12 +381,10 @@ namespace Sales_Tracker.Rentals
             Controls.Add(WarningProduct_LinkLabel);
             Controls.Add(WarningProduct_PictureBox);
             Controls.Add(AddRentalItem_Button);
-            Controls.Add(MonthlyRate_Label);
-            Controls.Add(MonthlyRate_TextBox);
-            Controls.Add(WeeklyRate_Label);
-            Controls.Add(WeeklyRate_TextBox);
-            Controls.Add(DailyRate_Label);
-            Controls.Add(DailyRate_TextBox);
+            Controls.Add(RateType_Label);
+            Controls.Add(RateType_ComboBox);
+            Controls.Add(RentalRate_Label);
+            Controls.Add(RentalRate_TextBox);
             Controls.Add(TotalQuantity_Label);
             Controls.Add(TotalQuantity_TextBox);
             Controls.Add(ProductName_Label);
@@ -459,12 +414,10 @@ namespace Sales_Tracker.Rentals
         public Guna.UI2.WinForms.Guna2TextBox ProductName_TextBox;
         private Label TotalQuantity_Label;
         private Guna.UI2.WinForms.Guna2TextBox TotalQuantity_TextBox;
-        private Label DailyRate_Label;
-        private Guna.UI2.WinForms.Guna2TextBox DailyRate_TextBox;
-        private Label WeeklyRate_Label;
-        private Guna.UI2.WinForms.Guna2TextBox WeeklyRate_TextBox;
-        private Label MonthlyRate_Label;
-        private Guna.UI2.WinForms.Guna2TextBox MonthlyRate_TextBox;
+        private Label RentalRate_Label;
+        private Guna.UI2.WinForms.Guna2TextBox RentalRate_TextBox;
+        private Label RateType_Label;
+        private Guna.UI2.WinForms.Guna2ComboBox RateType_ComboBox;
         private Guna.UI2.WinForms.Guna2Button AddRentalItem_Button;
         private LinkLabel WarningProduct_LinkLabel;
         private PictureBox WarningProduct_PictureBox;

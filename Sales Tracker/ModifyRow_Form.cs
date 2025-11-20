@@ -1059,8 +1059,24 @@ namespace Sales_Tracker
 
                             // Rate Type ComboBox
                             ConstructLabel("Rate Type", secondLeft, _secondPanel);
-                            Guna2ComboBox rateTypeComboBox = ConstructComboBox(secondLeft, "RateType", ["Day", "Week", "Month"], rateType, _secondPanel);
-                            rateTypeComboBox.Width = ScaledSmallWidth;
+                            Guna2ComboBox rateTypeComboBox = new()
+                            {
+                                Location = new Point(secondLeft, 45 + CustomControls.SpaceBetweenControls),
+                                Size = new Size(ScaledSmallWidth, ScaledControlHeight),
+                                ItemHeight = (int)(44 * DpiHelper.GetRelativeDpiScale()),
+                                FillColor = CustomColors.ControlBack,
+                                ForeColor = CustomColors.Text,
+                                BorderColor = CustomColors.ControlBorder,
+                                BorderRadius = 3,
+                                Name = "RateType",
+                                Font = new Font("Segoe UI", 9),
+                                AccessibleDescription = AccessibleDescriptionManager.DoNotCache,
+                                HoverState = { BorderColor = CustomColors.AccentBlue },
+                                DropDownStyle = ComboBoxStyle.DropDownList
+                            };
+                            rateTypeComboBox.Items.AddRange(new object[] { "Day", "Week", "Month" });
+                            rateTypeComboBox.SelectedItem = rateType;
+                            _secondPanel.Controls.Add(rateTypeComboBox);
                             secondLeft += ScaledSmallWidth + CustomControls.SpaceBetweenControls;
                         }
                         break;
