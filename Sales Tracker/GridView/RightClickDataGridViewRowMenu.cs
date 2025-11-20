@@ -899,17 +899,22 @@ namespace Sales_Tracker.GridView
             if (selectedRow.Tag is RentalItem rentalItem)
             {
                 // Find all active rentals for this rental item across all customers
-                List<(Customer customer, RentalRecord rental)> activeRentals = [];
+                List<(Customer customer, RentalRecord rental, DataGridViewRow row)> activeRentals = [];
 
-                foreach (Customer customer in MainMenu_Form.Instance.CustomerList)
+                foreach (DataGridViewRow row in MainMenu_Form.Instance.Rental_DataGridView.Rows)
                 {
-                    List<RentalRecord> customerActiveRentals = customer.GetActiveRentals()
-                        .Where(r => r.RentalItemID == rentalItem.RentalItemID)
-                        .ToList();
-
-                    foreach (RentalRecord rental in customerActiveRentals)
+                    if (row.Tag is TagData tagData && !tagData.IsReturned)
                     {
-                        activeRentals.Add((customer, rental));
+                        // Find the customer and rental record
+                        Customer customer = MainMenu_Form.Instance.CustomerList.FirstOrDefault(c => c.CustomerID == tagData.CustomerID);
+                        if (customer != null)
+                        {
+                            RentalRecord rental = customer.GetActiveRentals().FirstOrDefault(r => r.RentalRecordID == tagData.RentalRecordID);
+                            if (rental != null && rental.RentalItemID == rentalItem.RentalItemID)
+                            {
+                                activeRentals.Add((customer, rental, row));
+                            }
+                        }
                     }
                 }
 
@@ -923,27 +928,12 @@ namespace Sales_Tracker.GridView
                     return;
                 }
 
-                // Find the corresponding rental transaction row in MainMenu_Form.Rental_DataGridView
-                DataGridViewRow rentalRow = null;
                 if (activeRentals.Count == 1)
                 {
-                    // Only one active rental, find its row
-                    string rentalRecordID = activeRentals[0].rental.RentalRecordID;
-                    foreach (DataGridViewRow row in MainMenu_Form.Instance.Rental_DataGridView.Rows)
-                    {
-                        if (row.Tag is TagData tagData && tagData.RentalRecordID == rentalRecordID)
-                        {
-                            rentalRow = row;
-                            break;
-                        }
-                    }
-
-                    if (rentalRow != null)
-                    {
-                        Tools.OpenForm(new ReturnRental_Form(MainMenu_Form.Instance, rentalRow));
-                        Hide();
-                        return;
-                    }
+                    // Only one active rental, open the form with that row
+                    Tools.OpenForm(new ReturnRental_Form(MainMenu_Form.Instance, activeRentals[0].row));
+                    Hide();
+                    return;
                 }
 
                 // Multiple active rentals - show message to user
@@ -960,21 +950,29 @@ namespace Sales_Tracker.GridView
             }
 
             // Handle rental transaction rows (TagData tag)
-            if (selectedRow.Tag is TagData tagData && tagData.IsReturned)
+            if (selectedRow.Tag is TagData tagData2)
             {
-                CustomMessageBox.Show(
-                    "Already Returned",
-                    "This rental has already been returned.",
-                    CustomMessageBoxIcon.Info,
-                    CustomMessageBoxButtons.Ok);
-                return;
-            }
+                if (tagData2.IsReturned)
+                {
+                    CustomMessageBox.Show(
+                        "Already Returned",
+                        "This rental has already been returned.",
+                        CustomMessageBoxIcon.Info,
+                        CustomMessageBoxButtons.Ok);
+                    return;
+                }
 
-            if (selectedRow.Tag is TagData)
-            {
                 // Open the return rental form with the selected row
                 Tools.OpenForm(new ReturnRental_Form(MainMenu_Form.Instance, selectedRow));
                 Hide();
+            }
+            else
+            {
+                CustomMessageBox.Show(
+                    "Error",
+                    "Unable to process this rental return. Invalid rental data.",
+                    CustomMessageBoxIcon.Error,
+                    CustomMessageBoxButtons.Ok);
             }
         }
 
