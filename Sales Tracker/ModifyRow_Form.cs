@@ -1245,11 +1245,10 @@ namespace Sales_Tracker
                     // Handle individual rate fields
                     else if (column == "DailyRate" || column == "WeeklyRate" || column == "MonthlyRate")
                     {
-                        // These are handled in UpdateRentalInventoryListWithValues
-                        // Here we need to update the display RentalRate column
+                        // Update the display RentalRate column
                         if (_selectedTag == MainMenu_Form.DataGridViewTag.RentalInventory.ToString() && _selectedRow.Tag is RentalItem item)
                         {
-                            // Get rate values from textboxes (using allControls from outer scope)
+                            // Get rate values from textboxes
                             string dailyRate = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "DailyRate")?.Text ?? "";
                             string weeklyRate = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "WeeklyRate")?.Text ?? "";
                             string monthlyRate = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "MonthlyRate")?.Text ?? "";
