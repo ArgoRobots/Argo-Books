@@ -19,8 +19,11 @@ namespace Sales_Tracker.Rentals
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Title_Label = new Label();
-            FilterOverdue_CheckBox = new Guna.UI2.WinForms.Guna2CheckBox();
+            FilterOverdue_CheckBox = new Guna.UI2.WinForms.Guna2CustomCheckBox();
+            FilterOverdue_Label = new Label();
             Search_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             ShowingResultsFor_Label = new Label();
             Total_Label = new Label();
@@ -40,28 +43,40 @@ namespace Sales_Tracker.Rentals
             // FilterOverdue_CheckBox
             //
             FilterOverdue_CheckBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            FilterOverdue_CheckBox.AutoSize = true;
+            FilterOverdue_CheckBox.Animated = true;
             FilterOverdue_CheckBox.CheckedState.BorderColor = Color.FromArgb(94, 148, 255);
-            FilterOverdue_CheckBox.CheckedState.BorderRadius = 0;
+            FilterOverdue_CheckBox.CheckedState.BorderRadius = 2;
             FilterOverdue_CheckBox.CheckedState.BorderThickness = 0;
             FilterOverdue_CheckBox.CheckedState.FillColor = Color.FromArgb(94, 148, 255);
-            FilterOverdue_CheckBox.Font = new Font("Segoe UI", 10F);
+            FilterOverdue_CheckBox.CustomizableEdges = customizableEdges1;
             FilterOverdue_CheckBox.Location = new Point(873, 43);
-            FilterOverdue_CheckBox.Margin = new Padding(4, 5, 4, 5);
             FilterOverdue_CheckBox.Name = "FilterOverdue_CheckBox";
-            FilterOverdue_CheckBox.Size = new Size(226, 32);
+            FilterOverdue_CheckBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            FilterOverdue_CheckBox.Size = new Size(20, 20);
             FilterOverdue_CheckBox.TabIndex = 1;
-            FilterOverdue_CheckBox.Text = "Show Overdue Only";
             FilterOverdue_CheckBox.UncheckedState.BorderColor = Color.FromArgb(125, 137, 149);
-            FilterOverdue_CheckBox.UncheckedState.BorderRadius = 0;
+            FilterOverdue_CheckBox.UncheckedState.BorderRadius = 2;
             FilterOverdue_CheckBox.UncheckedState.BorderThickness = 0;
             FilterOverdue_CheckBox.UncheckedState.FillColor = Color.FromArgb(125, 137, 149);
             FilterOverdue_CheckBox.CheckedChanged += FilterOverdue_CheckBox_CheckedChanged;
             //
+            // FilterOverdue_Label
+            //
+            FilterOverdue_Label.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            FilterOverdue_Label.AutoSize = true;
+            FilterOverdue_Label.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            FilterOverdue_Label.Location = new Point(891, 38);
+            FilterOverdue_Label.Name = "FilterOverdue_Label";
+            FilterOverdue_Label.Padding = new Padding(5);
+            FilterOverdue_Label.Size = new Size(208, 38);
+            FilterOverdue_Label.TabIndex = 2;
+            FilterOverdue_Label.Text = "Show Overdue Only";
+            FilterOverdue_Label.Click += FilterOverdue_Label_Click;
+            //
             // Search_TextBox
             //
             Search_TextBox.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Search_TextBox.CustomizableEdges = customizableEdges1;
+            Search_TextBox.CustomizableEdges = customizableEdges3;
             Search_TextBox.DefaultText = "";
             Search_TextBox.Font = new Font("Segoe UI", 9F);
             Search_TextBox.IconRight = Properties.Resources.CloseGray;
@@ -73,7 +88,7 @@ namespace Sales_Tracker.Rentals
             Search_TextBox.Name = "Search_TextBox";
             Search_TextBox.PlaceholderText = "Search current rentals";
             Search_TextBox.SelectedText = "";
-            Search_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            Search_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges4;
             Search_TextBox.Size = new Size(300, 50);
             Search_TextBox.TabIndex = 2;
             Search_TextBox.IconRightClick += Search_TextBox_IconRightClick;
@@ -113,7 +128,8 @@ namespace Sales_Tracker.Rentals
             Controls.Add(Total_Label);
             Controls.Add(ShowingResultsFor_Label);
             Controls.Add(Search_TextBox);
-            Controls.Add(FilterOverdue_Button);
+            Controls.Add(FilterOverdue_Label);
+            Controls.Add(FilterOverdue_CheckBox);
             Controls.Add(Title_Label);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Margin = new Padding(4, 5, 4, 5);
@@ -131,7 +147,8 @@ namespace Sales_Tracker.Rentals
         #endregion
 
         private Label Title_Label;
-        private Guna.UI2.WinForms.Guna2CheckBox FilterOverdue_CheckBox;
+        private Guna.UI2.WinForms.Guna2CustomCheckBox FilterOverdue_CheckBox;
+        private Label FilterOverdue_Label;
         private Guna.UI2.WinForms.Guna2TextBox Search_TextBox;
         private Label ShowingResultsFor_Label;
         private Label Total_Label;

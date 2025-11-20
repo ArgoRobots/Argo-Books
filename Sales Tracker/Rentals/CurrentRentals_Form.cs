@@ -115,7 +115,8 @@ namespace Sales_Tracker.Rentals
 
             // Align controls
             Search_TextBox.Left = CurrentRentals_DataGridView.Right - Search_TextBox.Width;
-            FilterOverdue_CheckBox.Left = Search_TextBox.Left - FilterOverdue_CheckBox.Width - CustomControls.SpaceBetweenControls;
+            FilterOverdue_Label.Left = Search_TextBox.Left - FilterOverdue_Label.Width - CustomControls.SpaceBetweenControls;
+            FilterOverdue_CheckBox.Left = FilterOverdue_Label.Left - FilterOverdue_CheckBox.Width - 5;
         }
         private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -262,6 +263,10 @@ namespace Sales_Tracker.Rentals
         {
             _showOverdueOnly = FilterOverdue_CheckBox.Checked;
             RefreshDataGridView();
+        }
+        private void FilterOverdue_Label_Click(object sender, EventArgs e)
+        {
+            FilterOverdue_CheckBox.Checked = !FilterOverdue_CheckBox.Checked;
         }
         private void Search_TextBox_TextChanged(object sender, EventArgs e)
         {
