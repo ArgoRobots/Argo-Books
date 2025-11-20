@@ -14,7 +14,6 @@ namespace Sales_Tracker
     public partial class ReturnRental_Form : BaseForm
     {
         // Properties
-        private readonly MainMenu_Form _mainMenuForm;
         private readonly Customer _customer;
         private readonly RentalRecord _rentalRecord;
 
@@ -22,7 +21,6 @@ namespace Sales_Tracker
         public ReturnRental_Form(MainMenu_Form mainMenu, Customer customer, RentalRecord rentalRecord)
         {
             InitializeComponent();
-            _mainMenuForm = mainMenu;
             _customer = customer;
             _rentalRecord = rentalRecord;
 
@@ -119,24 +117,18 @@ namespace Sales_Tracker
                 // Update customer rental status
                 _customer?.ReturnRental(_rentalRecord.RentalRecordID);
 
-                // Update DataGridView row
-                bool wasExistingRow = UpdateDataGridViewRow(returnDate);
+                // Add DataGridView row for the return
+                AddRentalRowToDataGridView(returnDate);
 
                 // Refresh the grid to ensure visual changes are displayed
-                _mainMenuForm.Rental_DataGridView.Refresh();
+                MainMenu_Form.Instance.Rental_DataGridView.Refresh();
 
                 // Save all changes
                 RentalInventoryManager.SaveInventory();
                 MainMenu_Form.Instance.SaveCustomersToFile();
 
-                // Save rental data (only if we updated an existing row, not added a new one)
-                if (wasExistingRow)
-                {
-                    DataGridViewManager.DataGridViewRowChanged(_mainMenuForm.Rental_DataGridView);
-                }
-
                 // Refresh charts and UI
-                _mainMenuForm.LoadOrRefreshMainCharts();
+                MainMenu_Form.Instance.LoadOrRefreshMainCharts();
 
                 // Refresh rental inventory form if open
                 Rentals_Form.Instance?.RefreshDataGridView();
@@ -159,62 +151,6 @@ namespace Sales_Tracker
                     $"An error occurred while processing the return: {ex.Message}",
                     CustomMessageBoxIcon.Error,
                     CustomMessageBoxButtons.Ok);
-            }
-        }
-        private bool UpdateDataGridViewRow(DateTime returnDate)
-        {
-            // Find if a row already exists for this rental in Rental_DataGridView
-            DataGridViewRow existingRow = null;
-            foreach (DataGridViewRow row in _mainMenuForm.Rental_DataGridView.Rows)
-            {
-                if (row.Tag is TagData tagData && tagData.RentalRecordID == _rentalRecord.RentalRecordID)
-                {
-                    existingRow = row;
-                    break;
-                }
-            }
-
-            if (existingRow != null)
-            {
-                // Update the existing row
-                if (existingRow.Tag is TagData tagData)
-                {
-                    tagData.IsReturned = true;
-                    tagData.ReturnDate = returnDate;
-                    existingRow.Tag = tagData;
-                }
-
-                // Apply visual indicator (strikethrough and color)
-                foreach (DataGridViewCell cell in existingRow.Cells)
-                {
-                    cell.Style.Font = new Font(cell.Style.Font ?? existingRow.DataGridView.DefaultCellStyle.Font, FontStyle.Strikeout);
-                    cell.Style.ForeColor = Color.Gray;
-                }
-
-                // Add return date to notes column
-                DataGridViewCell noteCell = existingRow.Cells[ReadOnlyVariables.Note_column];
-                if (noteCell != null)
-                {
-                    string currentNote = noteCell.Value?.ToString() ?? "";
-                    string returnNote = $"[RETURNED: {returnDate:MMM dd, yyyy}]";
-
-                    if (string.IsNullOrWhiteSpace(currentNote))
-                    {
-                        noteCell.Value = returnNote;
-                    }
-                    else if (!currentNote.Contains("RETURNED"))
-                    {
-                        noteCell.Value = $"{currentNote}\n{returnNote}";
-                    }
-                }
-
-                return true; // Existing row was updated
-            }
-            else
-            {
-                // No existing row - add a new row to Rental_DataGridView
-                AddRentalRowToDataGridView(returnDate);
-                return false; // New row was added
             }
         }
         private void AddRentalRowToDataGridView(DateTime returnDate)
@@ -285,12 +221,12 @@ namespace Sales_Tracker
             ];
 
             // Add the row to the DataGridView
-            int rowIndex = _mainMenuForm.Rental_DataGridView.Rows.Add(rowValues);
+            int rowIndex = MainMenu_Form.Instance.Rental_DataGridView.Rows.Add(rowValues);
 
             // Add note if present
             if (!string.IsNullOrWhiteSpace(notes))
             {
-                DataGridViewManager.AddNoteToCell(_mainMenuForm.Rental_DataGridView, rowIndex, notes);
+                DataGridViewManager.AddNoteToCell(MainMenu_Form.Instance.Rental_DataGridView, rowIndex, notes);
             }
 
             // Create and attach TagData
@@ -303,7 +239,7 @@ namespace Sales_Tracker
                 RentalRecordID = _rentalRecord.RentalRecordID
             };
 
-            DataGridViewRow newRow = _mainMenuForm.Rental_DataGridView.Rows[rowIndex];
+            DataGridViewRow newRow = MainMenu_Form.Instance.Rental_DataGridView.Rows[rowIndex];
             newRow.Tag = tagData;
 
             // Set the Has Receipt cell
@@ -318,7 +254,7 @@ namespace Sales_Tracker
 
             // Trigger the RowsAdded event to save and refresh
             DataGridViewRowsAddedEventArgs args = new(rowIndex, 1);
-            DataGridViewManager.DataGridViewRowsAdded(_mainMenuForm.Rental_DataGridView, args);
+            DataGridViewManager.DataGridViewRowsAdded(MainMenu_Form.Instance.Rental_DataGridView, args);
         }
     }
 }
