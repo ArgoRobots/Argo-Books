@@ -21,6 +21,8 @@ namespace Sales_Tracker.Rentals
         public ReturnRental_Form(Customer customer, RentalRecord rentalRecord)
         {
             InitializeComponent();
+            ReturnDate_Picker.Value = DateTime.Now;
+
             _customer = customer;
             _rentalRecord = rentalRecord;
 
@@ -260,7 +262,7 @@ namespace Sales_Tracker.Rentals
             object[] rowValues =
             [
                 _rentalRecord.RentalRecordID,                    // Rental #
-                MainMenu_Form.SelectedAccountant,                // Accountant
+                _rentalRecord.Accountant,                        // Accountant
                 rentalItem.ProductName,                          // Product / Service
                 categoryName,                                    // Category
                 product.CountryOfOrigin ?? "-",                  // Country of destination

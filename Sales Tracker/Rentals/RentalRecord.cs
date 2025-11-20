@@ -16,6 +16,7 @@ namespace Sales_Tracker.Rentals
     public class RentalRecord
     {
         public string RentalRecordID { get; set; }
+        public string Accountant { get; set; }
         public string CustomerID { get; set; }
         public string RentalItemID { get; set; }
         public string ProductName { get; set; }
@@ -34,6 +35,7 @@ namespace Sales_Tracker.Rentals
         public decimal Discount { get; set; }
         public decimal AmountCharged { get; set; }
         public string Notes { get; set; } = "";
+        public string Receipt { get; set; } = "";
         public bool IsActive { get; set; } = true;
         public bool IsOverdue { get; set; }
 

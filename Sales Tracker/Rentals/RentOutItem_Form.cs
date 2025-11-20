@@ -134,6 +134,7 @@ namespace Sales_Tracker.Rentals
                 securityDeposit: deposit,
                 notes: Notes_TextBox.Text.Trim()
             );
+            record.Accountant = MainMenu_Form.SelectedAccountant;
 
             // Rent out the item
             if (!_rentalItem.RentOut(quantity, _selectedCustomer.CustomerID))
@@ -229,7 +230,7 @@ namespace Sales_Tracker.Rentals
             object[] rowValues =
             [
                 rentalID,                                 // Rental #
-                MainMenu_Form.SelectedAccountant,         // Accountant
+                record.Accountant,                        // Accountant
                 _rentalItem.ProductName,                  // Product / Service
                 categoryName,                             // Category
                 product.CountryOfOrigin ?? "-",           // Country of destination (using origin for rental)

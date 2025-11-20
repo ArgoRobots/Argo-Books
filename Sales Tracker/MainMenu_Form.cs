@@ -222,7 +222,107 @@ namespace Sales_Tracker
 
             AddRowsFromFile(Purchase_DataGridView, SelectedOption.Purchases);
             AddRowsFromFile(Sale_DataGridView, SelectedOption.Sales);
-            AddRowsFromFile(Rental_DataGridView, SelectedOption.Rentals);
+            LoadRentalsFromInventory();
+        }
+        private void LoadRentalsFromInventory()
+        {
+            foreach (RentalItem rentalItem in RentalInventoryManager.RentalInventory)
+            {
+                foreach (RentalRecord record in rentalItem.RentalRecords)
+                {
+                    // Get the product details from category lists
+                    Product product = GetProductProductNameIsFrom(
+                        CategoryRentalList,
+                        rentalItem.ProductName,
+                        rentalItem.CompanyName);
+
+                    if (product == null)
+                    {
+                        Log.Write(1, $"Product not found for rental: {rentalItem.ProductName} from {rentalItem.CompanyName}");
+                        continue;
+                    }
+
+                    string categoryName = GetCategoryNameProductIsFrom(
+                        CategoryRentalList,
+                        rentalItem.ProductName,
+                        rentalItem.CompanyName) ?? "";
+
+                    // Format rental rate display
+                    string ratePeriod = record.RateType switch
+                    {
+                        RentalRateType.Daily => "day",
+                        RentalRateType.Weekly => "week",
+                        RentalRateType.Monthly => "month",
+                        _ => "day"
+                    };
+                    string formattedRate = $"{CurrencySymbol}{record.Rate:N2}/{ratePeriod}";
+
+                    // End date shows return date if returned, otherwise "-"
+                    string endDate = record.ReturnDate.HasValue
+                        ? record.ReturnDate.Value.ToString("yyyy-MM-dd")
+                        : "-";
+
+                    // Calculate charged difference
+                    decimal expectedAmount = record.TotalCost + record.Tax + record.Fee + record.Shipping - record.Discount;
+                    decimal chargedDifference = record.AmountCharged - expectedAmount;
+
+                    // Prepare the row values
+                    object[] rowValues =
+                    [
+                        record.RentalRecordID,                           // Rental #
+                        record.Accountant ?? SelectedAccountant,         // Accountant
+                        rentalItem.ProductName,                          // Product / Service
+                        categoryName,                                    // Category
+                        product.CountryOfOrigin ?? "-",                  // Country of destination
+                        rentalItem.CompanyName,                          // Company of origin
+                        record.StartDate.ToString("yyyy-MM-dd"),         // Start date
+                        endDate,                                         // End date
+                        record.Quantity,                                 // Total items
+                        formattedRate,                                   // Rental rate
+                        record.Shipping.ToString("0.00"),                // Shipping
+                        record.Tax.ToString("0.00"),                     // Tax
+                        record.Fee.ToString("0.00"),                     // Fee
+                        record.Discount.ToString("0.00"),                // Discount
+                        chargedDifference.ToString("0.00"),              // Charged difference
+                        record.AmountCharged.ToString("0.00"),           // Total rental revenue
+                        "-",                                             // Notes placeholder
+                        ReadOnlyVariables.EmptyCell                      // Has receipt
+                    ];
+
+                    // Add the row to the DataGridView
+                    int rowIndex = Rental_DataGridView.Rows.Add(rowValues);
+
+                    // Add note if present
+                    if (!string.IsNullOrWhiteSpace(record.Notes))
+                    {
+                        DataGridViewManager.AddNoteToCell(Rental_DataGridView, rowIndex, record.Notes);
+                    }
+
+                    // Get customer information
+                    Customer customer = CustomerList.FirstOrDefault(c => c.CustomerID == record.CustomerID);
+
+                    // Create and attach TagData
+                    TagData tagData = new()
+                    {
+                        IsReturned = record.ReturnDate.HasValue,
+                        ReturnDate = record.ReturnDate,
+                        CustomerID = record.CustomerID,
+                        CustomerName = customer?.FullName ?? "",
+                        RentalRecordID = record.RentalRecordID
+                    };
+
+                    Rental_DataGridView.Rows[rowIndex].Tag = tagData;
+
+                    // Set the Has Receipt cell
+                    if (!string.IsNullOrWhiteSpace(record.Receipt))
+                    {
+                        SetReceiptCellToX(Rental_DataGridView.Rows[rowIndex].Cells[Column.HasReceipt.ToString()]);
+                    }
+                }
+            }
+
+            bool hasVisibleRows = DataGridViewManager.HasVisibleRowsExcludingReturnedOrLost(Rental_DataGridView);
+            LabelManager.ManageNoDataLabelOnControl(hasVisibleRows, Rental_DataGridView);
         }
         private void LoadCustomColumnHeaders()
         {
