@@ -63,7 +63,6 @@ namespace Sales_Tracker
             int searchBoxMaxHeight = (int)(255 * scale);
             SearchBox.Attach(Customer_TextBox, this, GetCustomerSearchResults, searchBoxMaxHeight, false, false, false, false);
         }
-
         private List<SearchResult> GetCustomerSearchResults()
         {
             List<SearchResult> results = [];

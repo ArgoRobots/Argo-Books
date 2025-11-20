@@ -926,63 +926,17 @@ namespace Sales_Tracker.GridView
                 if (activeRentals.Count == 1)
                 {
                     // Only one active rental, open the form with customer and rental record
-                    Tools.OpenForm(new ReturnRental_Form(MainMenu_Form.Instance, activeRentals[0].customer, activeRentals[0].rental));
+                    Tools.OpenForm(new ReturnRental_Form(activeRentals[0].customer, activeRentals[0].rental));
                     Hide();
                     return;
                 }
-
-                // Multiple active rentals - show message to user
-                string rentalsList = string.Join("\n", activeRentals.Select(r =>
-                    $"  • {r.customer.FullName} - Rental #{r.rental.RentalRecordID}"));
-
-                CustomMessageBox.Show(
-                    "Multiple Active Rentals",
-                    $"This item has multiple active rentals:\n\n{rentalsList}\n\n" +
-                    "Please go to the Rentals view in the main menu and right-click on the specific rental you want to return.",
-                    CustomMessageBoxIcon.Info,
-                    CustomMessageBoxButtons.Ok);
-                return;
             }
 
-            // Handle rental transaction rows (TagData tag)
-            if (selectedRow.Tag is TagData tagData)
-            {
-                if (tagData.IsReturned)
-                {
-                    CustomMessageBox.Show(
-                        "Already Returned",
-                        "This rental has already been returned.",
-                        CustomMessageBoxIcon.Info,
-                        CustomMessageBoxButtons.Ok);
-                    return;
-                }
-
-                // Find the customer and rental record
-                Customer customer = MainMenu_Form.Instance.CustomerList.FirstOrDefault(c => c.CustomerID == tagData.CustomerID);
-                RentalRecord rentalRecord = customer?.GetActiveRentals().FirstOrDefault(r => r.RentalRecordID == tagData.RentalRecordID);
-
-                if (customer == null || rentalRecord == null)
-                {
-                    CustomMessageBox.Show(
-                        "Error",
-                        "Could not find the rental information.",
-                        CustomMessageBoxIcon.Error,
-                        CustomMessageBoxButtons.Ok);
-                    return;
-                }
-
-                // Open the return rental form with customer and rental record
-                Tools.OpenForm(new ReturnRental_Form(MainMenu_Form.Instance, customer, rentalRecord));
-                Hide();
-            }
-            else
-            {
-                CustomMessageBox.Show(
-                    "Error",
-                    "Unable to process this rental return. Invalid rental data.",
-                    CustomMessageBoxIcon.Error,
-                    CustomMessageBoxButtons.Ok);
-            }
+            CustomMessageBox.Show(
+                "Error",
+                "Unable to process this rental return. Invalid rental data.",
+                CustomMessageBoxIcon.Error,
+                CustomMessageBoxButtons.Ok);
         }
 
         // Helper methods

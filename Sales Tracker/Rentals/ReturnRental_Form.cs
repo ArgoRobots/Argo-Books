@@ -18,7 +18,7 @@ namespace Sales_Tracker
         private readonly RentalRecord _rentalRecord;
 
         // Init
-        public ReturnRental_Form(MainMenu_Form mainMenu, Customer customer, RentalRecord rentalRecord)
+        public ReturnRental_Form(Customer customer, RentalRecord rentalRecord)
         {
             InitializeComponent();
             _customer = customer;
@@ -161,7 +161,7 @@ namespace Sales_Tracker
 
             // Get the product and category information
             Product product = MainMenu_Form.GetProductProductNameIsFrom(
-                MainMenu_Form.Instance.CategoryPurchaseList,
+                MainMenu_Form.Instance.CategoryRentalList,
                 rentalItem.ProductName,
                 rentalItem.CompanyName);
 
@@ -172,7 +172,7 @@ namespace Sales_Tracker
             }
 
             string categoryName = MainMenu_Form.GetCategoryNameProductIsFrom(
-                MainMenu_Form.Instance.CategoryPurchaseList,
+                MainMenu_Form.Instance.CategoryRentalList,
                 rentalItem.ProductName,
                 rentalItem.CompanyName) ?? "";
 
@@ -244,13 +244,6 @@ namespace Sales_Tracker
 
             // Set the Has Receipt cell
             MainMenu_Form.SetReceiptCellToX(newRow.Cells[MainMenu_Form.Column.HasReceipt.ToString()]);
-
-            // Apply visual indicator (strikethrough and color) since it's returned
-            foreach (DataGridViewCell cell in newRow.Cells)
-            {
-                cell.Style.Font = new Font(cell.Style.Font ?? newRow.DataGridView.DefaultCellStyle.Font, FontStyle.Strikeout);
-                cell.Style.ForeColor = Color.Gray;
-            }
 
             // Trigger the RowsAdded event to save and refresh
             DataGridViewRowsAddedEventArgs args = new(rowIndex, 1);
