@@ -960,11 +960,7 @@ namespace Sales_Tracker
                         break;
 
                     case nameof(Rentals_Form.Column.CompanyName):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.CompanyName], left, Panel);
-                        Guna2TextBox companyTextBox = ConstructTextBox(left, columnName, cellValue, 50, CustomControls.KeyPressValidation.None, false, Panel);
-                        List<SearchResult> companySearchResults = SearchBox.ConvertToSearchResults(MainMenu_Form.Instance.CompanyList);
-                        SearchBox.Attach(companyTextBox, this, () => companySearchResults, searchBoxMaxHeight, false, false, false, true);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        // Skip CompanyName - it should only be set from the products form
                         break;
 
                     case nameof(Rentals_Form.Column.Status):
