@@ -12,9 +12,7 @@ using System.ComponentModel;
 namespace Sales_Tracker.GridView
 {
     /// <summary>
-    /// Manages the setup, interactions, and event handling for DataGridView components in the.
-    /// This class includes methods for initializing DataGridViews, handling row and cell events, 
-    /// and customizing DataGridView behavior, such as right-click context menus and cell style updates.
+    /// Manages the setup, interactions, and event handling for DataGridView components.
     /// </summary>
     public class DataGridViewManager
     {
@@ -652,6 +650,7 @@ namespace Sales_Tracker.GridView
             bool isSingleRowSelected = grid.SelectedRows.Count == 1;
             bool isPurchasesOrSales = selectedOption == MainMenu_Form.SelectedOption.Purchases ||
                                       selectedOption == MainMenu_Form.SelectedOption.Sales;
+            bool isRentals = selectedOption == MainMenu_Form.SelectedOption.Rentals;
             bool isTransactionView = selectedOption == MainMenu_Form.SelectedOption.ItemsInPurchase ||
                                      selectedOption == MainMenu_Form.SelectedOption.ItemsInSale;
             int currentIndex = 0;
@@ -663,11 +662,21 @@ namespace Sales_Tracker.GridView
             {
                 if (isSingleRowSelected)
                 {
-                    // Check if item has available quantity  
-                    if (grid.SelectedRows[0].Tag is RentalItem rentalItem && rentalItem.QuantityAvailable > 0)
+                    if (grid.SelectedRows[0].Tag is RentalItem rentalItem)
                     {
-                        RightClickDataGridViewRowMenu.RentOut_Button.Visible = true;
-                        flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.RentOut_Button, currentIndex++);
+                        // Check if item has available quantity for renting out
+                        if (rentalItem.QuantityAvailable > 0)
+                        {
+                            RightClickDataGridViewRowMenu.RentOut_Button.Visible = true;
+                            flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.RentOut_Button, currentIndex++);
+                        }
+
+                        // Check if item has rented quantity for returning
+                        if (rentalItem.QuantityRented > 0)
+                        {
+                            RightClickDataGridViewRowMenu.ReturnRental_Button.Visible = true;
+                            flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ReturnRental_Button, currentIndex++);
+                        }
                     }
 
                     RightClickDataGridViewRowMenu.Modify_Button.Visible = true;
@@ -679,6 +688,20 @@ namespace Sales_Tracker.GridView
 
                 return;  // Don't add any more buttons
             }
+
+            // Add buttons for Rental Transactions
+            if (isRentals && isSingleRowSelected)
+            {
+                DataGridViewRow selectedRow = grid.SelectedRows[0];
+
+                // Check if this is a rental transaction (has TagData) and not already returned
+                if (selectedRow.Tag is TagData tagData && !tagData.IsReturned)
+                {
+                    RightClickDataGridViewRowMenu.ReturnRental_Button.Visible = true;
+                    flowPanel.Controls.SetChildIndex(RightClickDataGridViewRowMenu.ReturnRental_Button, currentIndex++);
+                }
+            }
+
             // Add buttons for Receipts_Form
             if (selectedOption == MainMenu_Form.SelectedOption.Receipts)
             {
