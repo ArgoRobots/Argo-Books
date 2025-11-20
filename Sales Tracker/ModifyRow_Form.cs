@@ -1027,11 +1027,33 @@ namespace Sales_Tracker
                         break;
 
                     case nameof(Rentals_Form.Column.RentalRate):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.RentalRate], secondLeft, _secondPanel);
-                        Guna2TextBox rentalRateTextBox = ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.None, false, _secondPanel);
-                        rentalRateTextBox.ReadOnly = true; // Display only - rate is calculated from item properties
-                        rentalRateTextBox.Width = ScaledSmallWidth;
-                        secondLeft += ScaledSmallWidth + CustomControls.SpaceBetweenControls;
+                        // Extract rates from the RentalItem object
+                        if (_selectedRow.Tag is RentalItem rentalItem)
+                        {
+                            // DailyRate
+                            ConstructLabel("Daily Rate", secondLeft, _secondPanel);
+                            Guna2TextBox dailyRateTextBox = ConstructTextBox(secondLeft, "DailyRate", rentalItem.DailyRate > 0 ? rentalItem.DailyRate.ToString("0.00") : "", 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
+                            dailyRateTextBox.Width = ScaledSmallWidth;
+                            dailyRateTextBox.TextChanged += ValidateInputs;
+                            dailyRateTextBox.TextChanged += HandleRateTextBoxChanged;
+                            secondLeft += ScaledSmallWidth + CustomControls.SpaceBetweenControls;
+
+                            // WeeklyRate
+                            ConstructLabel("Weekly Rate", secondLeft, _secondPanel);
+                            Guna2TextBox weeklyRateTextBox = ConstructTextBox(secondLeft, "WeeklyRate", rentalItem.WeeklyRate.HasValue && rentalItem.WeeklyRate.Value > 0 ? rentalItem.WeeklyRate.Value.ToString("0.00") : "", 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
+                            weeklyRateTextBox.Width = ScaledSmallWidth;
+                            weeklyRateTextBox.TextChanged += ValidateInputs;
+                            weeklyRateTextBox.TextChanged += HandleRateTextBoxChanged;
+                            secondLeft += ScaledSmallWidth + CustomControls.SpaceBetweenControls;
+
+                            // MonthlyRate
+                            ConstructLabel("Monthly Rate", secondLeft, _secondPanel);
+                            Guna2TextBox monthlyRateTextBox = ConstructTextBox(secondLeft, "MonthlyRate", rentalItem.MonthlyRate.HasValue && rentalItem.MonthlyRate.Value > 0 ? rentalItem.MonthlyRate.Value.ToString("0.00") : "", 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
+                            monthlyRateTextBox.Width = ScaledSmallWidth;
+                            monthlyRateTextBox.TextChanged += ValidateInputs;
+                            monthlyRateTextBox.TextChanged += HandleRateTextBoxChanged;
+                            secondLeft += ScaledSmallWidth + CustomControls.SpaceBetweenControls;
+                        }
                         break;
 
                     case nameof(Rentals_Form.Column.SecurityDeposit):
@@ -1220,10 +1242,41 @@ namespace Sales_Tracker
                             _selectedRow.Cells[column].Value = 0m;
                         }
                     }
-                    // Skip RentalRate - it's read-only and calculated
-                    else if (column == nameof(Rentals_Form.Column.RentalRate))
+                    // Handle individual rate fields
+                    else if (column == "DailyRate" || column == "WeeklyRate" || column == "MonthlyRate")
                     {
-                        // Do nothing - this is display-only
+                        // These are handled in UpdateRentalInventoryListWithValues
+                        // Here we need to update the display RentalRate column
+                        if (_selectedTag == MainMenu_Form.DataGridViewTag.RentalInventory.ToString() && _selectedRow.Tag is RentalItem item)
+                        {
+                            // Get rate values from textboxes
+                            IEnumerable<Control> allControls = Panel.Controls.Cast<Control>();
+                            if (_secondPanel != null)
+                            {
+                                allControls = allControls.Concat(_secondPanel.Controls.Cast<Control>());
+                            }
+
+                            string dailyRate = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "DailyRate")?.Text ?? "";
+                            string weeklyRate = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "WeeklyRate")?.Text ?? "";
+                            string monthlyRate = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "MonthlyRate")?.Text ?? "";
+
+                            // Format the display value
+                            string formattedRate = ReadOnlyVariables.EmptyCell;
+                            if (!string.IsNullOrWhiteSpace(dailyRate) && decimal.TryParse(dailyRate, out decimal daily) && daily > 0)
+                            {
+                                formattedRate = $"{MainMenu_Form.CurrencySymbol}{daily:N2}/day";
+                            }
+                            else if (!string.IsNullOrWhiteSpace(weeklyRate) && decimal.TryParse(weeklyRate, out decimal weekly) && weekly > 0)
+                            {
+                                formattedRate = $"{MainMenu_Form.CurrencySymbol}{weekly:N2}/week";
+                            }
+                            else if (!string.IsNullOrWhiteSpace(monthlyRate) && decimal.TryParse(monthlyRate, out decimal monthly) && monthly > 0)
+                            {
+                                formattedRate = $"{MainMenu_Form.CurrencySymbol}{monthly:N2}/month";
+                            }
+
+                            _selectedRow.Cells[nameof(Rentals_Form.Column.RentalRate)].Value = formattedRate;
+                        }
                     }
                     // All other columns
                     else if (column != "Notes_TextBox" && column != "CountryCode_TextBox" && !processedColumns.Contains(column))
@@ -1490,6 +1543,59 @@ namespace Sales_Tracker
             if (_validationLabels.TryGetValue(control, out Label validationLabel))
             {
                 validationLabel.Visible = false;
+            }
+        }
+        private void HandleRateTextBoxChanged(object sender, EventArgs e)
+        {
+            if (sender is not Guna2TextBox changedTextBox) return;
+
+            // Get all controls from both panels
+            IEnumerable<Control> allControls = Panel.Controls.Cast<Control>();
+            if (_secondPanel != null)
+            {
+                allControls = allControls.Concat(_secondPanel.Controls.Cast<Control>());
+            }
+
+            // Find all rate textboxes
+            Guna2TextBox dailyRateTextBox = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "DailyRate");
+            Guna2TextBox weeklyRateTextBox = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "WeeklyRate");
+            Guna2TextBox monthlyRateTextBox = allControls.OfType<Guna2TextBox>().FirstOrDefault(tb => tb.Name == "MonthlyRate");
+
+            if (dailyRateTextBox == null || weeklyRateTextBox == null || monthlyRateTextBox == null)
+                return;
+
+            // If the changed textbox has a value, disable the other rate textboxes
+            bool hasValue = !string.IsNullOrWhiteSpace(changedTextBox.Text) && changedTextBox.Text != "0" && changedTextBox.Text != "0.00";
+
+            if (changedTextBox == dailyRateTextBox)
+            {
+                weeklyRateTextBox.Enabled = !hasValue;
+                monthlyRateTextBox.Enabled = !hasValue;
+                if (!hasValue)
+                {
+                    weeklyRateTextBox.Clear();
+                    monthlyRateTextBox.Clear();
+                }
+            }
+            else if (changedTextBox == weeklyRateTextBox)
+            {
+                dailyRateTextBox.Enabled = !hasValue;
+                monthlyRateTextBox.Enabled = !hasValue;
+                if (!hasValue)
+                {
+                    dailyRateTextBox.Clear();
+                    monthlyRateTextBox.Clear();
+                }
+            }
+            else if (changedTextBox == monthlyRateTextBox)
+            {
+                dailyRateTextBox.Enabled = !hasValue;
+                weeklyRateTextBox.Enabled = !hasValue;
+                if (!hasValue)
+                {
+                    dailyRateTextBox.Clear();
+                    weeklyRateTextBox.Clear();
+                }
             }
         }
         private bool IsDuplicateProduct(IEnumerable<Control> allControls)
@@ -2111,9 +2217,35 @@ namespace Sales_Tracker
                                 rentalItem.QuantityInMaintenance = maintenance;
                             }
                             break;
-                        case nameof(Rentals_Form.Column.RentalRate):
-                            // RentalRate is display-only and calculated from the item's rate properties
-                            // Actual rate editing would need to be done through item properties
+                        case "DailyRate":
+                            if (decimal.TryParse(textBox.Text.Trim(), out decimal daily))
+                            {
+                                rentalItem.DailyRate = daily;
+                            }
+                            else
+                            {
+                                rentalItem.DailyRate = 0;
+                            }
+                            break;
+                        case "WeeklyRate":
+                            if (!string.IsNullOrWhiteSpace(textBox.Text.Trim()) && decimal.TryParse(textBox.Text.Trim(), out decimal weekly) && weekly > 0)
+                            {
+                                rentalItem.WeeklyRate = weekly;
+                            }
+                            else
+                            {
+                                rentalItem.WeeklyRate = null;
+                            }
+                            break;
+                        case "MonthlyRate":
+                            if (!string.IsNullOrWhiteSpace(textBox.Text.Trim()) && decimal.TryParse(textBox.Text.Trim(), out decimal monthly) && monthly > 0)
+                            {
+                                rentalItem.MonthlyRate = monthly;
+                            }
+                            else
+                            {
+                                rentalItem.MonthlyRate = null;
+                            }
                             break;
                         case nameof(Rentals_Form.Column.SecurityDeposit):
                             if (decimal.TryParse(textBox.Text.Trim(), out decimal deposit))
