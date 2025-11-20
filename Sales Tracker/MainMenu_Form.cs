@@ -2364,13 +2364,13 @@ namespace Sales_Tracker
             {
                 categoryList = CategoryPurchaseList;
             }
-            else if (option == SelectedOption.CategoryRentals)
+            else if (option == SelectedOption.CategorySales || option == SelectedOption.ProductSales)
             {
-                categoryList = CategoryRentalList;
+                categoryList = CategorySaleList;
             }
             else
             {
-                categoryList = CategorySaleList;
+                categoryList = CategoryRentalList;
             }
 
             string json = JsonConvert.SerializeObject(categoryList, Formatting.Indented);
