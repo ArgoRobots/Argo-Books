@@ -1411,6 +1411,13 @@ namespace Sales_Tracker
             {
                 if (control is Guna2TextBox gunaTextBox)
                 {
+                    // Skip validation for disabled textboxes (e.g., disabled rental rate fields)
+                    if (!gunaTextBox.Enabled)
+                    {
+                        HideValidationMessage(gunaTextBox);
+                        continue;
+                    }
+
                     // ProductID is optional for products
                     bool isProductID = _selectedTag == nameof(MainMenu_Form.DataGridViewTag.Product) &&
                                        gunaTextBox.Name == nameof(Products_Form.Column.ProductID);
