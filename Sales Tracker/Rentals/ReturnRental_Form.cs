@@ -56,8 +56,12 @@ namespace Sales_Tracker.Rentals
 
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(AmountCharged_TextBox);
             TextBoxManager.Attach(AmountCharged_TextBox);
+            AmountCharged_TextBox.TextChanged += AmountCharged_TextBox_TextChanged;
 
             TextBoxManager.Attach(Notes_TextBox);
+
+            // Initial validation
+            ValidateForm();
         }
         private void LoadRentalDetails()
         {
@@ -109,14 +113,25 @@ namespace Sales_Tracker.Rentals
             decimal fee = string.IsNullOrWhiteSpace(Fee_TextBox.Text) ? 0 : decimal.Parse(Fee_TextBox.Text);
             decimal shipping = string.IsNullOrWhiteSpace(Shipping_TextBox.Text) ? 0 : decimal.Parse(Shipping_TextBox.Text);
             decimal discount = string.IsNullOrWhiteSpace(Discount_TextBox.Text) ? 0 : decimal.Parse(Discount_TextBox.Text);
-            decimal amountCharged = string.IsNullOrWhiteSpace(AmountCharged_TextBox.Text) ? 0 : decimal.Parse(AmountCharged_TextBox.Text);
+            decimal amountCharged = decimal.Parse(AmountCharged_TextBox.Text);
 
             ProcessReturn(returnDate, notes, tax, fee, shipping, discount, amountCharged);
+        }
+        private void AmountCharged_TextBox_TextChanged(object sender, EventArgs e)
+        {
+            ValidateForm();
         }
         private void Cancel_Button_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        // Validation
+        private void ValidateForm()
+        {
+            // Return_Button is enabled only if AmountCharged_TextBox is not empty
+            Return_Button.Enabled = !string.IsNullOrWhiteSpace(AmountCharged_TextBox.Text);
         }
 
         // Business logic
