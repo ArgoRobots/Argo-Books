@@ -168,6 +168,17 @@ namespace Sales_Tracker
             return -1;
         }
 
+        /// <summary>
+        /// Gets the original email from the old values list, or null if not available.
+        /// </summary>
+        private string GetOriginalEmail()
+        {
+            int emailColumnIndex = GetEmailColumnIndex();
+            return emailColumnIndex >= 0 && emailColumnIndex < _listOfOldValues.Count
+                ? _listOfOldValues[emailColumnIndex]
+                : null;
+        }
+
         // Event handlers
         private void Save_Button_Click(object sender, EventArgs e)
         {
@@ -1383,18 +1394,9 @@ namespace Sales_Tracker
                     bool isValidEmail = !isEmailField || TextBoxValidation.IsValidEmail(gunaTextBox.Text);
 
                     // For email uniqueness check, exclude the current customer's original email
-                    bool isUniqueEmail = true;
-                    if (isEmailField && !string.IsNullOrWhiteSpace(gunaTextBox.Text))
-                    {
-                        // Get the index of the Email column in _listOfOldValues
-                        int emailColumnIndex = GetEmailColumnIndex();
-                        string originalEmail = emailColumnIndex >= 0 && emailColumnIndex < _listOfOldValues.Count
-                            ? _listOfOldValues[emailColumnIndex]
-                            : "";
-
-                        // Check for duplicates, excluding the original email
-                        isUniqueEmail = !TextBoxValidation.IsEmailDuplicate(gunaTextBox.Text, originalEmail);
-                    }
+                    bool isUniqueEmail = !isEmailField ||
+                                       string.IsNullOrWhiteSpace(gunaTextBox.Text) ||
+                                       !TextBoxValidation.IsEmailDuplicate(gunaTextBox.Text, GetOriginalEmail());
 
                     bool isEmpty = string.IsNullOrEmpty(gunaTextBox.Text) ||
                                    gunaTextBox.Text == ReadOnlyVariables.EmptyCell ||
