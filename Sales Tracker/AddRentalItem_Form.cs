@@ -233,7 +233,7 @@ namespace Sales_Tracker
         }
         private void CheckIfProductsExist()
         {
-            if (MainMenu_Form.Instance.GetProductPurchaseNames().Count == 0)
+            if (MainMenu_Form.Instance.GetFormattedRentableProductNames().Count == 0)
             {
                 WarningProduct_PictureBox.Visible = true;
                 WarningProduct_LinkLabel.Visible = true;
