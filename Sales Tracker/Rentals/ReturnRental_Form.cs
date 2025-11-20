@@ -54,6 +54,9 @@ namespace Sales_Tracker.Rentals
             TextBoxValidation.OnlyAllowNumbersAndOneDecimal(Discount_TextBox);
             TextBoxManager.Attach(Discount_TextBox);
 
+            TextBoxValidation.OnlyAllowNumbersAndOneDecimal(AmountCharged_TextBox);
+            TextBoxManager.Attach(AmountCharged_TextBox);
+
             TextBoxManager.Attach(Notes_TextBox);
         }
         private void LoadRentalDetails()
@@ -106,9 +109,10 @@ namespace Sales_Tracker.Rentals
             decimal fee = string.IsNullOrWhiteSpace(Fee_TextBox.Text) ? 0 : decimal.Parse(Fee_TextBox.Text);
             decimal shipping = string.IsNullOrWhiteSpace(Shipping_TextBox.Text) ? 0 : decimal.Parse(Shipping_TextBox.Text);
             decimal discount = string.IsNullOrWhiteSpace(Discount_TextBox.Text) ? 0 : decimal.Parse(Discount_TextBox.Text);
+            decimal amountCharged = string.IsNullOrWhiteSpace(AmountCharged_TextBox.Text) ? 0 : decimal.Parse(AmountCharged_TextBox.Text);
 
             // Process return
-            ProcessReturn(returnDate, notes, tax, fee, shipping, discount);
+            ProcessReturn(returnDate, notes, tax, fee, shipping, discount, amountCharged);
         }
         private void Cancel_Button_Click(object sender, EventArgs e)
         {
@@ -117,7 +121,7 @@ namespace Sales_Tracker.Rentals
         }
 
         // Business logic
-        private void ProcessReturn(DateTime returnDate, string notes, decimal tax, decimal fee, decimal shipping, decimal discount)
+        private void ProcessReturn(DateTime returnDate, string notes, decimal tax, decimal fee, decimal shipping, decimal discount, decimal amountCharged)
         {
             try
             {
@@ -129,6 +133,7 @@ namespace Sales_Tracker.Rentals
                 _rentalRecord.Fee = fee;
                 _rentalRecord.Shipping = shipping;
                 _rentalRecord.Discount = discount;
+                _rentalRecord.AmountCharged = amountCharged;
 
                 if (!string.IsNullOrWhiteSpace(notes))
                 {
@@ -225,6 +230,11 @@ namespace Sales_Tracker.Rentals
                 notes = returnNote;
             }
 
+            // Calculate charged difference
+            // Expected amount = TotalCost + Tax + Fee + Shipping - Discount
+            decimal expectedAmount = _rentalRecord.TotalCost + _rentalRecord.Tax + _rentalRecord.Fee + _rentalRecord.Shipping - _rentalRecord.Discount;
+            decimal chargedDifference = _rentalRecord.AmountCharged - expectedAmount;
+
             // Prepare the row values (matching structure from RentOutItem_Form)
             object[] rowValues =
             [
@@ -241,8 +251,8 @@ namespace Sales_Tracker.Rentals
                 _rentalRecord.Tax.ToString("0.00"),              // Tax
                 _rentalRecord.Fee.ToString("0.00"),              // Fee
                 _rentalRecord.Discount.ToString("0.00"),         // Discount
-                "0.00",                                          // Charged difference
-                _rentalRecord.TotalCost.ToString("N2"),          // Total rental revenue
+                chargedDifference.ToString("0.00"),              // Charged difference
+                _rentalRecord.AmountCharged.ToString("0.00"),    // Amount charged (Total rental revenue column)
                 "-",                                             // Notes placeholder
                 ReadOnlyVariables.EmptyCell                      // Has receipt
             ];

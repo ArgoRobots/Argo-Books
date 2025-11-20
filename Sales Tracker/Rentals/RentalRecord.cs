@@ -32,6 +32,7 @@ namespace Sales_Tracker.Rentals
         public decimal Fee { get; set; }
         public decimal Shipping { get; set; }
         public decimal Discount { get; set; }
+        public decimal AmountCharged { get; set; }
         public string Notes { get; set; } = "";
         public bool IsActive { get; set; } = true;
         public bool IsOverdue { get; set; }

@@ -46,6 +46,8 @@ namespace Sales_Tracker.Rentals
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Title_Label = new Label();
             RentalDetails_Label = new Label();
             ReturnDate_Label = new Label();
@@ -60,6 +62,8 @@ namespace Sales_Tracker.Rentals
             Discount_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             Notes_Label = new Label();
             Notes_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
+            AmountCharged_Label = new Label();
+            AmountCharged_TextBox = new Guna.UI2.WinForms.Guna2TextBox();
             Return_Button = new Guna.UI2.WinForms.Guna2Button();
             Cancel_Button = new Guna.UI2.WinForms.Guna2Button();
             SuspendLayout();
@@ -250,34 +254,60 @@ namespace Sales_Tracker.Rentals
             Notes_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges12;
             Notes_TextBox.Size = new Size(640, 100);
             Notes_TextBox.TabIndex = 13;
-            // 
+            //
+            // AmountCharged_Label
+            //
+            AmountCharged_Label.AutoSize = true;
+            AmountCharged_Label.Font = new Font("Segoe UI", 11F);
+            AmountCharged_Label.Location = new Point(30, 765);
+            AmountCharged_Label.Margin = new Padding(4, 0, 4, 0);
+            AmountCharged_Label.Name = "AmountCharged_Label";
+            AmountCharged_Label.Size = new Size(163, 30);
+            AmountCharged_Label.TabIndex = 14;
+            AmountCharged_Label.Text = "Amount Charged";
+            //
+            // AmountCharged_TextBox
+            //
+            AmountCharged_TextBox.CustomizableEdges = customizableEdges13;
+            AmountCharged_TextBox.DefaultText = "";
+            AmountCharged_TextBox.Font = new Font("Segoe UI", 10F);
+            AmountCharged_TextBox.Location = new Point(30, 805);
+            AmountCharged_TextBox.Margin = new Padding(5, 8, 5, 8);
+            AmountCharged_TextBox.MaxLength = 10;
+            AmountCharged_TextBox.Name = "AmountCharged_TextBox";
+            AmountCharged_TextBox.PlaceholderText = "0.00";
+            AmountCharged_TextBox.SelectedText = "";
+            AmountCharged_TextBox.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            AmountCharged_TextBox.Size = new Size(200, 50);
+            AmountCharged_TextBox.TabIndex = 15;
+            //
             // Return_Button
             //
             Return_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Return_Button.CustomizableEdges = customizableEdges13;
+            Return_Button.CustomizableEdges = customizableEdges15;
             Return_Button.Font = new Font("Segoe UI", 11F);
             Return_Button.ForeColor = Color.White;
-            Return_Button.Location = new Point(470, 775);
+            Return_Button.Location = new Point(470, 885);
             Return_Button.Margin = new Padding(4, 5, 4, 5);
             Return_Button.Name = "Return_Button";
-            Return_Button.ShadowDecoration.CustomizableEdges = customizableEdges14;
+            Return_Button.ShadowDecoration.CustomizableEdges = customizableEdges16;
             Return_Button.Size = new Size(200, 50);
-            Return_Button.TabIndex = 14;
+            Return_Button.TabIndex = 16;
             Return_Button.Text = "Process Return";
             Return_Button.Click += Return_Button_Click;
             //
             // Cancel_Button
             //
             Cancel_Button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            Cancel_Button.CustomizableEdges = customizableEdges15;
+            Cancel_Button.CustomizableEdges = customizableEdges17;
             Cancel_Button.Font = new Font("Segoe UI", 11F);
             Cancel_Button.ForeColor = Color.White;
-            Cancel_Button.Location = new Point(262, 775);
+            Cancel_Button.Location = new Point(262, 885);
             Cancel_Button.Margin = new Padding(4, 5, 4, 5);
             Cancel_Button.Name = "Cancel_Button";
-            Cancel_Button.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            Cancel_Button.ShadowDecoration.CustomizableEdges = customizableEdges18;
             Cancel_Button.Size = new Size(200, 50);
-            Cancel_Button.TabIndex = 15;
+            Cancel_Button.TabIndex = 17;
             Cancel_Button.Text = "Cancel";
             Cancel_Button.Click += Cancel_Button_Click;
             // 
@@ -285,7 +315,7 @@ namespace Sales_Tracker.Rentals
             //
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 855);
+            ClientSize = new Size(700, 965);
             Controls.Add(Title_Label);
             Controls.Add(RentalDetails_Label);
             Controls.Add(ReturnDate_Label);
@@ -300,6 +330,8 @@ namespace Sales_Tracker.Rentals
             Controls.Add(Discount_TextBox);
             Controls.Add(Notes_Label);
             Controls.Add(Notes_TextBox);
+            Controls.Add(AmountCharged_Label);
+            Controls.Add(AmountCharged_TextBox);
             Controls.Add(Return_Button);
             Controls.Add(Cancel_Button);
             FormBorderStyle = FormBorderStyle.SizableToolWindow;
@@ -331,6 +363,8 @@ namespace Sales_Tracker.Rentals
         private Guna.UI2.WinForms.Guna2TextBox Discount_TextBox;
         private Label Notes_Label;
         private Guna.UI2.WinForms.Guna2TextBox Notes_TextBox;
+        private Label AmountCharged_Label;
+        private Guna.UI2.WinForms.Guna2TextBox AmountCharged_TextBox;
         private Guna.UI2.WinForms.Guna2Button Return_Button;
         private Guna.UI2.WinForms.Guna2Button Cancel_Button;
     }
