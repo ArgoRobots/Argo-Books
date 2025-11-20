@@ -25,6 +25,7 @@ namespace Sales_Tracker.Rentals
             UpdateTheme();
             SetAccessibleDescriptions();
             LanguageManager.UpdateLanguageForControl(this);
+            RateType_ComboBox.SelectedIndex = 0;  // Set to "Day"
 
             PanelCloseFilter panelCloseFilter = new(this, ClosePanels,
                 TextBoxManager.RightClickTextBox_Panel,
