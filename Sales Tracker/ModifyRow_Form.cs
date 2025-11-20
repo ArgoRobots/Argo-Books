@@ -220,7 +220,7 @@ namespace Sales_Tracker
             }
             else if (_selectedTag == MainMenu_Form.DataGridViewTag.RentalInventory.ToString())
             {
-                left = ConstructControlsForRentalInventory();
+                (left, secondLeft) = ConstructControlsForRentalInventory();
             }
 
             SizeControls(left, secondLeft);
@@ -910,9 +910,11 @@ namespace Sales_Tracker
         }
 
         // Construct controls for rental inventory
-        private int ConstructControlsForRentalInventory()
+        private (int, int) ConstructControlsForRentalInventory()
         {
+            ConstructSecondPanel();
             int left = 0;
+            int secondLeft = 0;
             int searchBoxMaxHeight = 100;
 
             foreach (DataGridViewColumn column in _selectedRow.DataGridView.Columns)
@@ -988,51 +990,51 @@ namespace Sales_Tracker
                         break;
 
                     case nameof(Rentals_Form.Column.Rented):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.Rented], left, Panel);
-                        ConstructTextBox(left, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbers, false, Panel);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.Rented], secondLeft, _secondPanel);
+                        ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbers, false, _secondPanel);
+                        secondLeft += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.Maintenance):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.Maintenance], left, Panel);
-                        ConstructTextBox(left, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbers, false, Panel);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.Maintenance], secondLeft, _secondPanel);
+                        ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbers, false, _secondPanel);
+                        secondLeft += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.DailyRate):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.DailyRate], left, Panel);
-                        Guna2TextBox dailyRateTextBox = ConstructTextBox(left, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, Panel);
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.DailyRate], secondLeft, _secondPanel);
+                        Guna2TextBox dailyRateTextBox = ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
                         dailyRateTextBox.Text = ExtractNumericValue(cellValue);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        secondLeft += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.WeeklyRate):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.WeeklyRate], left, Panel);
-                        Guna2TextBox weeklyRateTextBox = ConstructTextBox(left, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, Panel);
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.WeeklyRate], secondLeft, _secondPanel);
+                        Guna2TextBox weeklyRateTextBox = ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
                         weeklyRateTextBox.Text = ExtractNumericValue(cellValue);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        secondLeft += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.MonthlyRate):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.MonthlyRate], left, Panel);
-                        Guna2TextBox monthlyRateTextBox = ConstructTextBox(left, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, Panel);
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.MonthlyRate], secondLeft, _secondPanel);
+                        Guna2TextBox monthlyRateTextBox = ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
                         monthlyRateTextBox.Text = ExtractNumericValue(cellValue);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        secondLeft += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.SecurityDeposit):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.SecurityDeposit], left, Panel);
-                        Guna2TextBox depositTextBox = ConstructTextBox(left, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, Panel);
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.SecurityDeposit], secondLeft, _secondPanel);
+                        Guna2TextBox depositTextBox = ConstructTextBox(secondLeft, columnName, cellValue, 10, CustomControls.KeyPressValidation.OnlyNumbersAndDecimal, false, _secondPanel);
                         depositTextBox.Text = ExtractNumericValue(cellValue);
-                        left += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
+                        secondLeft += ScaledStandardWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.DateAdded):
-                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.DateAdded], left, Panel);
+                        ConstructLabel(Rentals_Form.ColumnHeaders[Rentals_Form.Column.DateAdded], secondLeft, _secondPanel);
                         DateTime dateAdded = DateTime.TryParse(cellValue, out DateTime parsedDate) ? parsedDate : DateTime.Now;
-                        Guna2DateTimePicker dateAddedPicker = ConstructDatePicker(left, columnName, dateAdded, Panel);
+                        Guna2DateTimePicker dateAddedPicker = ConstructDatePicker(secondLeft, columnName, dateAdded, _secondPanel);
                         dateAddedPicker.ValueChanged += ValidateInputs;
-                        left += ScaledDatePickerWidth + CustomControls.SpaceBetweenControls;
+                        secondLeft += ScaledDatePickerWidth + CustomControls.SpaceBetweenControls;
                         break;
 
                     case nameof(Rentals_Form.Column.LastRentalDate):
@@ -1041,7 +1043,7 @@ namespace Sales_Tracker
                 }
             }
 
-            return left - CustomControls.SpaceBetweenControls;
+            return (left - CustomControls.SpaceBetweenControls, secondLeft - CustomControls.SpaceBetweenControls);
         }
         private static string ExtractNumericValue(string formattedValue)
         {
