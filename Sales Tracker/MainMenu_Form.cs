@@ -1402,7 +1402,7 @@ namespace Sales_Tracker
         }
         private void ManageCategories_Button_Click(object sender, EventArgs e)
         {
-            Tools.OpenForm(new Categories_Form(CategoryType.Purchase));
+            Tools.OpenForm(new Categories_Form());
         }
         private void Customers_Button_Click(object sender, EventArgs e)
         {

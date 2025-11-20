@@ -587,7 +587,7 @@ namespace Sales_Tracker.UI
             menuBtn.Click += (_, _) =>
             {
                 MainMenu_Form.Instance.Controls.Remove(ControlDropDown_Panel);
-                Tools.OpenForm(new Categories_Form(CategoryType.Purchase));
+                Tools.OpenForm(new Categories_Form());
             };
 
             ConstructSeparator(btnWidth, flowPanel);
