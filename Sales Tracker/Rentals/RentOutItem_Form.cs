@@ -67,11 +67,12 @@ namespace Sales_Tracker
         private List<SearchResult> GetCustomerSearchResults()
         {
             List<SearchResult> results = [];
+            string searchText = Customer_TextBox.Text;
 
             foreach (Customer customer in MainMenu_Form.Instance.CustomerList)
             {
                 string displayText = $"{customer.FullName} ({customer.CustomerID})";
-                if (displayText.Contains(Customer_TextBox.Text, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrEmpty(searchText) || displayText.Contains(searchText, StringComparison.OrdinalIgnoreCase))
                 {
                     results.Add(new SearchResult(displayText, null, 0));
                 }
@@ -174,8 +175,11 @@ namespace Sales_Tracker
         }
         private void Customer_TextBox_TextChanged(object sender, EventArgs e)
         {
-            // Check if a valid customer is selected from SearchBox
-            _selectedCustomer = SearchBox.SelectedObject as Customer;
+            // Find customer matching the selected text
+            string selectedText = Customer_TextBox.Text;
+            _selectedCustomer = MainMenu_Form.Instance.CustomerList.FirstOrDefault(c =>
+                $"{c.FullName} ({c.CustomerID})" == selectedText);
+
             ValidateInputs();
         }
         private void Quantity_NumericUpDown_ValueChanged(object sender, EventArgs e)
