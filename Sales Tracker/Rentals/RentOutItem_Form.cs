@@ -30,6 +30,10 @@ namespace Sales_Tracker
             UpdateTheme();
             SetAccessibleDescriptions();
             LanguageManager.UpdateLanguageForControl(this);
+
+            PanelCloseFilter panelCloseFilter = new(this, ClosePanels, SearchBox.SearchResultBoxContainer);
+            Application.AddMessageFilter(panelCloseFilter);
+
             LoadingPanel.ShowBlankLoadingPanel(this);
         }
         private void InitializeForm()
@@ -348,6 +352,10 @@ namespace Sales_Tracker
         private void ValidateInputs()
         {
             RentOut_Button.Enabled = _selectedCustomer != null;
+        }
+        private void ClosePanels()
+        {
+            SearchBox.Close();
         }
     }
 }
