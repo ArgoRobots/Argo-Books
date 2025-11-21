@@ -325,7 +325,6 @@ namespace Sales_Tracker
                         OriginalChargedOrCredited = record.AmountCharged,
 
                         // Rental specific
-                        IsReturned = record.ReturnDate.HasValue,
                         ReturnDate = record.ReturnDate,
                         CustomerID = record.CustomerID,
                         CustomerName = customer?.FullName ?? "",
