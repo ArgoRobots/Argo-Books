@@ -315,7 +315,7 @@ namespace Sales_Tracker.Rentals
                 TaxUSD = _rentalRecord.TaxUSD,
                 FeeUSD = _rentalRecord.FeeUSD,
                 DiscountUSD = _rentalRecord.DiscountUSD,
-                ChargedDifferenceUSD = Math.Round((_rentalRecord.AmountChargedUSD - (_rentalRecord.RateUSD * _rentalRecord.Quantity + _rentalRecord.TaxUSD + _rentalRecord.FeeUSD + _rentalRecord.ShippingUSD - _rentalRecord.DiscountUSD)), 2),
+                ChargedDifferenceUSD = Math.Round(_rentalRecord.AmountChargedUSD - (_rentalRecord.RateUSD * _rentalRecord.Quantity + _rentalRecord.TaxUSD + _rentalRecord.FeeUSD + _rentalRecord.ShippingUSD - _rentalRecord.DiscountUSD), 2),
                 ChargedOrCreditedUSD = _rentalRecord.AmountChargedUSD,
                 OriginalCurrency = _rentalRecord.OriginalCurrency ?? "USD",
 
@@ -329,7 +329,6 @@ namespace Sales_Tracker.Rentals
                 OriginalChargedOrCredited = _rentalRecord.AmountCharged,
 
                 // Rental specific
-                IsReturned = true,
                 ReturnDate = returnDate,
                 CustomerID = _customer.CustomerID,
                 CustomerName = _customer.FullName,
