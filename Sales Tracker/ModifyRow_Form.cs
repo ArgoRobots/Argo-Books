@@ -222,6 +222,10 @@ namespace Sales_Tracker
             {
                 (left, secondLeft) = ConstructControlsForPurchaseOrSale();
             }
+            else if (_selectedTag == MainMenu_Form.DataGridViewTag.Rental.ToString())
+            {
+                (left, secondLeft) = ConstructControlsForPurchaseOrSale();
+            }
             else if (_selectedTag == MainMenu_Form.DataGridViewTag.ItemsInPurchase.ToString())
             {
                 left = ConstructControlsForItemsInTransaction();
@@ -1684,12 +1688,6 @@ namespace Sales_Tracker
         {
             if (_selectedTag == MainMenu_Form.DataGridViewTag.SaleOrPurchase.ToString())
             {
-                // Skip charged difference calculation for rentals - they handle it differently
-                if (MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.Rentals)
-                {
-                    return;
-                }
-
                 MainMenu_Form.IsProgramLoading = true;
 
                 string productName = _selectedRow.Cells[ReadOnlyVariables.Product_column].Value.ToString();
@@ -1705,6 +1703,7 @@ namespace Sales_Tracker
 
                 MainMenu_Form.IsProgramLoading = false;
             }
+            // Rentals handle charged difference in UpdateRentalRecord()
         }
         private void HandleReceiptChanges()
         {
@@ -1806,18 +1805,18 @@ namespace Sales_Tracker
             {
                 string type = MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.Purchases
                     ? "purchase"
-                    : MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.Sales
-                        ? "sale"
-                        : "rental";
+                    : "sale";
                 string id = _selectedRow.Cells[ReadOnlyVariables.ID_column].Value.ToString();
 
-                // Update underlying rental record if this is a rental
-                if (MainMenu_Form.Instance.Selected == MainMenu_Form.SelectedOption.Rentals)
-                {
-                    UpdateRentalRecord();
-                }
-
                 CustomMessage_Form.AddThingThatHasChangedAndLogMessage(MainMenu_Form.ThingsThatHaveChangedInFile, 2, $"Modified {type} '{id}'");
+                return;
+            }
+
+            if (_selectedTag == MainMenu_Form.DataGridViewTag.Rental.ToString())
+            {
+                string id = _selectedRow.Cells[ReadOnlyVariables.ID_column].Value.ToString();
+                UpdateRentalRecord();
+                CustomMessage_Form.AddThingThatHasChangedAndLogMessage(MainMenu_Form.ThingsThatHaveChangedInFile, 2, $"Modified rental '{id}'");
                 return;
             }
 

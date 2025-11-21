@@ -183,7 +183,7 @@ namespace Sales_Tracker
             Sale_DataGridView.CellFormatting += DataGridView_CellFormatting;
 
             DataGridViewManager.InitializeDataGridView(Rental_DataGridView, "rentals_DataGridView", RentalColumnHeaders, null, this);
-            Rental_DataGridView.Tag = DataGridViewTag.SaleOrPurchase;
+            Rental_DataGridView.Tag = DataGridViewTag.Rental;
             Rental_DataGridView.CellFormatting += DataGridView_CellFormatting;
         }
         private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -2283,7 +2283,8 @@ namespace Sales_Tracker
             Accountant,
             ItemsInPurchase,
             Customer,
-            RentalInventory
+            RentalInventory,
+            Rental
         }
 
         // DataGridView methods
