@@ -261,41 +261,6 @@ namespace Sales_Tracker.Rentals
         }
 
         // Methods
-        private void ReturnRental(RentalRecord record, Customer customer)
-        {
-            if (record == null || customer == null) { return; }
-
-            ReturnRental_Form returnForm = new(customer, record);
-            if (returnForm.ShowDialog() == DialogResult.OK)
-            {
-                RefreshDataGridView();
-                Rentals_Form.Instance?.RefreshDataGridView();
-            }
-        }
-        private static void ViewCustomerDetails(Customer customer)
-        {
-            if (customer == null) { return; }
-
-            // Open Customers_Form if not already open
-            if (Customers_Form.Instance == null)
-            {
-                Tools.OpenForm(new Customers_Form());
-            }
-
-            // Find the customer row in the Customers_Form DataGridView
-            if (Customers_Form.Instance != null)
-            {
-                foreach (DataGridViewRow row in Customers_Form.Instance.Customers_DataGridView.Rows)
-                {
-                    if (row.Cells[Customers_Form.Column.CustomerID.ToString()].Value?.ToString() == customer.CustomerID)
-                    {
-                        // Open ModifyRow_Form for this customer
-                        Tools.OpenForm(new ModifyRow_Form(row));
-                        break;
-                    }
-                }
-            }
-        }
         public void RefreshDataGridView()
         {
             CurrentRentals_DataGridView.Rows.Clear();
