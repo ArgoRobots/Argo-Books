@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StartupObject>Sales_Tracker.Program</StartupObject>
+    <StartupObject>Argo_Books.Program</StartupObject>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
@@ -37,23 +37,16 @@
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="EPPlus" Version="8.2.1" />
-    <PackageReference Include="Google.Apis.CloudResourceManager.v1" Version="1.70.0.3809" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.72.0.3944" />
-    <PackageReference Include="Google.Apis.Iam.v1" Version="1.72.0.3935" />
-    <PackageReference Include="Google.Apis.ServiceUsage.v1" Version="1.72.0.3946" />
     <PackageReference Include="Google.Apis.Sheets.v4" Version="1.70.0.3819" />
     <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WinForms" Version="2.0.0-rc5.4" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3650-prerelease" />
     <PackageReference Include="NetSparkleUpdater.SparkleUpdater" Version="3.0.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Ookii.Dialogs.WinForms" Version="4.0.0" />
-    <PackageReference Include="SharpCompress" Version="0.41.0" />
     <PackageReference Include="SkiaSharp.Views.Desktop.Common" Version="3.119.2-preview.1" />
-    <PackageReference Include="SkiaSharp.Views.WindowsForms" Version="3.119.2-preview.1" />
     <PackageReference Include="Svg.Skia" Version="3.2.1" />
     <PackageReference Include="System.Formats.Asn1" Version="10.0.0" />
-    <PackageReference Include="System.IO.Packaging" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>
